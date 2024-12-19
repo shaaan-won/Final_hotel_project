@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2024 at 07:46 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Dec 19, 2024 at 06:53 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,9 +20,10 @@ SET time_zone = "+00:00";
 --
 -- Database: `hotel_db`
 --
-Drop database IF EXISTS `hotel_db`;
-Create database IF NOT EXISTS `hotel_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-use `hotel_db`;
+Drop database if exists `hotel_db`;
+CREATE DATABASE IF NOT EXISTS `hotel_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `hotel_db`;
+
 -- --------------------------------------------------------
 
 --
@@ -76,10 +77,10 @@ INSERT INTO `ht_bookings` (`id`, `customer_id`, `room_id`, `check_in_date`, `che
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ht_checkin_checkout`
+-- Table structure for table `ht_checkin_checkouts`
 --
 
-CREATE TABLE `ht_checkin_checkout` (
+CREATE TABLE `ht_checkin_checkouts` (
   `id` int(11) NOT NULL,
   `booking_id` int(11) DEFAULT NULL,
   `check_in_date` datetime DEFAULT NULL,
@@ -90,10 +91,10 @@ CREATE TABLE `ht_checkin_checkout` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `ht_checkin_checkout`
+-- Dumping data for table `ht_checkin_checkouts`
 --
 
-INSERT INTO `ht_checkin_checkout` (`id`, `booking_id`, `check_in_date`, `check_out_date`, `notes`, `created_at`, `updated_at`) VALUES
+INSERT INTO `ht_checkin_checkouts` (`id`, `booking_id`, `check_in_date`, `check_out_date`, `notes`, `created_at`, `updated_at`) VALUES
 (1, 1, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
 (2, 2, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
 (3, 3, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
@@ -132,10 +133,10 @@ INSERT INTO `ht_customers` (`id`, `name`, `first_name`, `last_name`, `email`, `p
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ht_customer_feedback`
+-- Table structure for table `ht_customer_feedbacks`
 --
 
-CREATE TABLE `ht_customer_feedback` (
+CREATE TABLE `ht_customer_feedbacks` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `comments` text DEFAULT NULL,
@@ -144,10 +145,10 @@ CREATE TABLE `ht_customer_feedback` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `ht_customer_feedback`
+-- Dumping data for table `ht_customer_feedbacks`
 --
 
-INSERT INTO `ht_customer_feedback` (`id`, `user_id`, `comments`, `rating`, `created_at`) VALUES
+INSERT INTO `ht_customer_feedbacks` (`id`, `user_id`, `comments`, `rating`, `created_at`) VALUES
 (1, 1, 'Great service and friendly staff', 5, '2024-12-19 05:49:33'),
 (2, 2, 'Room was clean and comfortable', 4, '2024-12-19 05:49:33'),
 (3, 3, 'Food was delicious', 5, '2024-12-19 05:49:33'),
@@ -156,10 +157,10 @@ INSERT INTO `ht_customer_feedback` (`id`, `user_id`, `comments`, `rating`, `crea
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ht_events`
+-- Table structure for table `ht_hotel_events`
 --
 
-CREATE TABLE `ht_events` (
+CREATE TABLE `ht_hotel_events` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
@@ -172,10 +173,10 @@ CREATE TABLE `ht_events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `ht_events`
+-- Dumping data for table `ht_hotel_events`
 --
 
-INSERT INTO `ht_events` (`id`, `name`, `customer_id`, `event_date`, `event_time`, `location`, `attendees`, `created_at`, `updated_at`) VALUES
+INSERT INTO `ht_hotel_events` (`id`, `name`, `customer_id`, `event_date`, `event_time`, `location`, `attendees`, `created_at`, `updated_at`) VALUES
 (1, 'Wedding', 1, '2023-08-15', '18:00:00', 'Main Hall', 200, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
 (2, 'Wedding', 1, '2023-08-15', '18:00:00', 'Grand Hall', 100, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
 (3, 'Conference', 2, '2023-09-20', '09:00:00', 'Conference Room A', 50, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
@@ -185,10 +186,31 @@ INSERT INTO `ht_events` (`id`, `name`, `customer_id`, `event_date`, `event_time`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ht_inventory`
+-- Table structure for table `ht_id_card_types`
 --
 
-CREATE TABLE `ht_inventory` (
+CREATE TABLE `ht_id_card_types` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ht_id_card_types`
+--
+
+INSERT INTO `ht_id_card_types` (`id`, `name`, `created_at`) VALUES
+(1, 'National ID', '2024-12-19 22:49:07'),
+(2, 'Birth Certificate', '2024-12-19 22:49:07'),
+(3, 'Passport', '2024-12-19 22:49:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ht_inventorys`
+--
+
+CREATE TABLE `ht_inventorys` (
   `id` int(11) NOT NULL,
   `supplier_id` int(11) DEFAULT NULL,
   `item_name` varchar(255) DEFAULT NULL,
@@ -199,10 +221,10 @@ CREATE TABLE `ht_inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `ht_inventory`
+-- Dumping data for table `ht_inventorys`
 --
 
-INSERT INTO `ht_inventory` (`id`, `supplier_id`, `item_name`, `quantity`, `unit_price`, `created_at`, `updated_at`) VALUES
+INSERT INTO `ht_inventorys` (`id`, `supplier_id`, `item_name`, `quantity`, `unit_price`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Shampoo Bottles', 100, 3.50, '2024-12-19 05:51:58', '2024-12-19 05:51:58'),
 (2, 2, 'Conditioner Bottles', 150, 4.00, '2024-12-19 05:51:58', '2024-12-19 05:51:58'),
 (3, 3, 'Soap Bars', 200, 1.25, '2024-12-19 05:51:58', '2024-12-19 05:51:58'),
@@ -583,6 +605,7 @@ CREATE TABLE `ht_room_types` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
+  `photo` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -590,11 +613,11 @@ CREATE TABLE `ht_room_types` (
 -- Dumping data for table `ht_room_types`
 --
 
-INSERT INTO `ht_room_types` (`id`, `name`, `description`, `created_at`) VALUES
-(1, 'Standard', 'Basic room with essential amenities', '2024-12-19 05:49:33'),
-(2, 'Deluxe', 'Spacious room with additional features', '2024-12-19 05:49:33'),
-(3, 'Suite', 'Luxurious suite with premium services', '2024-12-19 05:49:33'),
-(4, 'Penthouse', 'Exclusive top-floor suite with panoramic views', '2024-12-19 05:49:33');
+INSERT INTO `ht_room_types` (`id`, `name`, `description`, `photo`, `created_at`) VALUES
+(1, 'Standard', 'Basic room with essential amenities', '', '2024-12-19 05:49:33'),
+(2, 'Deluxe', 'Spacious room with additional features', '', '2024-12-19 05:49:33'),
+(3, 'Suite', 'Luxurious suite with premium services', '', '2024-12-19 05:49:33'),
+(4, 'Penthouse', 'Exclusive top-floor suite with panoramic views', '', '2024-12-19 05:49:33');
 
 -- --------------------------------------------------------
 
@@ -805,9 +828,9 @@ ALTER TABLE `ht_bookings`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ht_checkin_checkout`
+-- Indexes for table `ht_checkin_checkouts`
 --
-ALTER TABLE `ht_checkin_checkout`
+ALTER TABLE `ht_checkin_checkouts`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -818,21 +841,27 @@ ALTER TABLE `ht_customers`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `ht_customer_feedback`
+-- Indexes for table `ht_customer_feedbacks`
 --
-ALTER TABLE `ht_customer_feedback`
+ALTER TABLE `ht_customer_feedbacks`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ht_events`
+-- Indexes for table `ht_hotel_events`
 --
-ALTER TABLE `ht_events`
+ALTER TABLE `ht_hotel_events`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ht_inventory`
+-- Indexes for table `ht_id_card_types`
 --
-ALTER TABLE `ht_inventory`
+ALTER TABLE `ht_id_card_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ht_inventorys`
+--
+ALTER TABLE `ht_inventorys`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -992,9 +1021,9 @@ ALTER TABLE `ht_bookings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `ht_checkin_checkout`
+-- AUTO_INCREMENT for table `ht_checkin_checkouts`
 --
-ALTER TABLE `ht_checkin_checkout`
+ALTER TABLE `ht_checkin_checkouts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
@@ -1004,21 +1033,27 @@ ALTER TABLE `ht_customers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `ht_customer_feedback`
+-- AUTO_INCREMENT for table `ht_customer_feedbacks`
 --
-ALTER TABLE `ht_customer_feedback`
+ALTER TABLE `ht_customer_feedbacks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `ht_events`
+-- AUTO_INCREMENT for table `ht_hotel_events`
 --
-ALTER TABLE `ht_events`
+ALTER TABLE `ht_hotel_events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `ht_inventory`
+-- AUTO_INCREMENT for table `ht_id_card_types`
 --
-ALTER TABLE `ht_inventory`
+ALTER TABLE `ht_id_card_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `ht_inventorys`
+--
+ALTER TABLE `ht_inventorys`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
