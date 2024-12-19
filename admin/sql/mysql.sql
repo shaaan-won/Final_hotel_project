@@ -68,6 +68,19 @@ CREATE TABLE ht_customers (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- 2.a. IdCardType Table
+CREATE TABLE ht_id_card_types (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- dummy data for IdCardType Table
+INSERT INTO ht_id_card_types (name, created_at) VALUES
+('National ID', CURRENT_TIMESTAMP),
+('Birth Certificate', CURRENT_TIMESTAMP),
+('Passport', CURRENT_TIMESTAMP);
+
 -- 2. Staff Table
 CREATE TABLE ht_staffs ( 
     id INT AUTO_INCREMENT PRIMARY KEY,

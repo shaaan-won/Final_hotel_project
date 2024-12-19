@@ -41,6 +41,8 @@ $uid = $_SESSION["uid"];
 
      <!-- Theme Config js (Require in all Page) -->
      <script src="<?= $base_url ?>assets/js/config.min.js"></script>
+     <!-- jQuery js (Require in all Page) -->
+     <script src="<?= $base_url ?>assets/js/jquery.min.js"></script>
 </head>
 
 <body>
