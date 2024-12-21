@@ -9,7 +9,7 @@ echo Form::open(["route"=>"room/update"]);
 	echo Form::input(["label"=>"Room Type","name"=>"room_type_id","table"=>"room_types","value"=>"$room->room_type_id"]);
 	echo Form::input(["label"=>"Price","type"=>"text","name"=>"price","value"=>"$room->price"]);
 	echo Form::input(["label"=>"Capacity","type"=>"text","name"=>"capacity","value"=>"$room->capacity"]);
-	echo Form::input(["label"=>"Status","name"=>"status_id","table"=>"status","value"=>"$room->status_id"]);
+	echo Form::input(["label"=>"Status","name"=>"status_id","table"=>"statuss","value"=>"$room->status_id"]);
 
 echo Form::input(["name"=>"update","class"=>"btn btn-success offset-2" , "value"=>"Save Chanage", "type"=>"submit"]);
 echo Form::close();

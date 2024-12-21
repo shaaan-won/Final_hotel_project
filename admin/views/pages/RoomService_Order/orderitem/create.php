@@ -4,7 +4,7 @@ echo Page::body_open();
 echo Html::link(["class"=>"btn btn-success", "route"=>"orderitem", "text"=>"Manage OrderItem"]);
 echo Page::context_open();
 echo Form::open(["route"=>"orderitem/save"]);
-	echo Form::input(["label"=>"Order","name"=>"order_id","table"=>"orders"]);
+	echo Form::input(["label"=>"Order","name"=>"order_id","table"=>"order_items","display_column"=>"order_id"]);
 	echo Form::input(["label"=>"Item","name"=>"item_id","table"=>"items"]);
 	echo Form::input(["label"=>"Quantity","type"=>"text","name"=>"quantity"]);
 	echo Form::input(["label"=>"Unit Price","type"=>"text","name"=>"unit_price"]);

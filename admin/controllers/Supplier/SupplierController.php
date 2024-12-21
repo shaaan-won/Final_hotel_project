@@ -28,7 +28,7 @@ public function save($data,$file){
 		$errors["address"]="Invalid address";
 	}
 
-*/
+*/	    global $now;
 		if(count($errors)==0){
 			$supplier=new Supplier();
 		$supplier->name=$data["name"];
@@ -69,7 +69,7 @@ public function update($data,$file){
 		$errors["address"]="Invalid address";
 	}
 
-*/
+*/		global $now;
 		if(count($errors)==0){
 			$supplier=new Supplier();
 			$supplier->id=$data["id"];
