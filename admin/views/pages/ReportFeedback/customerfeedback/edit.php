@@ -6,6 +6,7 @@ echo Page::context_open();
 echo Form::open(["route"=>"customerfeedback/update"]);
 	echo Form::input(["label"=>"Id","type"=>"hidden","name"=>"id","value"=>"$customerfeedback->id"]);
 	echo Form::input(["label"=>"User","name"=>"user_id","table"=>"users","value"=>"$customerfeedback->user_id"]);
+	echo Form::input(["label"=>"Customer","name"=>"customer_id","table"=>"customers","value"=>"$customerfeedback->customer_id"]);
 	echo Form::input(["label"=>"Comments","type"=>"textarea","name"=>"comments","value"=>"$customerfeedback->comments"]);
 	echo Form::input(["label"=>"Rating","type"=>"text","name"=>"rating","value"=>"$customerfeedback->rating"]);
 

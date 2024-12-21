@@ -3,10 +3,10 @@ class CustomerFeedbackController extends Controller{
 	public function __construct(){
 	}
 	public function index(){
-		view("Report_Feedback");
+		view("ReportFeedback");
 	}
 	public function create(){
-		view("Report_Feedback");
+		view("ReportFeedback");
 	}
 public function save($data,$file){
 	if(isset($data["create"])){
@@ -15,6 +15,9 @@ public function save($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["user_id"])){
 		$errors["user_id"]="Invalid user_id";
 	}
+	if(!preg_match("/^[\s\S]+$/",$data["customer_id"])){
+		$errors["customer_id"]="Invalid customer_id";
+	}
 	if(!preg_match("/^[\s\S]+$/",$data["comments"])){
 		$errors["comments"]="Invalid comments";
 	}
@@ -22,10 +25,11 @@ public function save($data,$file){
 		$errors["rating"]="Invalid rating";
 	}
 
-*/		global $now;
+*/        global $now;
 		if(count($errors)==0){
 			$customerfeedback=new CustomerFeedback();
 		$customerfeedback->user_id=$data["user_id"];
+		$customerfeedback->customer_id=$data["customer_id"];
 		$customerfeedback->comments=$data["comments"];
 		$customerfeedback->rating=$data["rating"];
 		$customerfeedback->created_at=$now;
@@ -38,7 +42,7 @@ public function save($data,$file){
 	}
 }
 public function edit($id){
-		view("Report_Feedback",CustomerFeedback::find($id));
+		view("ReportFeedback",CustomerFeedback::find($id));
 }
 public function update($data,$file){
 	if(isset($data["update"])){
@@ -47,6 +51,9 @@ public function update($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["user_id"])){
 		$errors["user_id"]="Invalid user_id";
 	}
+	if(!preg_match("/^[\s\S]+$/",$data["customer_id"])){
+		$errors["customer_id"]="Invalid customer_id";
+	}
 	if(!preg_match("/^[\s\S]+$/",$data["comments"])){
 		$errors["comments"]="Invalid comments";
 	}
@@ -54,11 +61,12 @@ public function update($data,$file){
 		$errors["rating"]="Invalid rating";
 	}
 
-*/		global $now;
+*/	    global $now;
 		if(count($errors)==0){
 			$customerfeedback=new CustomerFeedback();
 			$customerfeedback->id=$data["id"];
 		$customerfeedback->user_id=$data["user_id"];
+		$customerfeedback->customer_id=$data["customer_id"];
 		$customerfeedback->comments=$data["comments"];
 		$customerfeedback->rating=$data["rating"];
 		$customerfeedback->created_at=$now;
@@ -71,14 +79,14 @@ public function update($data,$file){
 	}
 }
 	public function confirm($id){
-		view("Report_Feedback");
+		view("ReportFeedback");
 	}
 	public function delete($id){
 		CustomerFeedback::delete($id);
 		redirect();
 	}
 	public function show($id){
-		view("Report_Feedback",CustomerFeedback::find($id));
+		view("ReportFeedback",CustomerFeedback::find($id));
 	}
 }
 ?>

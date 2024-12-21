@@ -109,12 +109,14 @@ class Invoice extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"invoice/create","text"=>"New Invoice"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Total Amount</th><th>Payment Status Id</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer Name</th><th>Booking Id</th><th>Total Amount</th><th>Payment Status </th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Total Amount</th><th>Payment Status Id</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($invoice=$result->fetch_object()){
 			$action_buttons = "";
+			$cname = Customer::find($invoice->customer_id);
+			$payment_status = PaymentStatuse::find($invoice->payment_status_id);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"invoice/show/$invoice->id"]);
@@ -122,7 +124,7 @@ class Invoice extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"invoice/confirm/$invoice->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$invoice->id</td><td>$invoice->customer_id</td><td>$invoice->booking_id</td><td>$invoice->total_amount</td><td>$invoice->payment_status_id</td><td>$invoice->created_at</td><td>$invoice->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$invoice->id</td><td>$cname->name</td><td>$invoice->booking_id</td><td>$invoice->total_amount</td><td class='text-success' >$payment_status->name</td><td>$invoice->created_at</td><td>$invoice->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

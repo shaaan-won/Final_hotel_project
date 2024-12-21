@@ -115,12 +115,18 @@ class RoomServiceRequest extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"roomservicerequest/create","text"=>"New RoomServiceRequest"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>User Id</th><th>Room Id</th><th>Customer Id</th><th>Request Type</th><th>Request Description</th><th>Status Id</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>User Name</th><th>Room Number</th><th>Customer Name</th><th>Request Type</th><th>Request Description</th><th>Status </th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>User Id</th><th>Room Id</th><th>Customer Id</th><th>Request Type</th><th>Request Description</th><th>Status Id</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($roomservicerequest=$result->fetch_object()){
 			$action_buttons = "";
+			// $auser = User::find($roomservicerequest->user_id);
+			$user = User::find($roomservicerequest->user_id);
+			// print_r($user);
+			$room = Room::find($roomservicerequest->room_id);
+			$customer = Customer::find($roomservicerequest->customer_id);
+			$status = Status::find($roomservicerequest->status_id);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"roomservicerequest/show/$roomservicerequest->id"]);
@@ -128,7 +134,7 @@ class RoomServiceRequest extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"roomservicerequest/confirm/$roomservicerequest->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$roomservicerequest->id</td><td>$roomservicerequest->user_id</td><td>$roomservicerequest->room_id</td><td>$roomservicerequest->customer_id</td><td>$roomservicerequest->request_type</td><td>$roomservicerequest->request_description</td><td>$roomservicerequest->status_id</td><td>$roomservicerequest->created_at</td><td>$roomservicerequest->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$roomservicerequest->id</td><td>$user->name</td><td>$room->room_number</td><td>$customer->name</td><td>$roomservicerequest->request_type</td><td>$roomservicerequest->request_description</td><td>$status->name</td><td>$roomservicerequest->created_at</td><td>$roomservicerequest->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

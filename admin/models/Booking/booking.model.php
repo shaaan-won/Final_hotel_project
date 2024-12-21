@@ -35,7 +35,7 @@ class Booking extends Model implements JsonSerializable{
 		global $db,$tx;
 		$db->query("delete from {$tx}bookings where id={$id}");
 	}
-	public function jsonSerialize():mixed{
+	public function jsonSerialize(): mixed{
 		return get_object_vars($this);
 	}
 	public static function all(){
@@ -112,12 +112,17 @@ class Booking extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"booking/create","text"=>"New Booking"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Room Id</th><th>Check In Date</th><th>Check Out Date</th><th>Status Id</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer name</th><th>Room number</th><th>Check In Date</th><th>Check Out Date</th><th>Status</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Room Id</th><th>Check In Date</th><th>Check Out Date</th><th>Status Id</th><th>Created At</th><th>Updated At</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer name</th><th>Room number</th><th>Check In Date</th><th>Check Out Date</th><th>Status</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($booking=$result->fetch_object()){
 			$action_buttons = "";
+			$cname = Customer::find($booking->customer_id)->name;
+			$rname = Room::find($booking->room_id)->room_number;
+			$status= Status::Find($booking->status_id)->name;
+			// print_r($cname);
+			// print_r($rname);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"booking/show/$booking->id"]);
@@ -125,7 +130,7 @@ class Booking extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"booking/confirm/$booking->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$booking->id</td><td>$booking->customer_id</td><td>$booking->room_id</td><td>$booking->check_in_date</td><td>$booking->check_out_date</td><td>$booking->status_id</td><td>$booking->created_at</td><td>$booking->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$booking->id</td><td>$cname</td><td>$rname</td><td>$booking->check_in_date</td><td>$booking->check_out_date</td><td class='text-center text-success'>$status</td><td>$booking->created_at</td><td>$booking->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

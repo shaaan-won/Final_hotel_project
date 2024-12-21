@@ -106,12 +106,13 @@ class Order extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"order/create","text"=>"New Order"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Order Date</th><th>Total Amount</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer Name</th><th>Order Date</th><th>Total Amount</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>Customer Id</th><th>Order Date</th><th>Total Amount</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($order=$result->fetch_object()){
 			$action_buttons = "";
+			$cname =  Customer::find($order->customer_id);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"order/show/$order->id"]);
@@ -119,7 +120,7 @@ class Order extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"order/confirm/$order->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$order->id</td><td>$order->customer_id</td><td>$order->order_date</td><td>$order->total_amount</td><td>$order->created_at</td><td>$order->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$order->id</td><td>$cname->name</td><td>$order->order_date</td><td>$order->total_amount</td><td>$order->created_at</td><td>$order->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

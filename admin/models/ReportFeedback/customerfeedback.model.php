@@ -2,15 +2,17 @@
 class CustomerFeedback extends Model implements JsonSerializable{
 	public $id;
 	public $user_id;
+	public $customer_id;
 	public $comments;
 	public $rating;
 	public $created_at;
 
 	public function __construct(){
 	}
-	public function set($id,$user_id,$comments,$rating,$created_at){
+	public function set($id,$user_id,$customer_id,$comments,$rating,$created_at){
 		$this->id=$id;
 		$this->user_id=$user_id;
+		$this->customer_id=$customer_id;
 		$this->comments=$comments;
 		$this->rating=$rating;
 		$this->created_at=$created_at;
@@ -18,12 +20,12 @@ class CustomerFeedback extends Model implements JsonSerializable{
 	}
 	public function save(){
 		global $db,$tx;
-		$db->query("insert into {$tx}customer_feedbacks(user_id,comments,rating,created_at)values('$this->user_id','$this->comments','$this->rating','$this->created_at')");
+		$db->query("insert into {$tx}customer_feedbacks(user_id,customer_id,comments,rating,created_at)values('$this->user_id','$this->customer_id','$this->comments','$this->rating','$this->created_at')");
 		return $db->insert_id;
 	}
 	public function update(){
 		global $db,$tx;
-		$db->query("update {$tx}customer_feedbacks set user_id='$this->user_id',comments='$this->comments',rating='$this->rating',created_at='$this->created_at' where id='$this->id'");
+		$db->query("update {$tx}customer_feedbacks set user_id='$this->user_id',customer_id='$this->customer_id',comments='$this->comments',rating='$this->rating',created_at='$this->created_at' where id='$this->id'");
 	}
 	public static function delete($id){
 		global $db,$tx;
@@ -34,7 +36,7 @@ class CustomerFeedback extends Model implements JsonSerializable{
 	}
 	public static function all(){
 		global $db,$tx;
-		$result=$db->query("select id,user_id,comments,rating,created_at from {$tx}customer_feedbacks");
+		$result=$db->query("select id,user_id,customer_id,comments,rating,created_at from {$tx}customer_feedbacks");
 		$data=[];
 		while($customerfeedback=$result->fetch_object()){
 			$data[]=$customerfeedback;
@@ -44,7 +46,7 @@ class CustomerFeedback extends Model implements JsonSerializable{
 	public static function pagination($page=1,$perpage=10,$criteria=""){
 		global $db,$tx;
 		$top=($page-1)*$perpage;
-		$result=$db->query("select id,user_id,comments,rating,created_at from {$tx}customer_feedbacks $criteria limit $top,$perpage");
+		$result=$db->query("select id,user_id,customer_id,comments,rating,created_at from {$tx}customer_feedbacks $criteria limit $top,$perpage");
 		$data=[];
 		while($customerfeedback=$result->fetch_object()){
 			$data[]=$customerfeedback;
@@ -59,7 +61,7 @@ class CustomerFeedback extends Model implements JsonSerializable{
 	}
 	public static function find($id){
 		global $db,$tx;
-		$result =$db->query("select id,user_id,comments,rating,created_at from {$tx}customer_feedbacks where id='$id'");
+		$result =$db->query("select id,user_id,customer_id,comments,rating,created_at from {$tx}customer_feedbacks where id='$id'");
 		$customerfeedback=$result->fetch_object();
 			return $customerfeedback;
 	}
@@ -75,6 +77,7 @@ class CustomerFeedback extends Model implements JsonSerializable{
 	public function __toString(){
 		return "		Id:$this->id<br> 
 		User Id:$this->user_id<br> 
+		Customer Id:$this->customer_id<br> 
 		Comments:$this->comments<br> 
 		Rating:$this->rating<br> 
 		Created At:$this->created_at<br> 
@@ -99,16 +102,18 @@ class CustomerFeedback extends Model implements JsonSerializable{
 		list($total_rows)=$count_result->fetch_row();
 		$total_pages = ceil($total_rows /$perpage);
 		$top = ($page - 1)*$perpage;
-		$result=$db->query("select id,user_id,comments,rating,created_at from {$tx}customer_feedbacks $criteria limit $top,$perpage");
+		$result=$db->query("select id,user_id,customer_id,comments,rating,created_at from {$tx}customer_feedbacks $criteria limit $top,$perpage");
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"customerfeedback/create","text"=>"New CustomerFeedback"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>User Id</th><th>Comments</th><th>Rating</th><th>Created At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>User Id</th><th>Customer Id</th><th>Comments</th><th>Rating</th><th>Created At</th><th>Action</th></tr>";
 		}else{
-			$html.="<tr><th>Id</th><th>User Id</th><th>Comments</th><th>Rating</th><th>Created At</th></tr>";
+			$html.="<tr><th>Id</th><th>User Id</th><th>Customer Id</th><th>Comments</th><th>Rating</th><th>Created At</th></tr>";
 		}
 		while($customerfeedback=$result->fetch_object()){
 			$action_buttons = "";
+			$user = User::find($customerfeedback->user_id)->name;
+			$cname = Customer::find($customerfeedback->customer_id)->name;
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"customerfeedback/show/$customerfeedback->id"]);
@@ -116,7 +121,7 @@ class CustomerFeedback extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"customerfeedback/confirm/$customerfeedback->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$customerfeedback->id</td><td>$customerfeedback->user_id</td><td>$customerfeedback->comments</td><td>$customerfeedback->rating</td><td>$customerfeedback->created_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$customerfeedback->id</td><td>$user</td><td>$cname</td><td>$customerfeedback->comments</td><td>$customerfeedback->rating</td><td>$customerfeedback->created_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);
@@ -124,12 +129,13 @@ class CustomerFeedback extends Model implements JsonSerializable{
 	}
 	static function html_row_details($id){
 		global $db,$tx,$base_url;
-		$result =$db->query("select id,user_id,comments,rating,created_at from {$tx}customer_feedbacks where id={$id}");
+		$result =$db->query("select id,user_id,customer_id,comments,rating,created_at from {$tx}customer_feedbacks where id={$id}");
 		$customerfeedback=$result->fetch_object();
 		$html="<table class='table'>";
 		$html.="<tr><th colspan=\"2\">CustomerFeedback Show</th></tr>";
 		$html.="<tr><th>Id</th><td>$customerfeedback->id</td></tr>";
 		$html.="<tr><th>User Id</th><td>$customerfeedback->user_id</td></tr>";
+		$html.="<tr><th>Customer Id</th><td>$customerfeedback->customer_id</td></tr>";
 		$html.="<tr><th>Comments</th><td>$customerfeedback->comments</td></tr>";
 		$html.="<tr><th>Rating</th><td>$customerfeedback->rating</td></tr>";
 		$html.="<tr><th>Created At</th><td>$customerfeedback->created_at</td></tr>";

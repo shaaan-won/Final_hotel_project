@@ -121,6 +121,7 @@ class HotelEvent extends Model implements JsonSerializable{
 		}
 		while($hotelevent=$result->fetch_object()){
 			$action_buttons = "";
+			$cname = Customer::find($hotelevent->customer_id)->name;
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"hotelevent/show/$hotelevent->id"]);
@@ -128,7 +129,7 @@ class HotelEvent extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"hotelevent/confirm/$hotelevent->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$hotelevent->id</td><td>$hotelevent->name</td><td>$hotelevent->customer_id</td><td>$hotelevent->event_date</td><td>$hotelevent->event_time</td><td>$hotelevent->location</td><td>$hotelevent->attendees</td><td>$hotelevent->created_at</td><td>$hotelevent->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$hotelevent->id</td><td>$hotelevent->name</td><td>$cname</td><td>$hotelevent->event_date</td><td>$hotelevent->event_time</td><td>$hotelevent->location</td><td>$hotelevent->attendees</td><td>$hotelevent->created_at</td><td>$hotelevent->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

@@ -18,23 +18,17 @@ public function save($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["room_id"])){
 		$errors["room_id"]="Invalid room_id";
 	}
-	if(!preg_match("/^[\s\S]+$/",$data["check_in_date"])){
-		$errors["check_in_date"]="Invalid check_in_date";
-	}
-	if(!preg_match("/^[\s\S]+$/",$data["check_out_date"])){
-		$errors["check_out_date"]="Invalid check_out_date";
-	}
 	if(!preg_match("/^[\s\S]+$/",$data["status_id"])){
 		$errors["status_id"]="Invalid status_id";
 	}
-
+		
 */		global $now;
 		if(count($errors)==0){
 			$booking=new Booking();
 		$booking->customer_id=$data["customer_id"];
 		$booking->room_id=$data["room_id"];
-		$booking->check_in_date=$data["check_in_date"];
-		$booking->check_out_date=$data["check_out_date"];
+		$booking->check_in_date=date("Y-m-d",strtotime($data["check_in_date"]));
+		$booking->check_out_date=date("Y-m-d",strtotime($data["check_out_date"]));
 		$booking->status_id=$data["status_id"];
 		$booking->created_at=$now;
 		$booking->updated_at=$now;
@@ -59,12 +53,6 @@ public function update($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["room_id"])){
 		$errors["room_id"]="Invalid room_id";
 	}
-	if(!preg_match("/^[\s\S]+$/",$data["check_in_date"])){
-		$errors["check_in_date"]="Invalid check_in_date";
-	}
-	if(!preg_match("/^[\s\S]+$/",$data["check_out_date"])){
-		$errors["check_out_date"]="Invalid check_out_date";
-	}
 	if(!preg_match("/^[\s\S]+$/",$data["status_id"])){
 		$errors["status_id"]="Invalid status_id";
 	}
@@ -75,8 +63,8 @@ public function update($data,$file){
 			$booking->id=$data["id"];
 		$booking->customer_id=$data["customer_id"];
 		$booking->room_id=$data["room_id"];
-		$booking->check_in_date=$data["check_in_date"];
-		$booking->check_out_date=$data["check_out_date"];
+		$booking->check_in_date=date("Y-m-d",strtotime($data["check_in_date"]));
+		$booking->check_out_date=date("Y-m-d",strtotime($data["check_out_date"]));
 		$booking->status_id=$data["status_id"];
 		$booking->created_at=$now;
 		$booking->updated_at=$now;

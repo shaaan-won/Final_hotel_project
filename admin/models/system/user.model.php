@@ -140,7 +140,7 @@ class User extends Model implements JsonSerializable{
 		$total_pages = ceil($total_rows /$perpage);
 		$top = ($page - 1)*$perpage;
 		$result=$db->query("select id,name,role_id,password,email,full_name,created_at,photo,verify_code,inactive,mobile,updated_at,ip,email_verified_at,remember_token from {$tx}users $criteria limit $top,$perpage");
-		$html="<table class='table'>";
+		$html="<div class='table-responsive'><table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"user/create","text"=>"New User"])."</th></tr>";
 		if($action){
 			$html.="<tr><th>Id</th><th>Name</th><th>Role Id</th><th>Password</th><th>Email</th><th>Full Name</th><th>Created At</th><th>Photo</th><th>Verify Code</th><th>Inactive</th><th>Mobile</th><th>Updated At</th><th>Ip</th><th>Email Verified At</th><th>Remember Token</th><th>Action</th></tr>";
@@ -149,6 +149,7 @@ class User extends Model implements JsonSerializable{
 		}
 		while($user=$result->fetch_object()){
 			$action_buttons = "";
+			$roles = Role::search($user->role_id)->name;
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"user/show/$user->id"]);
@@ -156,9 +157,9 @@ class User extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"user/confirm/$user->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$user->id</td><td>$user->name</td><td>$user->role_id</td><td>$user->password</td><td>$user->email</td><td>$user->full_name</td><td>$user->created_at</td><td><img src='$base_url/img/$user->photo' width='100' /></td><td>$user->verify_code</td><td>$user->inactive</td><td>$user->mobile</td><td>$user->updated_at</td><td>$user->ip</td><td>$user->email_verified_at</td><td>$user->remember_token</td> $action_buttons</tr>";
+			$html.="<tr><td>$user->id</td><td>$user->name</td><td>$roles</td><td>$user->password</td><td>$user->email</td><td>$user->full_name</td><td>$user->created_at</td><td><img src='$base_url/img/$user->photo' width='100' /></td><td>$user->verify_code</td><td>$user->inactive</td><td>$user->mobile</td><td>$user->updated_at</td><td>$user->ip</td><td>$user->email_verified_at</td><td>$user->remember_token</td> $action_buttons</tr>";
 		}
-		$html.="</table>";
+		$html.="</table> </div>";
 		$html.= pagination($page,$total_pages);
 		return $html;
 	}

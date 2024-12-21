@@ -106,12 +106,13 @@ class StaffPerformanceReview extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"staffperformancereview/create","text"=>"New StaffPerformanceReview"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Staff Id</th><th>Review Date</th><th>Review Score</th><th>Review Comments</th><th>Created At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Staff Name</th><th>Review Date</th><th>Review Score</th><th>Review Comments</th><th>Created At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>Staff Id</th><th>Review Date</th><th>Review Score</th><th>Review Comments</th><th>Created At</th></tr>";
 		}
 		while($staffperformancereview=$result->fetch_object()){
 			$action_buttons = "";
+			$staff= Staff::find($staffperformancereview->staff_id);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"staffperformancereview/show/$staffperformancereview->id"]);
@@ -119,7 +120,7 @@ class StaffPerformanceReview extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"staffperformancereview/confirm/$staffperformancereview->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$staffperformancereview->id</td><td>$staffperformancereview->staff_id</td><td>$staffperformancereview->review_date</td><td>$staffperformancereview->review_score</td><td>$staffperformancereview->review_comments</td><td>$staffperformancereview->created_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$staffperformancereview->id</td><td>$staff->name</td><td>$staffperformancereview->review_date</td><td>$staffperformancereview->review_score</td><td>$staffperformancereview->review_comments</td><td>$staffperformancereview->created_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

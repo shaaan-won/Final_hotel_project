@@ -106,12 +106,13 @@ class LoyaltyProgram extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"loyaltyprogram/create","text"=>"New LoyaltyProgram"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Points</th><th>Membership Level</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer Name</th><th>Points</th><th>Membership Level</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>Customer Id</th><th>Points</th><th>Membership Level</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($loyaltyprogram=$result->fetch_object()){
 			$action_buttons = "";
+			$cname = Customer::find($loyaltyprogram->customer_id);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"loyaltyprogram/show/$loyaltyprogram->id"]);
@@ -119,7 +120,7 @@ class LoyaltyProgram extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"loyaltyprogram/confirm/$loyaltyprogram->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$loyaltyprogram->id</td><td>$loyaltyprogram->customer_id</td><td>$loyaltyprogram->points</td><td>$loyaltyprogram->membership_level</td><td>$loyaltyprogram->created_at</td><td>$loyaltyprogram->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$loyaltyprogram->id</td><td>$cname->name</td><td>$loyaltyprogram->points</td><td>$loyaltyprogram->membership_level</td><td>$loyaltyprogram->created_at</td><td>$loyaltyprogram->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

@@ -5,6 +5,7 @@ echo Html::link(["class"=>"btn btn-success", "route"=>"customerfeedback", "text"
 echo Page::context_open();
 echo Form::open(["route"=>"customerfeedback/save"]);
 	echo Form::input(["label"=>"User","name"=>"user_id","table"=>"users"]);
+	echo Form::input(["label"=>"Customer","name"=>"customer_id","table"=>"customers"]);
 	echo Form::input(["label"=>"Comments","type"=>"textarea","name"=>"comments"]);
 	echo Form::input(["label"=>"Rating","type"=>"text","name"=>"rating"]);
 

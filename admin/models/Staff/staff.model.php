@@ -121,12 +121,13 @@ class Staff extends Model implements JsonSerializable{
 		$html="<div class='table-responsive'><table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"staff/create","text"=>"New Staff"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Name</th><th>Staff Role Id</th><th>Email</th><th>Phone</th><th>Address</th><th>Work Schedule Id</th><th>Hired Date</th><th>Performance Score</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Name</th><th>Staff Role</th><th>Email</th><th>Phone</th><th>Address</th><th>Work Schedule Id</th><th>Hired Date</th><th>Performance Score</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>Name</th><th>Staff Role Id</th><th>Email</th><th>Phone</th><th>Address</th><th>Work Schedule Id</th><th>Hired Date</th><th>Performance Score</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($staff=$result->fetch_object()){
 			$action_buttons = "";
+			$staff_role= StaffRole::find($staff->staff_role_id);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"staff/show/$staff->id"]);
@@ -134,7 +135,7 @@ class Staff extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"staff/confirm/$staff->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$staff->id</td><td>$staff->name</td><td>$staff->staff_role_id</td><td>$staff->email</td><td>$staff->phone</td><td>$staff->address</td><td>$staff->work_schedule_id</td><td>$staff->hired_date</td><td>$staff->performance_score</td><td>$staff->created_at</td><td>$staff->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$staff->id</td><td>$staff->name</td><td>$staff_role->name</td><td>$staff->email</td><td>$staff->phone</td><td>$staff->address</td><td>$staff->work_schedule_id</td><td>$staff->hired_date</td><td>$staff->performance_score</td><td>$staff->created_at</td><td>$staff->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table> </div>";
 		$html.= pagination($page,$total_pages);

@@ -3,10 +3,10 @@ class ReportController extends Controller{
 	public function __construct(){
 	}
 	public function index(){
-		view("Report_Feedback");
+		view("ReportFeedback");
 	}
 	public function create(){
-		view("Report_Feedback");
+		view("ReportFeedback");
 	}
 public function save($data,$file){
 	if(isset($data["create"])){
@@ -22,7 +22,7 @@ public function save($data,$file){
 		$errors["report_description"]="Invalid report_description";
 	}
 
-*/		global $now;
+*/	    global $now;
 		if(count($errors)==0){
 			$report=new Report();
 		$report->user_id=$data["user_id"];
@@ -39,7 +39,7 @@ public function save($data,$file){
 	}
 }
 public function edit($id){
-		view("Report_Feedback",Report::find($id));
+		view("ReportFeedback",Report::find($id));
 }
 public function update($data,$file){
 	if(isset($data["update"])){
@@ -55,7 +55,7 @@ public function update($data,$file){
 		$errors["report_description"]="Invalid report_description";
 	}
 
-*/		global $now;
+*/	    global $now;
 		if(count($errors)==0){
 			$report=new Report();
 			$report->id=$data["id"];
@@ -73,14 +73,14 @@ public function update($data,$file){
 	}
 }
 	public function confirm($id){
-		view("Report_Feedback");
+		view("ReportFeedback");
 	}
 	public function delete($id){
 		Report::delete($id);
 		redirect();
 	}
 	public function show($id){
-		view("Report_Feedback",Report::find($id));
+		view("ReportFeedback",Report::find($id));
 	}
 }
 ?>

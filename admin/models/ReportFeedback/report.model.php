@@ -106,12 +106,13 @@ class Report extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"report/create","text"=>"New Report"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>User Id</th><th>Report Type</th><th>Report Description</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>User Name</th><th>Report Type</th><th>Report Description</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>User Id</th><th>Report Type</th><th>Report Description</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($report=$result->fetch_object()){
 			$action_buttons = "";
+			$cname=User::find($report->user_id)->name;
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"report/show/$report->id"]);
@@ -119,7 +120,7 @@ class Report extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"report/confirm/$report->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$report->id</td><td>$report->user_id</td><td>$report->report_type</td><td>$report->report_description</td><td>$report->created_at</td><td>$report->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$report->id</td><td>$cname </td><td>$report->report_type</td><td>$report->report_description</td><td>$report->created_at</td><td>$report->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

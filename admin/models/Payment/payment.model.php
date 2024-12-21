@@ -109,12 +109,15 @@ class Payment extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"payment/create","text"=>"New Payment"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Amount</th><th>Payment Method Id</th><th>Payment Statuse Id</th><th>Created At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer Name</th><th>Booking Id</th><th>Amount</th><th>Payment Method </th><th>Payment Statuse </th><th>Created At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Amount</th><th>Payment Method Id</th><th>Payment Statuse Id</th><th>Created At</th></tr>";
 		}
 		while($payment=$result->fetch_object()){
 			$action_buttons = "";
+			$cname = Customer::find($payment->customer_id);
+			$pmethod = PaymentMethod::find($payment->payment_method_id);
+			$pstatuse = PaymentStatuse::find($payment->payment_statuse_id);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"payment/show/$payment->id"]);
@@ -122,7 +125,7 @@ class Payment extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"payment/confirm/$payment->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$payment->id</td><td>$payment->customer_id</td><td>$payment->booking_id</td><td>$payment->amount</td><td>$payment->payment_method_id</td><td>$payment->payment_statuse_id</td><td>$payment->created_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$payment->id</td><td>$cname->name</td><td>$payment->booking_id</td><td>$payment->amount</td><td>$pmethod->name</td><td class=' text-success text-bold '>$pstatuse->name</td><td>$payment->created_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

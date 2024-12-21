@@ -39,10 +39,18 @@ $uid = $_SESSION["uid"];
      <!-- App css (Require in all Page) -->
      <link href="<?= $base_url ?>assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
+     <!-- Bootstrap 5 CSS -->
+     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
      <!-- Theme Config js (Require in all Page) -->
      <script src="<?= $base_url ?>assets/js/config.min.js"></script>
      <!-- jQuery js (Require in all Page) -->
      <script src="<?= $base_url ?>assets/js/jquery.min.js"></script>
+     <!-- <style>
+          a{
+               text-decoration: none;
+          }
+     </style> -->
 </head>
 
 <body>
