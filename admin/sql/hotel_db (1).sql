@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2024 at 06:53 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Dec 21, 2024 at 07:03 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -21,9 +21,9 @@ SET time_zone = "+00:00";
 -- Database: `hotel_db`
 --
 Drop database if exists `hotel_db`;
-CREATE DATABASE IF NOT EXISTS `hotel_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `hotel_db`;
 
+CREATE DATABASE `hotel_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+Use `hotel_db`;
 -- --------------------------------------------------------
 
 --
@@ -394,6 +394,15 @@ CREATE TABLE `ht_payment_methods` (
   `name` varchar(50) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ht_payment_methods`
+--
+
+INSERT INTO `ht_payment_methods` (`id`, `name`, `created_at`) VALUES
+(1, 'credit card', '2024-12-21 05:42:09'),
+(2, 'Paypal', '2024-12-21 05:42:18'),
+(3, 'Bank Transfer', '2024-12-21 05:42:42');
 
 -- --------------------------------------------------------
 
@@ -1096,7 +1105,7 @@ ALTER TABLE `ht_payments`
 -- AUTO_INCREMENT for table `ht_payment_methods`
 --
 ALTER TABLE `ht_payment_methods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ht_payment_statuses`

@@ -11,9 +11,6 @@
 				<a class="sub-nav-link" href="<?php echo $base_url ?>report"> Daily Report </a>
 			</li>
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>performancereview"> Daily Performance </a>
-			</li>
-			<li class="sub-nav-item">
 				<a class="sub-nav-link" href="<?php echo $base_url ?>customerfeedback">Customer Feedback</a>
 			</li>
 

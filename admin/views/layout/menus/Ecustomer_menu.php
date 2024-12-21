@@ -8,10 +8,13 @@
 	<div class="collapse" id="sidebarIcons">
 		<ul class="nav sub-navbar-nav">
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>customerdetail">Customer List</a>
+				<a class="sub-nav-link" href="<?php echo $base_url ?>customer">Guest List</a>
 			</li>
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>idcardtype"> Customer ID type</a>
+				<a class="sub-nav-link" href="<?php echo $base_url ?>idcardtype"> Guest ID type</a>
+			</li>
+			<li class="sub-nav-item">
+				<a class="sub-nav-link" href="<?php echo $base_url ?>loyaltyprogram"> Loyalty Program</a>
 			</li>
 
 		</ul>

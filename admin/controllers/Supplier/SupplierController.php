@@ -3,10 +3,10 @@ class SupplierController extends Controller{
 	public function __construct(){
 	}
 	public function index(){
-		view("Supplier_Inventory");
+		view("Supplier");
 	}
 	public function create(){
-		view("Supplier_Inventory");
+		view("Supplier");
 	}
 public function save($data,$file){
 	if(isset($data["create"])){
@@ -28,7 +28,7 @@ public function save($data,$file){
 		$errors["address"]="Invalid address";
 	}
 
-*/	global $now;
+*/
 		if(count($errors)==0){
 			$supplier=new Supplier();
 		$supplier->name=$data["name"];
@@ -47,7 +47,7 @@ public function save($data,$file){
 	}
 }
 public function edit($id){
-		view("Supplier_Inventory",Supplier::find($id));
+		view("Supplier",Supplier::find($id));
 }
 public function update($data,$file){
 	if(isset($data["update"])){
@@ -69,7 +69,7 @@ public function update($data,$file){
 		$errors["address"]="Invalid address";
 	}
 
-*/	global $now;
+*/
 		if(count($errors)==0){
 			$supplier=new Supplier();
 			$supplier->id=$data["id"];
@@ -89,14 +89,14 @@ public function update($data,$file){
 	}
 }
 	public function confirm($id){
-		view("Supplier_Inventory");
+		view("Supplier");
 	}
 	public function delete($id){
 		Supplier::delete($id);
 		redirect();
 	}
 	public function show($id){
-		view("Supplier_Inventory",Supplier::find($id));
+		view("Supplier",Supplier::find($id));
 	}
 }
 ?>

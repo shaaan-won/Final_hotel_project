@@ -3,18 +3,18 @@
 		<span class="nav-icon">
 			<iconify-icon icon="solar:bill-list-broken"></iconify-icon>
 		</span>
-		<span class="nav-text"> Invoices </span>
+		<span class="nav-text"> Payment Details </span>
 	</a>
 	<div class="collapse" id="sidebarInvoice">
 		<ul class="nav sub-navbar-nav">
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>billing">Billing</a>
+				<a class="sub-nav-link" href="<?php echo $base_url ?>payment">Payment List</a>
 			</li>
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>payment">Payment Details</a>
+				<a class="sub-nav-link" href="<?php echo $base_url ?>paymentmethod">Payment Method List</a>
 			</li>
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>paymentmethod"> Payment Method List</a>
+				<a class="sub-nav-link" href="<?php echo $base_url ?>paymentstatuse"> Payment Status </a>
 			</li>
 			<li class="sub-nav-item">
 				<a class="sub-nav-link" href="<?php echo $base_url ?>invoice">Invoice Details</a>

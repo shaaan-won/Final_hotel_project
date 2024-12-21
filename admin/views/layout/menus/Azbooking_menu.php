@@ -3,7 +3,7 @@
 		<span class="nav-icon">
 			<iconify-icon icon="solar:bedside-table-4-broken"></iconify-icon>
 		</span>
-		<span class="nav-text"> Reservation </span>
+		<span class="nav-text"> Hotel Bookings </span>
 	</a>
 	<div class="collapse" id="sidebarTables">
 		<ul class="nav sub-navbar-nav">
@@ -12,17 +12,11 @@
 				<a class="sub-nav-link" href="<?php echo $base_url ?>booking"> Bookings</a>
 			</li>
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>bookingdetail"> Booking Details</a>
+				<a class="sub-nav-link" href="<?php echo $base_url ?>checkincheckout"> Checkin&Checkout</a>
 			</li>
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>reservation"> Book Room</a>
+				<a class="sub-nav-link" href="<?php echo $base_url ?>status"> Booking Status</a>
 			</li>
-			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>checkincheckout"> Check In & Out</a>
-			</li>
-
-
-
 		</ul>
 	</div>
 </li

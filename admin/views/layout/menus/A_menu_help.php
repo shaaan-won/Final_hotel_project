@@ -1,7 +1,4 @@
-
-			
-
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:siderbar-broken"></iconify-icon>
@@ -110,7 +107,7 @@
 
 			<li class="menu-title">Custom</li> -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPages">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:folder-with-files-broken"></iconify-icon>
@@ -147,7 +144,7 @@
 				</div>
 			</li> end Pages Menu -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarAuthentication" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuthentication">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:lock-password-unlocked-broken"></iconify-icon>
@@ -261,7 +258,7 @@
 				</div>
 			</li> end Base UI Menu -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarExtendedUI" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarExtendedUI">
 					<span class="nav-icon"><iconify-icon icon="solar:magic-stick-3-broken"></iconify-icon></span>
 					<span class="nav-text"> Advanced UI </span>
@@ -287,7 +284,7 @@
 				</div>
 			</li> end Extended UI Menu -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarCharts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCharts">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:chart-square-broken"></iconify-icon>
@@ -348,7 +345,7 @@
 				</div>
 			</li> end Chart library Menu -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarForms" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarForms">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:checklist-broken"></iconify-icon>
@@ -394,7 +391,7 @@
 				</div>
 			</li> end Form Menu -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarTables" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarTables">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:bedside-table-4-broken"></iconify-icon>
@@ -413,7 +410,7 @@
 				</div>
 			</li> end Table Menu -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarIcons" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarIcons">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:bicycling-broken"></iconify-icon>
@@ -432,7 +429,7 @@
 				</div>
 			</li> end Icons library Menu -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarMaps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMaps">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:streets-map-point-broken"></iconify-icon>
@@ -451,7 +448,7 @@
 				</div>
 			</li> end Map Menu -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link" href="javascript:void(0);">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:football-broken"></iconify-icon>
@@ -461,7 +458,7 @@
 				</a>
 			</li> -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link menu-arrow" href="#sidebarMultiLevelDemo" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMultiLevelDemo">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:share-broken"></iconify-icon>
@@ -489,7 +486,7 @@
 				</div>
 			</li> end Demo Menu Item -->
 
-			<!-- <li class="nav-item">
+<!-- <li class="nav-item">
 				<a class="nav-link disabled" href="javascript:void(0);">
 					<span class="nav-icon">
 						<iconify-icon icon="solar:dislike-broken"></iconify-icon>
@@ -497,4 +494,4 @@
 					<span class="nav-text"> Disable Item </span>
 				</a>
 			</li> -->
-			<!-- end Demo Menu Item -->
+<!-- end Demo Menu Item -->

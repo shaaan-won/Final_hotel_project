@@ -118,7 +118,7 @@ class Staff extends Model implements JsonSerializable{
 		$total_pages = ceil($total_rows /$perpage);
 		$top = ($page - 1)*$perpage;
 		$result=$db->query("select id,name,staff_role_id,email,phone,address,work_schedule_id,hired_date,performance_score,created_at,updated_at from {$tx}staffs $criteria limit $top,$perpage");
-		$html="<table class='table'>";
+		$html="<div class='table-responsive'><table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"staff/create","text"=>"New Staff"])."</th></tr>";
 		if($action){
 			$html.="<tr><th>Id</th><th>Name</th><th>Staff Role Id</th><th>Email</th><th>Phone</th><th>Address</th><th>Work Schedule Id</th><th>Hired Date</th><th>Performance Score</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
@@ -136,7 +136,7 @@ class Staff extends Model implements JsonSerializable{
 			}
 			$html.="<tr><td>$staff->id</td><td>$staff->name</td><td>$staff->staff_role_id</td><td>$staff->email</td><td>$staff->phone</td><td>$staff->address</td><td>$staff->work_schedule_id</td><td>$staff->hired_date</td><td>$staff->performance_score</td><td>$staff->created_at</td><td>$staff->updated_at</td> $action_buttons</tr>";
 		}
-		$html.="</table>";
+		$html.="</table> </div>";
 		$html.= pagination($page,$total_pages);
 		return $html;
 	}
