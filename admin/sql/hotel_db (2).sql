@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 21, 2024 at 07:02 PM
+-- Generation Time: Dec 21, 2024 at 10:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `hotel_db`
 --
-DROP DATABASE IF EXISTS `hotel_db`;
+Drop database if exists hotel_db;
 CREATE DATABASE IF NOT EXISTS `hotel_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `hotel_db`;
 -- --------------------------------------------------------
@@ -56,8 +56,8 @@ CREATE TABLE `ht_bookings` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `room_id` int(11) DEFAULT NULL,
-  `check_in_date` date DEFAULT NULL,
-  `check_out_date` date DEFAULT NULL,
+  `check_in_date` datetime DEFAULT NULL,
+  `check_out_date` datetime DEFAULT NULL,
   `status_id` int(11) DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -68,10 +68,10 @@ CREATE TABLE `ht_bookings` (
 --
 
 INSERT INTO `ht_bookings` (`id`, `customer_id`, `room_id`, `check_in_date`, `check_out_date`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2023-04-01', '2023-04-05', 1, '2024-12-19 05:49:33', '2024-12-19 06:43:56'),
-(2, 2, 2, '2023-05-10', '2023-05-15', 1, '2024-12-19 05:49:33', '2024-12-19 06:44:00'),
-(3, 3, 3, '2023-06-20', '2023-06-25', 2, '2024-12-19 05:49:33', '2024-12-19 06:44:07'),
-(4, 4, 4, '2023-07-15', '2023-07-20', 1, '2024-12-19 05:49:33', '2024-12-19 06:44:12');
+(1, 1, 1, '2023-04-01 00:00:00', '2023-04-05 00:00:00', 1, '2024-12-19 05:49:33', '2024-12-19 06:43:56'),
+(2, 2, 2, '2023-05-10 00:00:00', '2023-05-15 00:00:00', 1, '2024-12-19 05:49:33', '2024-12-19 06:44:00'),
+(3, 3, 3, '2023-06-20 00:00:00', '2023-06-25 00:00:00', 2, '2024-12-19 05:49:33', '2024-12-19 06:44:07'),
+(4, 4, 4, '2023-07-15 00:00:00', '2023-07-20 00:00:00', 1, '2024-12-19 05:49:33', '2024-12-19 06:44:12');
 
 -- --------------------------------------------------------
 
@@ -138,6 +138,7 @@ INSERT INTO `ht_customers` (`id`, `name`, `first_name`, `last_name`, `email`, `p
 CREATE TABLE `ht_customer_feedbacks` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `customer_id` int(11) NOT NULL,
   `comments` text DEFAULT NULL,
   `rating` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -147,11 +148,11 @@ CREATE TABLE `ht_customer_feedbacks` (
 -- Dumping data for table `ht_customer_feedbacks`
 --
 
-INSERT INTO `ht_customer_feedbacks` (`id`, `user_id`, `comments`, `rating`, `created_at`) VALUES
-(1, 1, 'Great service and friendly staff', 5, '2024-12-19 05:49:33'),
-(2, 2, 'Room was clean and comfortable', 4, '2024-12-19 05:49:33'),
-(3, 3, 'Food was delicious', 5, '2024-12-19 05:49:33'),
-(4, 4, 'Would stay here again', 4, '2024-12-19 05:49:33');
+INSERT INTO `ht_customer_feedbacks` (`id`, `user_id`, `customer_id`, `comments`, `rating`, `created_at`) VALUES
+(1, 127, 1, 'Great service and friendly staff', 5, '2024-12-21 21:10:17'),
+(2, 127, 2, 'Room was clean and comfortable', 4, '2024-12-21 21:10:22'),
+(3, 127, 3, 'Food was delicious', 5, '2024-12-21 21:10:25'),
+(4, 127, 4, 'Would stay here again', 4, '2024-12-21 21:10:29');
 
 -- --------------------------------------------------------
 
@@ -314,7 +315,7 @@ INSERT INTO `ht_loyalty_programs` (`id`, `customer_id`, `points`, `membership_le
 CREATE TABLE `ht_orders` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) DEFAULT NULL,
-  `order_date` date DEFAULT NULL,
+  `order_date` datetime DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -325,10 +326,10 @@ CREATE TABLE `ht_orders` (
 --
 
 INSERT INTO `ht_orders` (`id`, `customer_id`, `order_date`, `total_amount`, `created_at`, `updated_at`) VALUES
-(1, 1, '2023-07-01', 150.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
-(2, 2, '2023-08-10', 200.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
-(3, 3, '2023-09-15', 250.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
-(4, 4, '2023-10-20', 300.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36');
+(1, 1, '2023-07-01 00:00:00', 150.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
+(2, 2, '2023-08-10 00:00:00', 200.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
+(3, 3, '2023-09-15 00:00:00', 250.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
+(4, 4, '2023-10-20 00:00:00', 300.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36');
 
 -- --------------------------------------------------------
 
@@ -471,10 +472,10 @@ CREATE TABLE `ht_reports` (
 --
 
 INSERT INTO `ht_reports` (`id`, `user_id`, `report_type`, `report_description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Incident', 'Lost and found item reported', '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(2, 2, 'Maintenance', 'Leaky faucet in room 204', '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(3, 3, 'Service', 'Slow room service response', '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(4, 4, 'Complaint', 'Noisy neighbors in room 305', '2024-12-19 05:49:33', '2024-12-19 05:49:33');
+(1, 194, 'Incident', 'Lost and found item reported', '2024-12-21 21:12:17', '2024-12-21 21:12:17'),
+(2, 199, 'Maintenance', 'Leaky faucet in room 204', '2024-12-21 21:12:22', '2024-12-21 21:12:22'),
+(3, 206, 'Service', 'Slow room service response', '2024-12-21 21:12:26', '2024-12-21 21:12:26'),
+(4, 194, 'Complaint', 'Noisy neighbors in room 305', '2024-12-21 21:12:32', '2024-12-21 21:12:32');
 
 -- --------------------------------------------------------
 
@@ -570,10 +571,10 @@ CREATE TABLE `ht_room_maintenance` (
 --
 
 INSERT INTO `ht_room_maintenance` (`id`, `room_id`, `description`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 101, 'AC not working', 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(2, 102, 'Leaky faucet', 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(3, 103, 'Broken window', 2, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(4, 104, 'Carpet cleaning', 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33');
+(1, 1, 'AC not working', 1, '2024-12-19 05:49:33', '2024-12-21 20:26:06'),
+(2, 2, 'Leaky faucet', 1, '2024-12-19 05:49:33', '2024-12-21 20:26:11'),
+(3, 3, 'Broken window', 2, '2024-12-19 05:49:33', '2024-12-21 20:26:16'),
+(4, 4, 'Carpet cleaning', 1, '2024-12-19 05:49:33', '2024-12-21 20:26:21');
 
 -- --------------------------------------------------------
 
@@ -598,10 +599,10 @@ CREATE TABLE `ht_room_service_requests` (
 --
 
 INSERT INTO `ht_room_service_requests` (`id`, `user_id`, `room_id`, `customer_id`, `request_type`, `request_description`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 101, 1, 'Cleaning', 'Room cleaning requested', 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(2, 2, 102, 2, 'Maintenance', 'Air conditioning not working', 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(3, 3, 103, 3, 'Food', 'Breakfast delivery requested', 2, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(4, 4, 104, 4, 'Laundry', 'Laundry service requested', 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33');
+(1, 200, 1, 1, 'Cleaning', 'Room cleaning requested', 1, '2024-12-21 20:49:23', '2024-12-21 20:49:23'),
+(2, 197, 2, 2, 'Maintenance', 'Air conditioning not working', 1, '2024-12-21 20:49:28', '2024-12-21 20:49:28'),
+(3, 206, 3, 3, 'Food', 'Breakfast delivery requested', 2, '2024-12-21 20:49:33', '2024-12-21 20:49:33'),
+(4, 199, 4, 4, 'Laundry', 'Laundry service requested', 1, '2024-12-21 20:49:37', '2024-12-21 20:49:37');
 
 -- --------------------------------------------------------
 
@@ -724,7 +725,8 @@ INSERT INTO `ht_statuss` (`id`, `name`, `created_at`) VALUES
 (1, 'Pending', '2024-12-19 05:49:33'),
 (2, 'In Progress', '2024-12-19 05:49:33'),
 (3, 'Completed', '2024-12-19 05:49:33'),
-(4, 'Cancelled', '2024-12-19 05:49:33');
+(4, 'Cancelled', '2024-12-19 05:49:33'),
+(5, 'Booked', '2024-12-21 18:40:12');
 
 -- --------------------------------------------------------
 
@@ -1026,7 +1028,7 @@ ALTER TABLE `ht_amenities`
 -- AUTO_INCREMENT for table `ht_bookings`
 --
 ALTER TABLE `ht_bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ht_checkin_checkouts`
@@ -1182,7 +1184,7 @@ ALTER TABLE `ht_staff_roles`
 -- AUTO_INCREMENT for table `ht_statuss`
 --
 ALTER TABLE `ht_statuss`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `ht_suppliers`
