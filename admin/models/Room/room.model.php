@@ -69,6 +69,13 @@ class Room extends Model implements JsonSerializable{
 		$room=$result->fetch_object();
 			return $room;
 	}
+	public static function find_room_availability($room_number){
+		global $db,$tx;
+		$result =$db->query("select id,room_number,room_type_id,price,capacity,status_id,created_at,updated_at from {$tx}rooms where room_number='$room_number'");
+		$room=$result->fetch_object();
+			return $room;
+		
+	}
 	static function get_last_id(){
 		global $db,$tx;
 		$result =$db->query("select max(id) last_id from {$tx}rooms");
