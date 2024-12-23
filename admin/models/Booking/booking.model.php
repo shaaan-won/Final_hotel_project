@@ -65,9 +65,14 @@ class Booking extends Model implements JsonSerializable{
 	}
 	public static function find($id){
 		global $db,$tx;
-		$result =$db->query("select id,customer_id,room_id,check_in_date,check_out_date,status_id,created_at,updated_at from {$tx}bookings where id='$id'");
+		$result =$db->query("select id,customer_id,room_id,check_in_date,check_out_date,status_id,created_at,updated_at from {$tx}bookings where customer_id='$id'");
 		$booking=$result->fetch_object();
 			return $booking;
+	}
+	public static function find_by_customer($customer_id){
+		global $db,$tx;
+		$result =$db->query("select id,room_id,check_in_date,check_out_date from {$tx}bookings where customer_id='$customer_id'");
+		return $result;
 	}
 	static function get_last_id(){
 		global $db,$tx;

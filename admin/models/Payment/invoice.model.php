@@ -107,7 +107,7 @@ class Invoice extends Model implements JsonSerializable{
 		$top = ($page - 1)*$perpage;
 		$result=$db->query("select id,customer_id,booking_id,total_amount,payment_status_id,created_at,updated_at from {$tx}invoices $criteria limit $top,$perpage");
 		$html="<table class='table'>";
-			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"invoice/create","text"=>"New Invoice"])."</th></tr>";
+			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"invoice/create","text"=>"Create Hotel Bills"])."</th></tr>";
 		if($action){
 			$html.="<tr><th>Id</th><th>Customer Name</th><th>Booking Id</th><th>Total Amount</th><th>Payment Status </th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
@@ -119,6 +119,7 @@ class Invoice extends Model implements JsonSerializable{
 			$payment_status = PaymentStatuse::find($invoice->payment_status_id);
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
+				// $action_buttons.= Event::button(["name"=>"bill", "value"=>"Bill", "class"=>"btn btn-success", "route"=>"invoice//$invoice->id"]);
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"invoice/show/$invoice->id"]);
 				$action_buttons.= Event::button(["name"=>"edit", "value"=>"Edit", "class"=>"btn btn-primary", "route"=>"invoice/edit/$invoice->id"]);
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"invoice/confirm/$invoice->id"]);

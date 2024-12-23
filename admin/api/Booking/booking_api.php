@@ -11,7 +11,10 @@ class BookingApi{
 		echo json_encode(["bookings"=>Booking::pagination($page,$perpage),"total_records"=>Booking::count()]);
 	}
 	function find($data){
-		echo json_encode(["booking"=>Booking::find($data["id"])]);
+		echo json_encode(["booking"=>Booking::find($data["customer_id"])]);
+	}
+	function find_by_customer($data){
+		echo json_encode(["booking"=>Booking::find_by_customer($data["customer_id"])]);
 	}
 	function delete($data){
 		Booking::delete($data["id"]);

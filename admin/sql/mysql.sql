@@ -213,13 +213,6 @@ CREATE TABLE ht_checkin_checkout (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
---dummy data for ht_checkin_checkout
-INSERT INTO ht_checkin_checkout (booking_id, check_in_date, check_out_date, notes, created_at, updated_at) VALUES
-(1, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 12:25:53', '2024-03-07 06:25:53'),
-(2, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 12:25:53', '2024-03-07 06:25:53'),
-(3, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 12:25:53', '2024-03-07 06:25:53'),
-(4, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 12:25:53', '2024-03-07 06:25:53');
-
 
 -- 14. Payments Table
 CREATE TABLE ht_payments (
@@ -427,6 +420,15 @@ INSERT INTO ht_room_service_requests (user_id, room_id, customer_id, request_typ
 (2, 102, 2, 'Maintenance', 'Air conditioning not working', 1),
 (3, 103, 3, 'Food', 'Breakfast delivery requested', 2),
 (4, 104, 4, 'Laundry', 'Laundry service requested', 1);
+
+
+--dummy data for ht_checkin_checkout
+INSERT INTO ht_checkin_checkout (booking_id, check_in_date, check_out_date, notes, created_at, updated_at) VALUES
+(1, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 12:25:53', '2024-03-07 06:25:53'),
+(2, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 12:25:53', '2024-03-07 06:25:53'),
+(3, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 12:25:53', '2024-03-07 06:25:53'),
+(4, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 12:25:53', '2024-03-07 06:25:53');
+
 
 -- Dummy data for ht_statuses
 INSERT INTO ht_statuss (name) VALUES

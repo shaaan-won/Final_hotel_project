@@ -112,7 +112,7 @@ class RoomServiceRequest extends Model implements JsonSerializable{
 		$total_pages = ceil($total_rows /$perpage);
 		$top = ($page - 1)*$perpage;
 		$result=$db->query("select id,user_id,room_id,customer_id,request_type,request_description,status_id,created_at,updated_at from {$tx}room_service_requests $criteria limit $top,$perpage");
-		$html="<table class='table'>";
+		$html="<div class='table-responsive'><table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"roomservicerequest/create","text"=>"New RoomServiceRequest"])."</th></tr>";
 		if($action){
 			$html.="<tr><th>Id</th><th>User Name</th><th>Room Number</th><th>Customer Name</th><th>Request Type</th><th>Request Description</th><th>Status </th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
@@ -136,7 +136,7 @@ class RoomServiceRequest extends Model implements JsonSerializable{
 			}
 			$html.="<tr><td>$roomservicerequest->id</td><td>$user->name</td><td>$room->room_number</td><td>$customer->name</td><td>$roomservicerequest->request_type</td><td>$roomservicerequest->request_description</td><td>$status->name</td><td>$roomservicerequest->created_at</td><td>$roomservicerequest->updated_at</td> $action_buttons</tr>";
 		}
-		$html.="</table>";
+		$html.="</table></div>";
 		$html.= pagination($page,$total_pages);
 		return $html;
 	}
