@@ -19,7 +19,7 @@ class CheckinCheckoutApi{
 	}
 	function save($data,$file=[]){
 		$checkincheckout=new CheckinCheckout();
-		$checkincheckout->booking_id=$data["booking_id"];
+		$checkincheckout->room_id=$data["room_id"];
 		$checkincheckout->check_in_date=$data["check_in_date"];
 		$checkincheckout->check_out_date=$data["check_out_date"];
 		$checkincheckout->notes=$data["notes"];
@@ -31,7 +31,7 @@ class CheckinCheckoutApi{
 		global $now;
 		$checkincheckout=new CheckinCheckout();
 		$checkincheckout->id=$data["id"];
-		$checkincheckout->booking_id=$data["booking_id"];
+		$checkincheckout->room_id=$data["room_id"];
 		$checkincheckout->check_in_date=$data["check_in_date"];
 		$checkincheckout->check_out_date=$data["check_out_date"];
 		$checkincheckout->notes=$data["notes"];

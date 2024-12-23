@@ -4,7 +4,7 @@ echo Page::body_open();
 echo Html::link(["class"=>"btn btn-success", "route"=>"checkincheckout", "text"=>"Manage CheckinCheckout"]);
 echo Page::context_open();
 echo Form::open(["route"=>"checkincheckout/save"]);
-	echo Form::input(["label"=>"Booking","name"=>"booking_id","table"=>"bookings","display_column"=>"id"]);
+	echo Form::input(["label"=>"Room","name"=>"room_id","table"=>"rooms","display_column"=>"room_number"]);
 	echo Form::input(["label"=>"Check In Date","type"=>"date","name"=>"check_in_date"]);
 	echo Form::input(["label"=>"Check Out Date","type"=>"date","name"=>"check_out_date"]);
 	echo Form::input(["label"=>"Notes","type"=>"textarea","name"=>"notes"]);

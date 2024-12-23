@@ -5,6 +5,11 @@ class RoomApi{
 	function index(){
 		echo json_encode(["rooms"=>Room::all()]);
 	}
+	function all_room_except_booking_date($data){
+		$date1=$data["date1"];
+		$date2=$data["date2"];
+		echo json_encode(["rooms"=>Room::all_room_except_booking_date($date1,$date2)]);
+	}
 	function pagination($data){
 		$page=$data["page"];
 		$perpage=$data["perpage"];

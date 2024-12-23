@@ -12,17 +12,17 @@ public function save($data,$file){
 	if(isset($data["create"])){
 	$errors=[];
 /*
-	if(!preg_match("/^[\s\S]+$/",$data["booking_id"])){
-		$errors["booking_id"]="Invalid booking_id";
+	if(!preg_match("/^[\s\S]+$/",$data["room_id"])){
+		$errors["room_id"]="Invalid room_id";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["notes"])){
 		$errors["notes"]="Invalid notes";
 	}
 
-*/global $now;
+*/		global $now;
 		if(count($errors)==0){
 			$checkincheckout=new CheckinCheckout();
-		$checkincheckout->booking_id=$data["booking_id"];
+		$checkincheckout->room_id=$data["room_id"];
 		$checkincheckout->check_in_date=date("Y-m-d",strtotime($data["check_in_date"]));
 		$checkincheckout->check_out_date=date("Y-m-d",strtotime($data["check_out_date"]));
 		$checkincheckout->notes=$data["notes"];
@@ -43,18 +43,18 @@ public function update($data,$file){
 	if(isset($data["update"])){
 	$errors=[];
 /*
-	if(!preg_match("/^[\s\S]+$/",$data["booking_id"])){
-		$errors["booking_id"]="Invalid booking_id";
+	if(!preg_match("/^[\s\S]+$/",$data["room_id"])){
+		$errors["room_id"]="Invalid room_id";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["notes"])){
 		$errors["notes"]="Invalid notes";
 	}
 
-*/	global $now;
+*/		global $now;
 		if(count($errors)==0){
 			$checkincheckout=new CheckinCheckout();
 			$checkincheckout->id=$data["id"];
-		$checkincheckout->booking_id=$data["booking_id"];
+		$checkincheckout->room_id=$data["room_id"];
 		$checkincheckout->check_in_date=date("Y-m-d",strtotime($data["check_in_date"]));
 		$checkincheckout->check_out_date=date("Y-m-d",strtotime($data["check_out_date"]));
 		$checkincheckout->notes=$data["notes"];

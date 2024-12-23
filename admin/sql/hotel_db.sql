@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 21, 2024 at 10:18 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Dec 23, 2024 at 08:03 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -68,10 +68,10 @@ CREATE TABLE `ht_bookings` (
 --
 
 INSERT INTO `ht_bookings` (`id`, `customer_id`, `room_id`, `check_in_date`, `check_out_date`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2023-04-01 00:00:00', '2023-04-05 00:00:00', 1, '2024-12-19 05:49:33', '2024-12-19 06:43:56'),
-(2, 2, 2, '2023-05-10 00:00:00', '2023-05-15 00:00:00', 1, '2024-12-19 05:49:33', '2024-12-19 06:44:00'),
-(3, 3, 3, '2023-06-20 00:00:00', '2023-06-25 00:00:00', 2, '2024-12-19 05:49:33', '2024-12-19 06:44:07'),
-(4, 4, 4, '2023-07-15 00:00:00', '2023-07-20 00:00:00', 1, '2024-12-19 05:49:33', '2024-12-19 06:44:12');
+(12, 1, 1, '2024-12-05 00:00:00', '2024-12-10 00:00:00', 5, '2024-12-23 06:13:29', '2024-12-23 06:13:29'),
+(13, 2, 2, '2024-12-10 00:00:00', '2024-12-15 00:00:00', 5, '2024-12-23 06:25:19', '2024-12-23 06:25:19'),
+(15, 1, 4, '2024-12-24 00:00:00', '2024-12-26 00:00:00', 5, '2024-12-23 06:39:10', '2024-12-23 06:39:10'),
+(16, 3, 3, '2024-12-25 00:00:00', '2024-12-30 00:00:00', 5, '2024-12-23 06:56:08', '2024-12-23 06:56:08');
 
 -- --------------------------------------------------------
 
@@ -81,7 +81,7 @@ INSERT INTO `ht_bookings` (`id`, `customer_id`, `room_id`, `check_in_date`, `che
 
 CREATE TABLE `ht_checkin_checkouts` (
   `id` int(11) NOT NULL,
-  `booking_id` int(11) DEFAULT NULL,
+  `room_id` int(11) DEFAULT NULL,
   `check_in_date` datetime DEFAULT NULL,
   `check_out_date` datetime DEFAULT NULL,
   `notes` text DEFAULT NULL,
@@ -93,11 +93,11 @@ CREATE TABLE `ht_checkin_checkouts` (
 -- Dumping data for table `ht_checkin_checkouts`
 --
 
-INSERT INTO `ht_checkin_checkouts` (`id`, `booking_id`, `check_in_date`, `check_out_date`, `notes`, `created_at`, `updated_at`) VALUES
+INSERT INTO `ht_checkin_checkouts` (`id`, `room_id`, `check_in_date`, `check_out_date`, `notes`, `created_at`, `updated_at`) VALUES
 (1, 1, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
 (2, 2, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
 (3, 3, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
-(4, 4, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53');
+(8, 3, '2024-12-25 12:00:00', '2024-12-30 12:00:00', '', '2024-12-23 06:56:08', '2024-12-23 06:56:08');
 
 -- --------------------------------------------------------
 
@@ -523,10 +523,10 @@ CREATE TABLE `ht_rooms` (
 --
 
 INSERT INTO `ht_rooms` (`id`, `room_number`, `room_type_id`, `price`, `capacity`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, '101', 1, 100.00, 2, 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(2, '102', 2, 150.00, 3, 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(3, '103', 3, 200.00, 4, 2, '2024-12-19 05:49:33', '2024-12-19 05:49:33'),
-(4, '104', 4, 250.00, 2, 1, '2024-12-19 05:49:33', '2024-12-19 05:49:33');
+(1, '101', 1, 100.00, 2, 5, '2024-12-23 06:11:57', '2024-12-23 06:11:57'),
+(2, '102', 2, 150.00, 3, 5, '2024-12-23 06:23:45', '2024-12-23 06:25:19'),
+(3, '103', 3, 200.00, 4, 5, '2024-12-23 06:23:49', '2024-12-23 06:56:09'),
+(4, '104', 4, 250.00, 2, 5, '2024-12-23 06:23:53', '2024-12-23 06:37:53');
 
 -- --------------------------------------------------------
 
@@ -726,7 +726,8 @@ INSERT INTO `ht_statuss` (`id`, `name`, `created_at`) VALUES
 (2, 'In Progress', '2024-12-19 05:49:33'),
 (3, 'Completed', '2024-12-19 05:49:33'),
 (4, 'Cancelled', '2024-12-19 05:49:33'),
-(5, 'Booked', '2024-12-21 18:40:12');
+(5, 'Booked', '2024-12-21 18:40:12'),
+(6, 'Available', '2024-12-23 03:22:39');
 
 -- --------------------------------------------------------
 
@@ -1028,13 +1029,13 @@ ALTER TABLE `ht_amenities`
 -- AUTO_INCREMENT for table `ht_bookings`
 --
 ALTER TABLE `ht_bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `ht_checkin_checkouts`
 --
 ALTER TABLE `ht_checkin_checkouts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `ht_customers`
@@ -1184,7 +1185,7 @@ ALTER TABLE `ht_staff_roles`
 -- AUTO_INCREMENT for table `ht_statuss`
 --
 ALTER TABLE `ht_statuss`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ht_suppliers`

@@ -34,6 +34,17 @@ public function save($data,$file){
 		$booking->updated_at=$now;
 
 			$booking->save();
+			//booking ee save korar somoy room table ee update korte hole eivabe korte hobe
+           Room::update_statues( $data["room_id"] ,$data["status_id"]);
+		//    CheckinCheckout::update_booking($data["id"],$data["check_in_date"],$data["check_out_date"]);
+			$checkinout=new CheckinCheckout();
+			$checkinout->room_id=$data["room_id"];	
+			$checkinout->check_in_date=date("Y-m-d h:i",strtotime($data["check_in_date"]));
+			$checkinout->check_out_date=date("Y-m-d h:i",strtotime($data["check_out_date"]));
+			$checkinout->created_at=$now;
+			$checkinout->updated_at=$now;
+			$checkinout->save();
+
 		redirect();
 		}else{
 			 print_r($errors);
