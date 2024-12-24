@@ -184,11 +184,13 @@
 			</p>
 		</div>
 		<div class="col-md-6">
-			<h5>Billing Information:</h5>
-			<p>Room Type: <span id="room-type">Deluxe Room</span></p>
-			<p>Check-In Date: <span id="check-in">2024-12-10</span></p>
-			<p>Check-Out Date: <span id="check-out">2024-12-15</span></p>
-			<p>Reservation ID: <span id="reservation-id">45678</span></p>
+		<h5>Billing Information:</h5>
+			<p>Room Number: <span id="room-number"></span></p>
+			<p>Room Type: <span id="room-type"></span></p>
+			<p>Room Price(per night): <span id="room-price-per-night" class="text-red fw-bold fs-20"></span></p>
+			<p>Check-In Date: <span id="check-in"></span></p>
+			<p>Check-Out Date: <span id="check-out"></span></p>
+			<p>Booking ID: <span id="booking-id"></span></p>
 			<!-- <p>Status: <span id="status">Paid</span></p> -->
 		</div>
 	</div>
@@ -204,7 +206,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>Room Price <span class="text-red fw-bold fs-20">(1 night)</span></td>
+				<td>Room Price <span class="text-red fw-bold fs-20" id="total-days">(1 night)</span></td>
 				<td id="room-price">$500.00</td>
 			</tr>
 			<tr>

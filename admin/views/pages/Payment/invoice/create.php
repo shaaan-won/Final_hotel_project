@@ -167,6 +167,18 @@
 		/* Pointer cursor for better UX */
 	}
 
+	#discount-input {
+		width: 60px;
+	}
+
+	#service-charges-input {
+		width: 100px;
+	}
+
+	#cleaning-charges-input {
+		width: 100px;
+	}
+
 	/* Responsive Design */
 	@media (max-width: 768px) {
 		.container {
@@ -204,7 +216,7 @@
 	</div>
 
 	<!-- Customer & Billing Information Section -->
-	<div class="row">
+	<div class="row ">
 		<div class="col-md-6">
 			<h5>Customer Details:</h5>
 			<p>Name: <span id="customer-name"><?php echo Customer::html_select(); ?></span></p>
@@ -219,6 +231,7 @@
 			<h5>Billing Information:</h5>
 			<p>Room Number: <span id="room-number"></span></p>
 			<p>Room Type: <span id="room-type"></span></p>
+			<p>Room Price(per night): <span id="room-price-per-night" class="text-red fw-bold fs-20"></span></p>
 			<p>Check-In Date: <span id="check-in"></span></p>
 			<p>Check-Out Date: <span id="check-out"></span></p>
 			<p>Booking ID: <span id="booking-id"></span></p>
@@ -237,7 +250,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>Room Price <span class="text-red fw-bold fs-20" id="total-days">(1 night)</span></td>
+				<td>Room Price ==<span class="text-red fw-bold fs-20" id="total-days">(1 night)</span></td>
 				<td id="room-price">$500.00</td>
 			</tr>
 			<tr>
@@ -245,16 +258,17 @@
 				<td id="tax">$75.00</td>
 			</tr>
 			<tr>
-				<td>Discount (10%)</td>
-				<td id="discount">-$50.00</td>
+				<td>Discount== <input type="number" name="discount" id="discount-input" placeholder="Enter Discount" value="10">%</td>
+				<!-- <td id="discount"> -$50.00</td> -->
+				<td id="discount"> </td>
 			</tr>
 			<tr>
 				<td>Service Charges</td>
-				<td id="service-charges">$30.00</td>
+				<td id="service-charges">$ <input type="number" name="service-charges" id="service-charges-input" placeholder="Service Charges"></td>
 			</tr>
 			<tr>
 				<td>Cleaning Charges</td>
-				<td id="cleaning-charges">$20.00</td>
+				<td id="cleaning-charges">$ <input type="number" name="cleaning-charges" id="cleaning-charges-input" placeholder="Cleaning Charges"></td>
 			</tr>
 			<tr>
 				<td>Extra Services (Spa)</td>
@@ -399,7 +413,7 @@
 							// console.log(response);
 							var room_info = JSON.parse(response);
 							// console.log(room_info);
-							var room_price = room_info.room.price;
+							let room_price_per_night = room_info.room.price;
 							var room_type_id = room_info.room.room_type_id;
 							// alert(room_type_id);
 							$.ajax({
@@ -417,31 +431,68 @@
 								}
 							})
 							$('#room-number').text(room_info.room.room_number);
+							$('#room-price-per-night').text("$" + room_price_per_night);
+							let total_room_price = parseFloat(room_price_per_night * daysDifference).toFixed(2);
+							// alert(total_room_price);
+							$('#room-price').text("$" + total_room_price);
+							//tax = 15% of room price
+							let tax = parseFloat(total_room_price * 0.15).toFixed(2);
+							$('#tax').text("$" + tax);
+							//discount
+							$('#discount-input').on('input', function() {
+								let discount = $(this).val();
+								let total_discount = parseFloat(total_room_price * discount / 100).toFixed(2);
+								$('#discount').text("$" + total_discount);
+							});
+							//service charges & cleaning charges
+							$('#service-charges-input').on('change', function() {
+								let service_charges = $(this).val();
+								$('#cleaning-charges-input').on('change', function() {
+									// alert("hello");
+									let cleaning_charges = $(this).val();
+									let total_service_charges = parseFloat(service_charges) + parseFloat(cleaning_charges);
+									// alert(total_service_charges);
+									// var total_room_price =parseFloat($('#room-price').text()).toFixed(2);
+									// var tax = parseFloat($('#tax').text()).toFixed(2);
+									var total_discount_fetch = $('#discount-input').val();
+									var total_discount = parseFloat(total_room_price * total_discount_fetch / 100).toFixed(2);
+									// alert(total_room_price);
+									// alert(tax);
+									// alert(total_discount);
+									let total = parseFloat(total_room_price) - parseFloat(total_discount) + parseFloat(tax) + total_service_charges;
+									// alert(total);
+									$('#total-amount').text("$" + total);
+								});
+								// $('#service-charges').text("$" + total_service_charges.toFixed(2));
+								// $('#cleaning-charges').text("$" + total_service_charges.toFixed(2));
+
+								// $('#extra-services-input').on('input', function() {
+								// 	let extra_services = $(this).val();
+								// 	let total_extra_services = parseFloat(extra_services);
+								// 	// $('#extra-services').text("$" + total_extra_services.toFixed(2));
+								// });
+
+							});
+
+
+
+
 						}
 					})
 					$('#booking-id').text(booking_info.booking.id);
 					$('#check-in').text(formatDate(check_in_date));
 					$('#check-out').text(formatDate(check_out_date));
+
+					// Calculate the difference in milliseconds
+					let timeDifference = new Date(check_out_date) - new Date(check_in_date);
+					let daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+					// alert(daysDifference);
+
+					$('#total-days').text(daysDifference + " nights");
 				}
 			});
-			// Calculate the difference in milliseconds
-			//let timeDifference = new Date(check_out_date) - new Date(check_in_date);
-			let timeDifference = check_in_date - check_out_date;
-			let daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-			alert(daysDifference);
-
-			// Convert the difference into days
-			//let daysDifference = timeDifference / (1000 * 60 * 60 * 24); // Convert ms to days
-			// Display the result
-			$('#total-days').text(`Stay Duration: ${daysDifference} days`);
-			// 	$('#total-days').text(daysDifference + " days");
-			// 	$('#room-price').text(room_price * daysDifference);
-			// 	$('#tax').text(room_price * daysDifference * 0.15);
-			// 	$('#discount').text(room_price * daysDifference * 0.1);
-			// 	$('#service-charges').text(room_price * daysDifference * 0.05);
-			// 	$('#cleaning-charges').text(room_price * daysDifference * 0.05);
-			// 	$('#extra-services').text(room_price * daysDifference * 0.05);
-			// 	$('#final-total').text(room_price * daysDifference * 1.15);
 		});
+
+
 	});
 </script>
