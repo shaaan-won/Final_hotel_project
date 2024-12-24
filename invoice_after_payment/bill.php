@@ -1,18 +1,7 @@
-<?php
-// echo Page::title(["title"=>"Show Invoice"]);
-// echo Page::body_open();
-// echo Html::link(["class"=>"btn btn-success", "route"=>"invoice", "text"=>"Manage Invoice"]);
-// echo Page::context_open();
-// echo Invoice::html_row_details($id);
-// echo Page::context_close();
-// echo Page::body_close();
-?>
-
 <style>
 	.container {
 		background-color: #fff;
-		max-width: 900px;
-		min-width: 768px;
+		max-width: 90%;
 		padding: 30px;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -23,26 +12,18 @@
 	.invoice-header {
 		text-align: center;
 		margin-bottom: 40px;
-		background-color: rgb(170, 198, 227);
-		padding: 20px;
-		border-radius: 8px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	}
 
 	.invoice-header h2 {
 		font-size: 2.5rem;
 		font-weight: bold;
 		color: #0056b3;
-		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 		margin-bottom: 10px;
 	}
 
-
 	.invoice-header p {
-		font-size: 1.2rem;
+		font-size: 1.1rem;
 		margin: 5px 0;
-		font-weight: bold;
-		color: black;
 	}
 
 	/* Section Titles */
@@ -64,16 +45,14 @@
 
 	.col-md-6 h5 {
 		font-size: 1.2rem;
-		color: #0056B3;
+		color: #333;
 		margin-bottom: 15px;
-		font-weight: bold;
+		font-weight: 600;
 	}
 
 	.col-md-6 p {
 		font-size: 1rem;
 		margin: 5px 0;
-		color: #495057;
-		font-weight: bold;
 	}
 
 	.col-md-6 span {
@@ -95,23 +74,14 @@
 	}
 
 	.invoice-table th {
-		background-color: rgba(0, 113, 227, 0.24);
-		font-weight: bold;
+		background-color: #f8f9fa;
+		font-weight: 600;
 		color: #495057;
-		font-size: 1.1rem;
 	}
 
 	.invoice-table td {
 		font-size: 1.1rem;
 		color: #333;
-	}
-
-	.invoice-table tr:nth-child(even) {
-		background-color: #f8f9fa;
-	}
-
-	.invoice-table tr:hover {
-		background-color: #e9ecef;
 	}
 
 	.invoice-table .total-amount {
@@ -171,7 +141,7 @@
 <div class="container">
 	<div class="invoice-header">
 		<h2>Hotel Management Invoice</h2>
-		<p>Invoice No #<span id="invoice-id">12345</span></p>
+		<p>Invoice #<span id="invoice-id">12345</span></p>
 		<p>Date: <span id="invoice-date">2024-12-17</span></p>
 	</div>
 
@@ -188,14 +158,12 @@
 			</p>
 		</div>
 		<div class="col-md-6">
-		<h5>Billing Information:</h5>
-			<p>Room Number: <span id="room-number"></span></p>
-			<p>Room Type: <span id="room-type"></span></p>
-			<p>Room Price(per night): <span id="room-price-per-night" class="text-red fw-bold fs-20"></span></p>
-			<p>Check-In Date: <span id="check-in"></span></p>
-			<p>Check-Out Date: <span id="check-out"></span></p>
-			<p>Booking ID: <span id="booking-id"></span></p>
-			<!-- <p>Status: <span id="status">Paid</span></p> -->
+			<h5>Billing Information:</h5>
+			<p>Room Type: <span id="room-type">Deluxe Room</span></p>
+			<p>Check-In Date: <span id="check-in">2024-12-10</span></p>
+			<p>Check-Out Date: <span id="check-out">2024-12-15</span></p>
+			<p>Reservation ID: <span id="reservation-id">45678</span></p>
+			<p>Status: <span id="status">Paid</span></p>
 		</div>
 	</div>
 
@@ -210,7 +178,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>Room Price <span class="text-red fw-bold fs-20" id="total-days">(1 night)</span></td>
+				<td>Room Price (5 nights)</td>
 				<td id="room-price">$500.00</td>
 			</tr>
 			<tr>
@@ -233,7 +201,7 @@
 				<td>Extra Services (Spa)</td>
 				<td id="extra-services">$100.00</td>
 			</tr>
-			<tr style="background-color:rgba(201, 66, 66, 0.43)">
+			<tr>
 				<td><strong>Total Amount</strong></td>
 				<td class="total-amount" id="total-amount">$675.00</td>
 			</tr>
@@ -295,16 +263,14 @@
 	</table>
 
 	<!-- Notes Section -->
-	<div class="section-title" style="color: #0056B3; ">Special Notes</div>
+	<div class="section-title">Special Notes</div>
 	<p id="special-notes" style="align-items: center; text-align: center ; font-size: 20px; font-weight: bold">
 		Thank you for staying with us. We hope you had a pleasant experience!
 	</p>
 
 	<!-- Final Total Section -->
 	<div class="text-center">
-		<h4>Total Amount: <span id="final-total">$675.00</span></h4>
-		<h4>Total Due: <span id="amount-due">$675.00</span></h4>
-		<h3 class="text-warning bg-info">Status: <span id="payment-status">Paid</span></h3>
+		<h3>Total Due: <span id="final-total">$675.00</span></h3>
 		<button class="btn btn-primary" id="edit-invoice">Edit Invoice</button>
 		<button class="btn btn-success" id="generate-invoice">
 			Generate Invoice

@@ -21,6 +21,9 @@ class InvoiceApi{
 		$invoice=new Invoice();
 		$invoice->customer_id=$data["customer_id"];
 		$invoice->booking_id=$data["booking_id"];
+		$invoice->order_id=$data["order_id"];
+		$invoice->service_charges=$data["service_charges"];
+		$invoice->cleaning_charges=$data["cleaning_charges"];
 		$invoice->payment_status_id=$data["payment_status_id"];
 
 		$invoice->save();
@@ -32,6 +35,9 @@ class InvoiceApi{
 		$invoice->id=$data["id"];
 		$invoice->customer_id=$data["customer_id"];
 		$invoice->booking_id=$data["booking_id"];
+		$invoice->order_id=$data["order_id"];
+		$invoice->service_charges=$data["service_charges"];
+		$invoice->cleaning_charges=$data["cleaning_charges"];
 		$invoice->payment_status_id=$data["payment_status_id"];
 		$invoice->updated_at=$now;
 

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Invoice</title>
+    <!-- <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
+        }
+        .invoice-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #4CAF50;
+        }
+        .header p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .details-table, .charges-table, .totals-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .details-table th, .details-table td,
+        .charges-table th, .charges-table td,
+        .totals-table th, .totals-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .details-table th, .charges-table th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+        }
+        .totals-table td {
+            text-align: right;
+        }
+        .totals-table .label {
+            font-weight: bold;
+        }
+        .grand-total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .footer button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .footer button:hover {
+            background-color: #45a049;
+        }
+        @media print {
+            .footer {
+                display: none;
+            }
+        }
+    </style> -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+    
+        .invoice-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+    
+        .header {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 20px 30px;
+            text-align: center;
+        }
+    
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+    
+        .header p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+    
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+    
+        th {
+            background-color: #f4f6f8;
+            font-weight: 600;
+        }
+    
+        td {
+            background-color: #ffffff;
+        }
+    
+        .charges-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+        h3 {
+            margin: 20px 0 10px;
+            color: #495057;
+            border-left: 4px solid #4CAF50;
+            padding-left: 10px;
+            font-size: 18px;
+        }
+    
+        .totals-table {
+            margin-top: 10px;
+        }
+    
+        .totals-table td {
+            font-size: 16px;
+        }
+    
+        .totals-table .grand-total {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #f4f6f8;
+        }
+    
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #4CAF50;
+            color: #fff;
+        }
+    
+        .footer button {
+            padding: 12px 25px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #ffffff;
+            color: #4CAF50;
+            transition: all 0.3s ease;
+        }
+    
+        .footer button:hover {
+            background-color: #45a049;
+            color: #fff;
+        }
+    
+        @media screen and (max-width: 768px) {
+            .invoice-container {
+                padding: 10px;
+            }
+    
+            th, td {
+                font-size: 14px;
+            }
+    
+            h3 {
+                font-size: 16px;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="invoice-container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Hotel XYZ Invoice</h1>
+            <p>123 Luxury Street, Paradise City, Earth</p>
+            <p>Phone: (123) 456-7890 | Email: info@hotelxyz.com</p>
+        </div>
+
+        <!-- Customer & Room Details -->
+        <table class="details-table">
+            <tr>
+                <th>Customer Name</th>
+                <td id="customer-name">John Doe</td>
+                <th>Room Number</th>
+                <td id="room-number">101</td>
+            </tr>
+            <tr>
+                <th>Check-in Date</th>
+                <td id="check-in-date">2024-12-20</td>
+                <th>Check-out Date</th>
+                <td id="check-out-date">2024-12-22</td>
+            </tr>
+        </table>
+
+        <!-- Room Charges -->
+        <h3>Room Charges</h3>
+        <table class="charges-table">
+            <thead>
+                <tr>
+                    <th>Room Type</th>
+                    <th>Price per Night</th>
+                    <th>Nights</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="room-type">Deluxe Suite</td>
+                    <td id="price-per-night">$200.00</td>
+                    <td id="nights">2</td>
+                    <td id="room-total">$400.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Amenities Charges -->
+        <h3>Amenities Charges</h3>
+        <table class="charges-table">
+            <thead>
+                <tr>
+                    <th>Amenity</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Spa</td>
+                    <td>$50.00</td>
+                    <td>1</td>
+                    <td>$50.00</td>
+                </tr>
+                <tr>
+                    <td>Gym</td>
+                    <td>$20.00</td>
+                    <td>1</td>
+                    <td>$20.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Order Items -->
+        <h3>Order Items</h3>
+        <table class="charges-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Breakfast</td>
+                    <td>$15.00</td>
+                    <td>2</td>
+                    <td>$30.00</td>
+                </tr>
+                <tr>
+                    <td>Dinner</td>
+                    <td>$25.00</td>
+                    <td>1</td>
+                    <td>$25.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Totals Section -->
+        <h3>Billing Summary</h3>
+        <table class="totals-table">
+            <tbody>
+                <tr>
+                    <td class="label">Subtotal:</td>
+                    <td id="subtotal">$525.00</td>
+                </tr>
+                <tr>
+                    <td class="label">Tax (10%):</td>
+                    <td id="tax">$52.50</td>
+                </tr>
+                <tr>
+                    <td class="label">Discount (5%):</td>
+                    <td id="discount">-$26.25</td>
+                </tr>
+                <tr class="grand-total">
+                    <td class="label">Grand Total:</td>
+                    <td id="grand-total">$551.25</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Payment Details -->
+        <h3>Payment Details</h3>
+        <table class="charges-table">
+            <thead>
+                <tr>
+                    <th>Payment Method</th>
+                    <th>Amount Paid</th>
+                    <th>Balance Due</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="payment-method">Credit Card</td>
+                    <td id="amount-paid">$500.00</td>
+                    <td id="balance-due">$51.25</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Footer -->
+        <div class="footer">
+            <button onclick="window.print()">Print Invoice</button>
+            <button>Save as PDF</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -7,8 +7,14 @@
 // 	echo Form::input(["label"=>"Id","type"=>"hidden","name"=>"id","value"=>"$invoice->id"]);
 // 	echo Form::input(["label"=>"Customer","name"=>"customer_id","table"=>"customers","value"=>"$invoice->customer_id"]);
 // 	echo Form::input(["label"=>"Booking","name"=>"booking_id","table"=>"bookings","value"=>"$invoice->booking_id","display_column"=>"id"]);
+// 	echo Form::input(["label"=>"Order","name"=>"order_id","table"=>"orders","value"=>"$invoice->order_id","display_column"=>"id"]);
 // 	echo Form::input(["label"=>"Total Amount","type"=>"text","name"=>"total_amount","value"=>"$invoice->total_amount"]);
+// 	echo Form::input(["label"=>"Discount","type"=>"text","name"=>"discount","value"=>"$invoice->discount"]);
+// 	echo Form::input(["label"=>"Tax","type"=>"text","name"=>"tax","value"=>"$invoice->tax"]);
+// 	echo Form::input(["label"=>"Service Charges","type"=>"text","name"=>"service_charges","value"=>"$invoice->service_charges"]);
+// 	echo Form::input(["label"=>"Cleaning Charges","type"=>"text","name"=>"cleaning_charges","value"=>"$invoice->cleaning_charges"]);
 // 	echo Form::input(["label"=>"Payment Status","name"=>"payment_status_id","table"=>"payment_statuses","value"=>"$invoice->payment_status_id","display_column"=>"name"]);
+// 	echo Form::input(["label"=>"Amount Due","type"=>"text","name"=>"amount_due","value"=>"$invoice->amount_due"]);
 
 // echo Form::input(["name"=>"update","class"=>"btn btn-success offset-2" , "value"=>"Save Chanage", "type"=>"submit"]);
 // echo Form::close();
@@ -116,6 +122,9 @@
 
 	.invoice-table tr:nth-child(even) {
 		background-color: #f8f9fa;
+	}
+	.invoice-table tr:hover {
+		background-color: #e9ecef;
 	}
 
 	.invoice-table .total-amount {

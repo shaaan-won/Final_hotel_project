@@ -14,15 +14,12 @@
 				<a class="sub-nav-link" href="<?php echo $base_url ?>roomtype">Room Types</a>
 			</li>
 			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>amenity">Amenities</a>
-			</li>
-			<li class="sub-nav-item">
-				<a class="sub-nav-link" href="<?php echo $base_url ?>roomamenity">Room Amenities request</a>
-			</li>
-			<li class="sub-nav-item">
 				<a class="sub-nav-link" href="<?php echo $base_url ?>roommaintenance">Room Maintenance</a>
 			</li>
-			
+			<li class="sub-nav-item">
+				<a class="sub-nav-link" href="<?php echo $base_url ?>roomservicerequest">Room Service Requests</a>
+			</li>
+
 		</ul>
 	</div>
 </li>

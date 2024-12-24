@@ -6,21 +6,14 @@
 // echo Form::open(["route"=>"invoice/save"]);
 // 	echo Form::input(["label"=>"Customer","name"=>"customer_id","table"=>"customers"]);
 // 	echo Form::input(["label"=>"Booking","name"=>"booking_id","table"=>"bookings","display_column"=>"id"]);
-// 	echo Form::input(["label"=>"Order","name"=>"order_id","table"=>"orders","display_column"=>"id"]);
 // 	echo Form::input(["label"=>"Total Amount","type"=>"text","name"=>"total_amount"]);
-// 	echo Form::input(["label"=>"Discount","type"=>"text","name"=>"discount"]);
-// 	echo Form::input(["label"=>"Tax","type"=>"text","name"=>"tax"]);
-// 	echo Form::input(["label"=>"Service Charges","type"=>"text","name"=>"service_charges"]);
-// 	echo Form::input(["label"=>"Cleaning Charges","type"=>"text","name"=>"cleaning_charges"]);
 // 	echo Form::input(["label"=>"Payment Status","name"=>"payment_status_id","table"=>"payment_statuses","display_column"=>"name"]);
-// 	echo Form::input(["label"=>"Amount Due","type"=>"text","name"=>"amount_due"]);
 
 // echo Form::input(["name"=>"create","class"=>"btn btn-primary offset-2", "value"=>"Save", "type"=>"submit"]);
 // echo Form::close();
 // echo Page::context_close();
 // echo Page::body_close();
 ?>
-
 <style>
 	.container {
 		background-color: #fff;

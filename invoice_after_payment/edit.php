@@ -1,9 +1,17 @@
 <?php
-// echo Page::title(["title"=>"Show Invoice"]);
+// echo Page::title(["title"=>"Edit Invoice"]);
 // echo Page::body_open();
 // echo Html::link(["class"=>"btn btn-success", "route"=>"invoice", "text"=>"Manage Invoice"]);
 // echo Page::context_open();
-// echo Invoice::html_row_details($id);
+// echo Form::open(["route"=>"invoice/update"]);
+// 	echo Form::input(["label"=>"Id","type"=>"hidden","name"=>"id","value"=>"$invoice->id"]);
+// 	echo Form::input(["label"=>"Customer","name"=>"customer_id","table"=>"customers","value"=>"$invoice->customer_id"]);
+// 	echo Form::input(["label"=>"Booking","name"=>"booking_id","table"=>"bookings","value"=>"$invoice->booking_id","display_column"=>"id"]);
+// 	echo Form::input(["label"=>"Total Amount","type"=>"text","name"=>"total_amount","value"=>"$invoice->total_amount"]);
+// 	echo Form::input(["label"=>"Payment Status","name"=>"payment_status_id","table"=>"payment_statuses","value"=>"$invoice->payment_status_id","display_column"=>"name"]);
+
+// echo Form::input(["name"=>"update","class"=>"btn btn-success offset-2" , "value"=>"Save Chanage", "type"=>"submit"]);
+// echo Form::close();
 // echo Page::context_close();
 // echo Page::body_close();
 ?>
@@ -95,7 +103,7 @@
 	}
 
 	.invoice-table th {
-		background-color: rgba(0, 113, 227, 0.24);
+		background-color: rgba(0, 113, 227, 0.26);
 		font-weight: bold;
 		color: #495057;
 		font-size: 1.1rem;
@@ -109,7 +117,6 @@
 	.invoice-table tr:nth-child(even) {
 		background-color: #f8f9fa;
 	}
-
 	.invoice-table tr:hover {
 		background-color: #e9ecef;
 	}
@@ -188,7 +195,7 @@
 			</p>
 		</div>
 		<div class="col-md-6">
-		<h5>Billing Information:</h5>
+			<h5>Billing Information:</h5>
 			<p>Room Number: <span id="room-number"></span></p>
 			<p>Room Type: <span id="room-type"></span></p>
 			<p>Room Price(per night): <span id="room-price-per-night" class="text-red fw-bold fs-20"></span></p>
@@ -210,7 +217,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>Room Price <span class="text-red fw-bold fs-20" id="total-days">(1 night)</span></td>
+				<td>Room Price ==<span class="text-red fw-bold fs-20" id="total-days">(1 night)</span></td>
 				<td id="room-price">$500.00</td>
 			</tr>
 			<tr>

@@ -10,7 +10,7 @@ echo Form::open(["route"=>"roomservicerequest/update"]);
 	echo Form::input(["label"=>"Customer","name"=>"customer_id","table"=>"customers","value"=>"$roomservicerequest->customer_id"]);
 	echo Form::input(["label"=>"Request Type","type"=>"text","name"=>"request_type","value"=>"$roomservicerequest->request_type"]);
 	echo Form::input(["label"=>"Request Description","type"=>"textarea","name"=>"request_description","value"=>"$roomservicerequest->request_description"]);
-	echo Form::input(["label"=>"Status","name"=>"status_id","table"=>"statuss","value"=>"$roomservicerequest->status_id"]);
+	echo Form::input(["label"=>"Status","name"=>"status_id","table"=>"statuss","value"=>"$roomservicerequest->status_id","display_column"=>"name"]);
 
 echo Form::input(["name"=>"update","class"=>"btn btn-success offset-2" , "value"=>"Save Chanage", "type"=>"submit"]);
 echo Form::close();

@@ -5,6 +5,7 @@ echo Html::link(["class"=>"btn btn-success", "route"=>"amenity", "text"=>"Manage
 echo Page::context_open();
 echo Form::open(["route"=>"amenity/save"]);
 	echo Form::input(["label"=>"Name","type"=>"text","name"=>"name"]);
+	echo Form::input(["label"=>"Amenity Price","type"=>"text","name"=>"amenity_price"]);
 	echo Form::input(["label"=>"Description","type"=>"textarea","name"=>"description"]);
 
 echo Form::input(["name"=>"create","class"=>"btn btn-primary offset-2", "value"=>"Save", "type"=>"submit"]);

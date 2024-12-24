@@ -3,10 +3,10 @@ class AmenityController extends Controller{
 	public function __construct(){
 	}
 	public function index(){
-		view("Room");
+		view("RoomService_Order");
 	}
 	public function create(){
-		view("Room");
+		view("RoomService_Order");
 	}
 public function save($data,$file){
 	if(isset($data["create"])){
@@ -14,6 +14,9 @@ public function save($data,$file){
 /*
 	if(!preg_match("/^[\s\S]+$/",$_POST["txtName"])){
 		$errors["name"]="Invalid name";
+	}
+	if(!preg_match("/^[\s\S]+$/",$data["amenity_price"])){
+		$errors["amenity_price"]="Invalid amenity_price";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["description"])){
 		$errors["description"]="Invalid description";
@@ -23,6 +26,7 @@ public function save($data,$file){
 		if(count($errors)==0){
 			$amenity=new Amenity();
 		$amenity->name=$data["name"];
+		$amenity->amenity_price=$data["amenity_price"];
 		$amenity->description=$data["description"];
 		$amenity->created_at=$now;
 
@@ -34,7 +38,7 @@ public function save($data,$file){
 	}
 }
 public function edit($id){
-		view("Room",Amenity::find($id));
+		view("RoomService_Order",Amenity::find($id));
 }
 public function update($data,$file){
 	if(isset($data["update"])){
@@ -42,6 +46,9 @@ public function update($data,$file){
 /*
 	if(!preg_match("/^[\s\S]+$/",$_POST["txtName"])){
 		$errors["name"]="Invalid name";
+	}
+	if(!preg_match("/^[\s\S]+$/",$data["amenity_price"])){
+		$errors["amenity_price"]="Invalid amenity_price";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["description"])){
 		$errors["description"]="Invalid description";
@@ -52,6 +59,7 @@ public function update($data,$file){
 			$amenity=new Amenity();
 			$amenity->id=$data["id"];
 		$amenity->name=$data["name"];
+		$amenity->amenity_price=$data["amenity_price"];
 		$amenity->description=$data["description"];
 		$amenity->created_at=$now;
 
@@ -63,14 +71,14 @@ public function update($data,$file){
 	}
 }
 	public function confirm($id){
-		view("Room");
+		view("RoomService_Order");
 	}
 	public function delete($id){
 		Amenity::delete($id);
 		redirect();
 	}
 	public function show($id){
-		view("Room",Amenity::find($id));
+		view("RoomService_Order",Amenity::find($id));
 	}
 }
 ?>

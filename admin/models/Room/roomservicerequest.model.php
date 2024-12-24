@@ -134,7 +134,7 @@ class RoomServiceRequest extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"roomservicerequest/confirm/$roomservicerequest->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$roomservicerequest->id</td><td>$user->name</td><td>$room->room_number</td><td>$customer->name</td><td>$roomservicerequest->request_type</td><td>$roomservicerequest->request_description</td><td>$status->name</td><td>$roomservicerequest->created_at</td><td>$roomservicerequest->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$roomservicerequest->id</td><td>$user->name</td><td>$room->room_number</td><td>$customer->name</td><td>$roomservicerequest->request_type</td><td>$roomservicerequest->request_description</td><td style='color:green ; font-weight: bold'>$status->name</td><td>$roomservicerequest->created_at</td><td>$roomservicerequest->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table></div>";
 		$html.= pagination($page,$total_pages);

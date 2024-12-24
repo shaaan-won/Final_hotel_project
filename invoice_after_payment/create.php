@@ -6,25 +6,18 @@
 // echo Form::open(["route"=>"invoice/save"]);
 // 	echo Form::input(["label"=>"Customer","name"=>"customer_id","table"=>"customers"]);
 // 	echo Form::input(["label"=>"Booking","name"=>"booking_id","table"=>"bookings","display_column"=>"id"]);
-// 	echo Form::input(["label"=>"Order","name"=>"order_id","table"=>"orders","display_column"=>"id"]);
 // 	echo Form::input(["label"=>"Total Amount","type"=>"text","name"=>"total_amount"]);
-// 	echo Form::input(["label"=>"Discount","type"=>"text","name"=>"discount"]);
-// 	echo Form::input(["label"=>"Tax","type"=>"text","name"=>"tax"]);
-// 	echo Form::input(["label"=>"Service Charges","type"=>"text","name"=>"service_charges"]);
-// 	echo Form::input(["label"=>"Cleaning Charges","type"=>"text","name"=>"cleaning_charges"]);
 // 	echo Form::input(["label"=>"Payment Status","name"=>"payment_status_id","table"=>"payment_statuses","display_column"=>"name"]);
-// 	echo Form::input(["label"=>"Amount Due","type"=>"text","name"=>"amount_due"]);
 
 // echo Form::input(["name"=>"create","class"=>"btn btn-primary offset-2", "value"=>"Save", "type"=>"submit"]);
 // echo Form::close();
 // echo Page::context_close();
 // echo Page::body_close();
 ?>
-
 <style>
 	.container {
 		background-color: #fff;
-		max-width: 950px;
+		max-width: 900px;
 		min-width: 768px;
 		padding: 30px;
 		border-radius: 8px;
@@ -293,7 +286,7 @@
 	</div>
 
 	<!-- Billing Table -->
-	<div class="section-title ">Billing Details</div>
+	<div class="section-title">Billing Details</div>
 	<table class="table table-bordered invoice-table">
 		<thead>
 			<tr>
@@ -323,78 +316,16 @@
 				<td>Cleaning Charges</td>
 				<td id="cleaning-charges">$ <input type="number" name="cleaning-charges" id="cleaning-charges-input" placeholder="Cleaning Charges"></td>
 			</tr>
-			<!-- <tr>
+			<tr>
 				<td>Extra Services (Spa)</td>
 				<td id="extra-services">$100.00</td>
-			</tr> -->
+			</tr>
 			<tr style="background-color:rgba(201, 66, 66, 0.43)">
 				<td><strong>Total Amount</strong></td>
 				<td class="total-amount" id="total-amount"></td>
 			</tr>
 		</tbody>
 	</table>
-	
-	<!-- Service Requests Section -->
-	<div class="section-title">Extra Services</div>
-	<div style="display: flex; justify-content: space-between; gap: 20px;">
-		<!-- Amenities Charges -->
-		<div style="width: 48%;">
-			<h4 class="text-center">Amenities Charges</h4>
-			<table class="invoice-table">
-				<thead>
-					<tr>
-						<th>Amenity</th>
-						<th>Price</th>
-						<th>Quantity</th>
-						<th>Total</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Spa</td>
-						<td>$50.00</td>
-						<td>1</td>
-						<td>$50.00</td>
-					</tr>
-					<tr>
-						<td>Gym</td>
-						<td>$20.00</td>
-						<td>1</td>
-						<td>$20.00</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<!-- Order Items -->
-		<div style="width: 48%;">
-			<h4 class="text-center">Order Items</h4>
-			<table class="invoice-table">
-				<thead>
-					<tr>
-						<th>Item</th>
-						<th>Price</th>
-						<th>Quantity</th>
-						<th>Total</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Breakfast</td>
-						<td>$15.00</td>
-						<td>2</td>
-						<td>$30.00</td>
-					</tr>
-					<tr>
-						<td>Dinner</td>
-						<td>$25.00</td>
-						<td>1</td>
-						<td>$25.00</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
 
 	<!-- Payment History Section -->
 	<div class="section-title">Payment History</div>
@@ -405,7 +336,7 @@
 				<th>Amount Paid</th>
 				<th>Amount Due</th>
 				<th>Payment Date</th>
-				<th id="clear-all-btn"><button id="clear-all" style="background-color:rgb(220, 38, 38); color: #fff;align-items: center;" class="btn ">Clear All</button></th>
+				<th id="clear-all-btn"><button id="clear-all" class="btn btn-danger btn-sm">Clear All</button></th>
 			</tr>
 		</thead>
 		<tbody id="payment-history">
@@ -425,7 +356,32 @@
 		</tbody>
 	</table>
 
-
+	<!-- Service Requests Section -->
+	<div class="section-title">Service Requests</div>
+	<table class="table table-bordered invoice-table">
+		<thead>
+			<tr>
+				<th>Service</th>
+				<th>Description</th>
+				<th>Status</th>
+				<th>Cost</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Spa</td>
+				<td>Full body massage</td>
+				<td>Completed</td>
+				<td>$100.00</td>
+			</tr>
+			<tr>
+				<td>Room Service</td>
+				<td>Breakfast</td>
+				<td>Completed</td>
+				<td>$25.00</td>
+			</tr>
+		</tbody>
+	</table>
 
 	<!-- Notes Section -->
 	<div class="section-title" style="color: #0056B3; ">Special Notes</div>
@@ -456,14 +412,13 @@
 		}; // Customize the format
 		return date.toLocaleDateString(undefined, options); // Format to a readable date
 	}
+	// Customer Information , Billing Information, Billing Summary
 	$(document).ready(function() {
 		// function to print cart and add cart to database local storage
 		// var cart = new Cart("payment");
 		// printcart();
 		// alert("hello");
 		$('select').select2();
-
-		// Customer Information , Billing Information, Billing Summary
 		$('#customer-name').on('change', function() {
 			// alert("hello");
 			var customer_id = $(this).find(':selected').val();
@@ -601,19 +556,18 @@
 			$('#amount-due').text("$" + amount_due.toFixed(2));
 			// alert (amount_due);
 		});
-		//payment date
+
 		$('#payment-date').on('input', function() {
 			let payment_date = $(this).val();
 			// alert(payment_date);
 		});
-		// Event listener for the "Add Payment" button
 		$('#insert-payment').on('click', function() {
 			// Retrieve input values
 			let payment_method = $('#payment-method').find(":selected").text();
-			// let total_amount = $('#total-amount').text().replace('$', '').trim();
 			let amount_paid = $('#amount-paid').val();
 			let amount_due = $('#amount-due').text().replace('$', '').trim();
 			let payment_date = $('#payment-date').val();
+
 			// Validate inputs
 			if (!payment_method || !amount_paid || !payment_date) {
 				alert('Please fill all payment details.');
@@ -624,7 +578,7 @@
 			let newRow = `
        			 <tr>
             		<td>${payment_method}</td>
-            		<td >$${parseFloat(amount_paid).toFixed(2)}</td>
+            		<td>$${parseFloat(amount_paid).toFixed(2)}</td>
             		<td>$${parseFloat(amount_due).toFixed(2)}</td>
            			<td>${payment_date}</td>
             		<td>
@@ -650,81 +604,78 @@
 		$('#clear-all-btn').on('click', function() {
 			$('#payment-row').nextAll().remove();
 		})
-		// Service Requests Section
-
 
 	});
 	//by sir method of add row in table
+	// $('#insert-payment').on('click', function() {
+	// 	// alert("hello");
+	// 	// let payment = {
+	// 	// 	"payment_type": $('#payment-method').find(":selected").val(),
+	// 	// 	"amount_paid": $('#amount-paid').val(),
+	// 	// 	"amount_due": $('#amount-due').text().replace('$', ''),
+	// 	// 	"payment_date": $('#payment-date').val(),
+	// 	// 	"booking_id": $('#booking-id').text()
+	// 	// };
+	// 	// cart.save(payment);
+	// 	// printcart();
+	// 	// alert(JSON.stringify(payment));
+	// 	// $.ajax({
+	// 	// 	url: '<?php echo $base_url; ?>api/Payment/create',
+	// 	// 	type: 'POST',
+	// 	// 	data: payment,
+	// 	// 	success: function(response) {
+	// 	// 		// alert(response);
+	// 	// 		// console.log(response);
+	// 	// 		// var payment_info = JSON.parse(response);
+	// 	// 		// alert(payment_info);
+	// 	// 	}
+	// 	// });
+	// })
+	//by codeium method of add row in table
+	// $('#insert-payment').on('click', function() {
+	// 	// alert("hello");
+	// 	let payment = {
+	// 		payment_type: payment_type,
+	// 		amount_paid: amount_paid,
+	// 		amount_due: amount_due,
+	// 		payment_date: payment_date,
+	// 		booking_id: $('#booking-id').text(),
+	// 	};
+	// 	cart.save(payment);
+	// 	printcart();
+	// 	// alert(JSON.stringify(payment));
+	// 	// $.ajax({
+	// 	// 	url: '<?php echo $base_url; ?>api/Payment/create',
+	// 	// 	type: 'POST',
+	// 	// 	data: payment,
+	// 	// 	success: function(response) {
+	// 	// 		// alert(response);
+	// 	// 		// console.log(response);
+	// 	// 		// var payment_info = JSON.parse(response);
+	// 	// 		// alert(payment_info);
+	// 	// 		// console.log(payment_info);
+	// 	// 		// alert(payment_info);
+	// 	// 	}
+	// 	// });
+	// 	function printcart() {
+	// 		let cart = JSON.parse(localStorage.getItem('cart'));
+	// 		let html = '';
+	// 		if (cart.length > 0) {
+	// 			payment.forEach(element, key => {
+	// 				html += `
+	// 				<tr>
+	// 					<td>${element.payment_type}</td>
+	// 					<td>${element.amount_paid}</td>
+	// 					<td>${element.amount_due}</td>
+	// 					<td>${element.payment_date}</td>
+	// 					<td><button class="btn btn-danger delete" data-id="${element.id}">Delete</button></td>
+	// 				</tr>
+	// 				`;
+	// 				$('#payment-table').after(html);
+	// 			});
+	// 		}
+	// 	}
+
+	// });
 </script>
 <script src=" <?php echo $base_url ?>/js/cart.js"></script>
-
-
-<!-- $('#insert-payment').on('click', function() {
-	// alert("hello");
-	// let payment = {
-	// 	"payment_type": $('#payment-method').find(":selected").val(),
-	// 	"amount_paid": $('#amount-paid').val(),
-	// 	"amount_due": $('#amount-due').text().replace('$', ''),
-	// 	"payment_date": $('#payment-date').val(),
-	// 	"booking_id": $('#booking-id').text()
-	// };
-	// cart.save(payment);
-	// printcart();
-	// alert(JSON.stringify(payment));
-	// $.ajax({
-	// 	url: '<?php echo $base_url; ?>api/Payment/create',
-	// 	type: 'POST',
-	// 	data: payment,
-	// 	success: function(response) {
-	// 		// alert(response);
-	// 		// console.log(response);
-	// 		// var payment_info = JSON.parse(response);
-	// 		// alert(payment_info);
-	// 	}
-	// });
-})
-//by codeium method of add row in table
-$('#insert-payment').on('click', function() {
-	// alert("hello");
-	let payment = {
-		payment_type: payment_type,
-		amount_paid: amount_paid,
-		amount_due: amount_due,
-		payment_date: payment_date,
-		booking_id: $('#booking-id').text(),
-	};
-	cart.save(payment);
-	printcart();
-	// alert(JSON.stringify(payment));
-	// $.ajax({
-	// 	url: '<?php echo $base_url; ?>api/Payment/create',
-	// 	type: 'POST',
-	// 	data: payment,
-	// 	success: function(response) {
-	// 		// alert(response);
-	// 		// console.log(response);
-	// 		// var payment_info = JSON.parse(response);
-	// 		// alert(payment_info);
-	// 		// console.log(payment_info);
-	// 		// alert(payment_info);
-	// 	}
-	// });
-	function printcart() {
-		let cart = JSON.parse(localStorage.getItem('cart'));
-		let html = '';
-		if (cart.length > 0) {
-			payment.forEach(element, key => {
-				html += `
-				<tr>
-					<td>${element.payment_type}</td>
-					<td>${element.amount_paid}</td>
-					<td>${element.amount_due}</td>
-					<td>${element.payment_date}</td>
-					<td><button class="btn btn-danger delete" data-id="${element.id}">Delete</button></td>
-				</tr>
-				`;
-				$('#payment-table').after(html);
-			});
-		}
-	});
-}); -->

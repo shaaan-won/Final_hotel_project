@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Bill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .invoice-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        .invoice-header p {
+            margin: 5px 0;
+            color: #777;
+        }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .invoice-table th,
+        .invoice-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .invoice-table th {
+            background: #f4f4f4;
+        }
+        .totals {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .totals .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .totals .total-row span {
+            font-size: 16px;
+        }
+        .totals .grand-total {
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .actions button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <!-- Header Section -->
+        <div class="invoice-header">
+            <h1>Hotel XYZ</h1>
+            <p>123 Luxury Street, Paradise City, Earth</p>
+            <p>Phone: (123) 456-7890 | Email: info@hotelxyz.com</p>
+        </div>
+
+        <!-- Customer & Room Details -->
+        <table class="invoice-table">
+            <tr>
+                <th>Customer Name</th>
+                <td id="customer-name">John Doe</td>
+                <th>Room Number</th>
+                <td id="room-number">101</td>
+            </tr>
+            <tr>
+                <th>Check-in Date</th>
+                <td id="check-in-date">2024-12-20</td>
+                <th>Check-out Date</th>
+                <td id="check-out-date">2024-12-22</td>
+            </tr>
+        </table>
+
+        <!-- Room Charges -->
+        <h3>Room Charges</h3>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Room Type</th>
+                    <th>Price per Night</th>
+                    <th>Nights</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="room-type">Deluxe Suite</td>
+                    <td id="price-per-night">$200.00</td>
+                    <td id="nights">2</td>
+                    <td id="room-total">$400.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Amenities Charges -->
+        <h3>Amenities Charges</h3>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Amenity</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Spa</td>
+                    <td>$50.00</td>
+                    <td>1</td>
+                    <td>$50.00</td>
+                </tr>
+                <tr>
+                    <td>Gym</td>
+                    <td>$20.00</td>
+                    <td>1</td>
+                    <td>$20.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Orders -->
+        <h3>Order Items</h3>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Breakfast</td>
+                    <td>$15.00</td>
+                    <td>2</td>
+                    <td>$30.00</td>
+                </tr>
+                <tr>
+                    <td>Dinner</td>
+                    <td>$25.00</td>
+                    <td>1</td>
+                    <td>$25.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Tax, Discount, and Total -->
+        <div class="totals">
+            <div class="total-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">$525.00</span>
+            </div>
+            <div class="total-row">
+                <span>Tax (10%):</span>
+                <span id="tax">$52.50</span>
+            </div>
+            <div class="total-row">
+                <span>Discount:</span>
+                <span id="discount">-$25.00</span>
+            </div>
+            <div class="total-row grand-total">
+                <span>Total:</span>
+                <span id="grand-total">$552.50</span>
+            </div>
+        </div>
+
+        <!-- Print & Save Actions -->
+        <div class="actions">
+            <button onclick="window.print()">Print Bill</button>
+            <button>Save as PDF</button>
+        </div>
+    </div>
+</body>
+</html>
