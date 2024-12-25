@@ -7,7 +7,6 @@
 // 	echo Form::input(["label"=>"Customer","name"=>"customer_id","table"=>"customers"]);
 // 	echo Form::input(["label"=>"Booking","name"=>"booking_id","table"=>"bookings","display_column"=>"id"]);
 // 	echo Form::input(["label"=>"Order","name"=>"order_id","table"=>"orders","display_column"=>"id"]);
-// 	echo Form::input(["label"=>"Room Amenitie","name"=>"room_amenitie_id","table"=>"room_amenities","display_column"=>"id"]);
 // 	echo Form::input(["label"=>"Total Amount","type"=>"text","name"=>"total_amount"]);
 // 	echo Form::input(["label"=>"Discount","type"=>"text","name"=>"discount"]);
 // 	echo Form::input(["label"=>"Tax","type"=>"text","name"=>"tax"]);
@@ -141,6 +140,18 @@
 		font-size: 1rem;
 	}
 
+	/* Final Total Section */
+	.text-center h3 {
+		font-size: 2rem;
+		font-weight: bold;
+		color: #333;
+		margin-bottom: 30px;
+	}
+
+	.text-center button {
+		width: 200px;
+	}
+
 	/* General Dropdown Styling */
 	select {
 		width: 250px;
@@ -167,7 +178,7 @@
 		/* Pointer cursor for better UX */
 	}
 
-	#payment-method>select {
+	#payment-method>select  {
 		width: 160px;
 		/* Full width for responsiveness */
 		/* height: 60px; */
@@ -193,9 +204,7 @@
 		cursor: pointer;
 		/* Pointer cursor for better UX */
 	}
-
-	#amenity-select>select,
-	#item-select>select {
+	#amenity-select>select , #item-select>select {
 		width: 150px;
 		/* Full width for responsiveness */
 		/* height: 60px; */
@@ -221,9 +230,7 @@
 		cursor: pointer;
 		/* Pointer cursor for better UX */
 	}
-
-	#amenity-quantity,
-	#item-quantity {
+	#amenity-quantity , #item-quantity {
 		width: 50px;
 	}
 
@@ -239,7 +246,7 @@
 		width: 100px;
 	}
 
-	#amount-to-pay {
+	#amount-due {
 		width: 100px;
 		font-size: 1.5rem;
 		font-weight: bold;
@@ -253,15 +260,6 @@
 		color: rgb(0, 0, 0);
 	}
 
-	#final-total-table h3 {
-		font-size: 1.4rem;
-		font-weight: bold;
-		color: rgb(0, 0, 0);
-	}
-
-	#final-total-row td {
-		padding: 30px;
-	}
 
 	/* Responsive Design */
 	@media (max-width: 768px) {
@@ -359,12 +357,12 @@
 				<td id="extra-services">$100.00</td>
 			</tr> -->
 			<tr style="background-color:rgba(201, 66, 66, 0.43)">
-				<td><strong>Sub Total Amount</strong></td>
+				<td><strong>Total Amount</strong></td>
 				<td class="total-amount" id="total-amount"></td>
 			</tr>
 		</tbody>
 	</table>
-
+	
 	<!-- Service Requests Section -->
 	<div class="section-title">Extra Services</div>
 	<div style="display: flex; justify-content: space-between; ">
@@ -402,10 +400,6 @@
 						<td>1</td>
 						<td>$20.00</td>
 					</tr> -->
-					<tr>
-						<td colspan="3"><strong>Sub Total</strong></td>
-						<td> <span id="amenity-total"></span></td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -419,7 +413,7 @@
 						<th>Item</th>
 						<th>Price</th>
 						<th>QTY</th>
-						<th style="block-size: 50px;">
+						<th  style="block-size: 50px;"> 
 							<!-- <p>Total</p> -->
 							<!-- <button type="button" style="background-color:rgba(255, 31, 57, 0.68); color: #fff; height: 40px; font-size: 10px;" class="btn btn-sm" id="item-clear-all">Clear</button> -->
 							<button type="button" style="background-color:rgba(249, 7, 7, 0.94); color: #fff;" class="btn" id="item-clear">Clear</button>
@@ -445,10 +439,6 @@
 						<td>1</td>
 						<td>$25.00</td>
 					</tr> -->
-					<tr>
-						<td colspan="3"><strong>Sub Total</strong></td>
-						<td><span id="item-total"></span></td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -459,18 +449,18 @@
 	<table class="table table-bordered invoice-table ">
 		<thead>
 			<tr>
-				<th>Amount To Pay</th>
 				<th>Payment Method</th>
 				<th>Amount Paid</th>
+				<th>Amount Due</th>
 				<th>Payment Date</th>
 				<th id="clear-all-btn"><button id="clear-all" style="background-color:rgb(220, 38, 38); color: #fff;align-items: center;" class="btn ">Clear All</button></th>
 			</tr>
 		</thead>
 		<tbody id="payment-history">
 			<tr id="payment-row">
-				<td><span id="amount-to-pay" class="text-red fw-bold">$0.00</span></td>
 				<td id="payment-method"><?php echo PaymentMethod::html_select(); ?></td>
 				<td><input type="number" name="amount-paid" id="amount-paid"></td>
+				<td><span id="amount-due" class="text-red fw-bold">$0.00</span></td>
 				<td><input type="date" name="payment-date" id="payment-date"></td>
 				<td><button id="insert-payment" style="background-color:rgba(0, 255, 85, 0.72); color: #fff;" class="btn ">Add</button></td>
 			</tr>
@@ -490,59 +480,14 @@
 	</p>
 
 	<!-- Final Total Section -->
-	<div class="final-section text-center">
-		<table class="table table-striped " id="final-total-table">
-			<thead class="thead-light fs-26 fw-bold">
-				<tr>
-					<th>Extra Charge</th>
-					<th>Grand Total</th>
-					<th>Paid </th>
-					<th>Total Due</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-			<tbody id="final-total-row">
-				<tr>
-					<td>
-						<h3 class="text-primary"><span id="extra-charges">0.00</span></h3>
-					</td>
-					<td>
-						<h3 class="text-success"><span id="grand-total">0.00</span></h3>
-					</td>
-					<td>
-						<h3 class="text-secondary"><span id="final-paid-amount">0.00</span></h3>
-					</td>
-					<td>
-						<h3 class="text-danger"><span id="final-amount-due">0.00</span></h3>
-					</td>
-					<td>
-						<h3 class="text-red bg-secondary  p-2 rounded">
-							<span id="payment-status">Paid</span>
-						</h3>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-
-		<button
-			id="process-invoice"
-			class="btn btn-primary"
-			style="padding: 10px 20px; font-size: 16px; font-family: Arial, sans-serif; border-radius: 5px; margin-right: 10px; transition: background-color 0.3s ease, transform 0.2s ease;">
-			<a
-				href="<?php echo $base_url; ?>invoice"
-				style="text-decoration: none; color: white;">
-				Process
-			</a>
-		</button>
-
-		<button
-			id="generate-invoice"
-			class="btn btn-success"
-			style="padding: 10px 20px; font-size: 16px; font-family: Arial, sans-serif; border-radius: 5px; transition: background-color 0.3s ease, transform 0.2s ease;">
+	<div class="text-center">
+		<h4>Total Amount: <span id="final-total">$675.00</span></h4>
+		<h4>Total Due: <span id="amount-due">$675.00</span></h4>
+		<h3 class="text-warning bg-info">Status: <span id="payment-status">Paid</span></h3>
+		<button class="btn btn-primary" id="edit-invoice">Edit Invoice</button>
+		<button class="btn btn-success" id="generate-invoice">
 			Generate Invoice
 		</button>
-
 	</div>
 </div>
 
@@ -638,12 +583,9 @@
 							$('#tax').text("$" + tax);
 							//discount
 							$('#discount-input').on('input', function() {
-								// $(this).on('mouseenter', function() {
-
 								let discount = $(this).val();
 								let total_discount = parseFloat(total_room_price * discount / 100).toFixed(2);
 								$('#discount').text("$" + total_discount);
-								// })
 							});
 							//service charges & cleaning charges
 							$('#service-charges-input').on('change', function() {
@@ -663,7 +605,6 @@
 									let total = parseFloat(total_room_price) - parseFloat(total_discount) + parseFloat(tax) + total_service_charges;
 									// alert(total);
 									$('#total-amount').text("$" + total.toFixed(2));
-									$('#amount-to-pay').text('$' + total.toFixed(2));
 								});
 								// $('#service-charges').text("$" + total_service_charges.toFixed(2));
 								// $('#cleaning-charges').text("$" + total_service_charges.toFixed(2));
@@ -675,6 +616,10 @@
 								// });
 
 							});
+
+
+
+
 						}
 					})
 					$('#booking-id').text(booking_info.booking.id);
@@ -690,7 +635,67 @@
 				}
 			});
 		});
+		//payment summary
+		$('#amount-paid').on('input', function() {
+			let payment_type = $('#payment-method').find(":selected").val();
+			// alert (payment_type);
+			let amount_paid = parseFloat($('#amount-paid').val());
+			let total_amount = parseFloat($('#total-amount').text().replace('$', ''));
+			// alert (amount_paid);
+			// alert (total_amount);
+			let amount_due = total_amount - amount_paid;
+			$('#amount-due').text("$" + amount_due.toFixed(2));
+			// alert (amount_due);
+		});
+		//payment date
+		$('#payment-date').on('input', function() {
+			let payment_date = $(this).val();
+			// alert(payment_date);
+		});
+		// Event listener for the "Add Payment" button
+		$('#insert-payment').on('click', function() {
+			// Retrieve input values
+			let payment_method = $('#payment-method').find(":selected").text();
+			// let total_amount = $('#total-amount').text().replace('$', '').trim();
+			let amount_paid = $('#amount-paid').val();
+			let amount_due = $('#amount-due').text().replace('$', '').trim();
+			let payment_date = $('#payment-date').val();
+			// Validate inputs
+			if (!payment_method || !amount_paid || !payment_date) {
+				alert('Please fill all payment details.');
+				return;
+			}
 
+			// Create the new row dynamically
+			let newRow = `
+       			 <tr>
+            		<td>${payment_method}</td>
+            		<td >$${parseFloat(amount_paid).toFixed(2)}</td>
+            		<td>$${parseFloat(amount_due).toFixed(2)}</td>
+           			<td>${payment_date}</td>
+            		<td>
+                		<button style="align-items: center; background-color: #f44336; color: #fff;" class="btn delete-payment">Delete</button>
+            		</td>
+        		</tr>
+    		`;
+
+			// Append the new row after #payment-row
+			$('#payment-row').after(newRow);
+
+			// Clear input fields
+			$('#amount-paid').val('');
+			$('#payment-date').val('');
+			$('#amount-due').text("$0.00");
+		});
+
+		// Event listener for dynamically added delete buttons
+		$(document).on('click', '.delete-payment', function() {
+			$(this).closest('tr').remove();
+		});
+		//Event listener for dynamically delete all payment
+		$('#clear-all-btn').on('click', function() {
+			$('#payment-row').nextAll().remove();
+		})
 		// Extra services section
 		//Amenity
 		$('#amenity-select').on('change', function() {
@@ -724,33 +729,19 @@
 						<td>${aminity_name}</td>
 						<td>${amenity_price}</td>
 						<td>${amenity_quantity}</td>
-						<td class="amenity-sub-total">${"$" + amenity_total.toFixed(2)}</td>
+						<td class="amenity-total">${"$" + amenity_total.toFixed(2)}</td>
 					</tr>`;
-			$('#amenities-charges-row tr:last').before(html);
-
-			// Calculate total amount
-			let total_amount = 0;
-			$('.amenity-sub-total').each(function() {
-				total_amount += parseFloat($(this).text().replace('$', ''));
-			});
-			$('#amenity-total').text("$" + total_amount.toFixed(2));
+			$('#amenities-charges-row').append(html);
 
 			// Clear input fields
 			// $('#amenity-select').val('');
 			$('#amenity-quantity').val('1');
 			// $('#amenity-price').text("$0.00");
-			// amount adding to total amount
-			let subtotal_amount_room = parseFloat($('#amount-to-pay').text().replace('$', '')).toFixed(2);
-			// alert(subtotal_amount_room);
-			let total_amount_all = parseFloat(subtotal_amount_room) + parseFloat(amenity_total);
-			// alert(total_amount_all);
-			$('#amount-to-pay').text("$" + total_amount_all.toFixed(2));
 		})
 		//Event listener for dynamically delete one by one amenity
 		$('#amenity-clear').on('click', function() {
 			// alert("hello");
-			// $('#amenities-charges-row tr:last').remove();
-			$('#amenities-charges-row tr:not(:last)').last().remove();
+			$('#amenities-charges-row tr:last').remove();
 		})
 
 		//Item
@@ -786,150 +777,101 @@
 						<td>${item_name}</td>
 						<td>${item_price}</td>
 						<td>${item_quantity}</td>
-						<td class="item-sub-total">${"$" + item_total.toFixed(2)}</td>
+						<td class="item-total">${"$" + item_total.toFixed(2)}</td>
 					</tr>`;
-			$('#order-items-row tr:last').before(html);
-
-			// Calculate total amount
-			let total_amount = 0;
-			$('.item-sub-total').each(function() {
-				total_amount += parseFloat($(this).text().replace('$', ''));
-			});
-			$('#item-total').text("$" + total_amount.toFixed(2));
+			$('#order-items-row').append(html);
 
 			// Clear input fields
 			// $('#item-select').val('');
 			$('#item-quantity').val('1');
 			// $('#item-price').text("$0.00");
-
-			//adding to total amount 
-			let subtotal_amount_till_now = parseFloat($('#amount-to-pay').text().replace('$', '')).toFixed(2);
-			// alert(subtotal_amount_till_now);
-			let total_amount_all = parseFloat(subtotal_amount_till_now) + parseFloat(item_total);
-			// alert(total_amount_all);
-			$('#amount-to-pay').text("$" + total_amount_all.toFixed(2));
 		})
 		//Event listener for dynamically delete one by one item
 		$('#item-clear').on('click', function() {
 			// alert("hello");
-			// $('#order-items-row tr:last').remove();
-			$('#order-items-row tr:not(:last)').last().remove();
+			$('#order-items-row tr:last').remove();
 		})
-
-		//payment summary
-		$('#amount-paid').on('input', function() {
-			let amount_paid = $(this).val();
-			// alert (amount_paid);
-			let payment_type = $('#payment-method').find(":selected").val();
-			// alert (payment_type);
-			let amount_to_paid = parseFloat($('#amount-to-pay').text().replace('$', ''));
-			// alert (amount_to_paid);
-			let amount_due = amount_to_paid - parseFloat(amount_paid);
-			$('#amount-to-pay').text("$" + amount_due.toFixed(2));
-			// alert (amount_due);
-		});
-		//payment date
-		$('#payment-date').on('input', function() {
-			let payment_date = $(this).val();
-			// alert(payment_date);
-		});
-		// Event listener for the "Add Payment" button
-		$('#insert-payment').on('click', function() {
-			// Retrieve input values
-			let payment_method = $('#payment-method').find(":selected").text();
-			// let total_amount = $('#total-amount').text().replace('$', '').trim();
-			let amount_paid = $('#amount-paid').val();
-			// alert(amount_paid);
-			// All the cost of the room
-			let sub_total_room = parseFloat($('#total-amount').text().replace('$', '').trim()).toFixed(2);
-			// alert(sub_total_room);
-			let sub_total_amenities = parseFloat($('#amenity-total').text().replace('$', '').trim()).toFixed(2);
-			// alert(sub_total_amenities);
-			let sub_total_items = parseFloat($('#item-total').text().replace('$', '').trim()).toFixed(2);
-			// alert(sub_total_items);
-			let grand_total = parseFloat(sub_total_room) + parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
-			// let amount_total = $('#amount-to-pay').text().replace('$', '').trim();
-			let amount_due_after_payment = parseFloat(grand_total) - parseFloat(amount_paid);
-			// alert(amount_due_after_payment);
-			let payment_date = $('#payment-date').val();
-			// Validate inputs
-			if (!payment_method || !amount_paid || !payment_date) {
-				alert('Please fill all payment details.');
-				return;
-			}
-
-			// Create the new row dynamically
-			let newRow = `
-       			 <tr>
-            		<td class="amount-due">-$${parseFloat(amount_due_after_payment).toFixed(2)}</td>
-            		<td>${payment_method}</td>
-            		<td class="amount-paid">$${parseFloat(amount_paid).toFixed(2)}</td>
-           			<td>${payment_date}</td>
-            		<td>
-                		<button style="align-items: center; background-color: #f44336; color: #fff;" class="btn delete-payment">Delete</button>
-            		</td>
-        		</tr>
-    		`;
-
-			// Append the new row after #payment-row
-			$('#payment-row').after(newRow);
-
-			// Clear input fields
-			$('#amount-paid').val('');
-			// $('#payment-date').val('');
-			$('#amount-to-pay').text("$" + amount_due_after_payment.toFixed(2));
-		});
-
-		// Event listener for dynamically added delete buttons
-		$('.delete-payment').on('click', function() {
-			$(this).closest('tr').remove();
-		});
-		//Event listener for dynamically delete all payment
-		$('#clear-all-btn').on('click', function() {
-			$('#payment-row').nextAll().remove();
-		})
-
-		//grand total and payment status section
-		$('.final-section').on('mouseenter', function() {
-			// alert("hello");
-			let sub_total_room = parseFloat($('#total-amount').text().replace('$', '').trim()).toFixed(2);
-			// alert(sub_total_room);
-			let sub_total_amenities = parseFloat($('#amenity-total').text().replace('$', '').trim()).toFixed(2);
-			// alert(sub_total_amenities);
-			let sub_total_items = parseFloat($('#item-total').text().replace('$', '').trim()).toFixed(2);
-			// alert(sub_total_items);
-			let grand_total = parseFloat(sub_total_room) + parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
-			// alert(grand_total);
-			let extra_charges = parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
-			// alert(extra_charges);
-			let amount_paid = $('.amount-paid').map(function() {
-				return parseFloat($(this).text().replace('$', ''));
-			}).get();
-			// alert(amount_paid);
-			let total_amount_paid = parseFloat(amount_paid.reduce((total, amount) => total + amount, 0)).toFixed(2);
-			// alert(total_amount_paid);
-			let amount_due = $('.amount-due').map(function() {
-				return parseFloat($(this).text().replace('$', ''));
-			}).get();
-			// alert(amount_due);
-			let total_amount_due = parseFloat(amount_due.reduce((total, amount) => total + amount, 0)).toFixed(2);
-			// alert(total_amount_due);
-			let ultimate_due = grand_total - parseFloat(total_amount_paid);
-			// alert(ultimate_due);
-			let payment_status = grand_total <= 0 ? 'Paid' : 'Due';
-
-			$('#extra-charges').text("$" + extra_charges.toFixed(2));
-			$('#grand-total').text("$" + grand_total.toFixed(2));
-			$('#final-paid-amount').text("$" + total_amount_paid);
-			$('#final-amount-due').text("$" + ultimate_due.toFixed(2));
-			$('#payment-status').text(payment_status);
-		})
-		// generate invoice
-		$('#generate-invoice').on('click', function() {
-			// alert("hello");
-			window.print();
-		})
+		//
 
 	});
+	//by sir method of add row in table
 </script>
 <script src=" <?php echo $base_url ?>/js/cart.js"></script>
+
+
+
+
+
+
+
+
+
+<!-- $('#insert-payment').on('click', function() {
+// 	// alert("hello");
+// 	// let payment = {
+// 	// 	"payment_type": $('#payment-method').find(":selected").val(),
+// 	// 	"amount_paid": $('#amount-paid').val(),
+// 	// 	"amount_due": $('#amount-due').text().replace('$', ''),
+// 	// 	"payment_date": $('#payment-date').val(),
+// 	// 	"booking_id": $('#booking-id').text()
+// 	// };
+// 	// cart.save(payment);
+// 	// printcart();
+// 	// alert(JSON.stringify(payment));
+// 	// $.ajax({
+// 	// 	url: '<?php echo $base_url; ?>api/Payment/create',
+// 	// 	type: 'POST',
+// 	// 	data: payment,
+// 	// 	success: function(response) {
+// 	// 		// alert(response);
+// 	// 		// console.log(response);
+// 	// 		// var payment_info = JSON.parse(response);
+// 	// 		// alert(payment_info);
+// 	// 	}
+// 	// });
+// })
+//by codeium method of add row in table
+// $('#insert-payment').on('click', function() {
+// 	// alert("hello");
+// 	let payment = {
+// 		payment_type: payment_type,
+// 		amount_paid: amount_paid,
+// 		amount_due: amount_due,
+// 		payment_date: payment_date,
+// 		booking_id: $('#booking-id').text(),
+// 	};
+// 	cart.save(payment);
+// 	printcart();
+// 	// alert(JSON.stringify(payment));
+// 	// $.ajax({
+// 	// 	url: '<?php echo $base_url; ?>api/Payment/create',
+// 	// 	type: 'POST',
+// 	// 	data: payment,
+// 	// 	success: function(response) {
+// 	// 		// alert(response);
+// 	// 		// console.log(response);
+// 	// 		// var payment_info = JSON.parse(response);
+// 	// 		// alert(payment_info);
+// 	// 		// console.log(payment_info);
+// 	// 		// alert(payment_info);
+// 	// 	}
+// 	// });
+// 	function printcart() {
+// 		let cart = JSON.parse(localStorage.getItem('cart'));
+// 		let html = '';
+// 		if (cart.length > 0) {
+// 			payment.forEach(element, key => {
+// 				html += `
+// 				<tr>
+// 					<td>${element.payment_type}</td>
+// 					<td>${element.amount_paid}</td>
+// 					<td>${element.amount_due}</td>
+// 					<td>${element.payment_date}</td>
+// 					<td><button class="btn btn-danger delete" data-id="${element.id}">Delete</button></td>
+// 				</tr>
+// 				`;
+// 				$('#payment-table').after(html);
+// 			});
+// 		}
+// 	});
+// }); -->

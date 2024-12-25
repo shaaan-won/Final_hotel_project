@@ -3,6 +3,14 @@ echo Page::title(["title" => "Create Booking"]);
 echo Page::body_open();
 echo Html::link(["class" => "btn btn-success", "route" => "booking", "text" => "Manage Booking"]);
 
+echo '<div class="text-center flex">
+			<button type="button" class="btn btn-primary center" id="dashboard">Dashboard</button>
+			<button type="button" class="btn btn-success center" id="add-customer">Add Customer</button>
+			<button type="button" class="btn btn-secondary center" id="add-room">Add Room</button>
+			<button type="button" class="btn btn-info center" id="add-amenity">Add Amenity</button>
+			<button type="button" class="btn btn-info center" id="add-order">Add Order</button>
+			<button type="button" class="btn btn-danger center" id="add-payment">Add Payment</button>
+		</div>';
 echo Page::context_open();
 echo Form::open(["route" => "booking/save"]);
 echo Form::input(["label" => "Check In Date", "type" => "date", "name" => "check_in_date"]);
@@ -47,6 +55,35 @@ echo Page::body_close();
 				}
 			});
 
+		});
+
+		$("#dashboard").click(function() {
+			// alert("hello");
+			window.location.href = "<?php echo $base_url; ?>home";
+		});
+		$("#add-customer").click(function() {
+			// alert("hello");
+			window.location.href = "<?php echo $base_url; ?>customer/create";
+		});
+
+		$("#add-room").click(function() {
+			// alert("hello");
+			window.location.href = "<?php echo $base_url; ?>room/create";
+		});
+
+		$("#add-amenity").click(function() {
+			// alert("hello");
+			window.location.href = "<?php echo $base_url; ?>amenity/create";
+		});
+
+		$("#add-order").click(function() {
+			// alert("hello");
+			window.location.href = "<?php echo $base_url; ?>order/create";
+		});
+
+		$("#add-payment").click(function() {
+			// alert("hello");
+			window.location.href = "<?php echo $base_url; ?>payment/create";
 		});
 	});
 </script>

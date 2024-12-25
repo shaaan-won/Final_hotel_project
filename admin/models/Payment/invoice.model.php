@@ -4,6 +4,7 @@ class Invoice extends Model implements JsonSerializable{
 	public $customer_id;
 	public $booking_id;
 	public $order_id;
+	public $room_amenitie_id;
 	public $total_amount;
 	public $discount;
 	public $tax;
@@ -16,11 +17,12 @@ class Invoice extends Model implements JsonSerializable{
 
 	public function __construct(){
 	}
-	public function set($id,$customer_id,$booking_id,$order_id,$total_amount,$discount,$tax,$service_charges,$cleaning_charges,$payment_status_id,$amount_due,$created_at,$updated_at){
+	public function set($id,$customer_id,$booking_id,$order_id,$room_amenitie_id,$total_amount,$discount,$tax,$service_charges,$cleaning_charges,$payment_status_id,$amount_due,$created_at,$updated_at){
 		$this->id=$id;
 		$this->customer_id=$customer_id;
 		$this->booking_id=$booking_id;
 		$this->order_id=$order_id;
+		$this->room_amenitie_id=$room_amenitie_id;
 		$this->total_amount=$total_amount;
 		$this->discount=$discount;
 		$this->tax=$tax;
@@ -34,23 +36,23 @@ class Invoice extends Model implements JsonSerializable{
 	}
 	public function save(){
 		global $db,$tx;
-		$db->query("insert into {$tx}invoices(customer_id,booking_id,order_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at)values('$this->customer_id','$this->booking_id','$this->order_id','$this->total_amount','$this->discount','$this->tax','$this->service_charges','$this->cleaning_charges','$this->payment_status_id','$this->amount_due','$this->created_at','$this->updated_at')");
+		$db->query("insert into {$tx}invoices(customer_id,booking_id,order_id,room_amenitie_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at)values('$this->customer_id','$this->booking_id','$this->order_id','$this->room_amenitie_id','$this->total_amount','$this->discount','$this->tax','$this->service_charges','$this->cleaning_charges','$this->payment_status_id','$this->amount_due','$this->created_at','$this->updated_at')");
 		return $db->insert_id;
 	}
 	public function update(){
 		global $db,$tx;
-		$db->query("update {$tx}invoices set customer_id='$this->customer_id',booking_id='$this->booking_id',order_id='$this->order_id',total_amount='$this->total_amount',discount='$this->discount',tax='$this->tax',service_charges='$this->service_charges',cleaning_charges='$this->cleaning_charges',payment_status_id='$this->payment_status_id',amount_due='$this->amount_due',created_at='$this->created_at',updated_at='$this->updated_at' where id='$this->id'");
+		$db->query("update {$tx}invoices set customer_id='$this->customer_id',booking_id='$this->booking_id',order_id='$this->order_id',room_amenitie_id='$this->room_amenitie_id',total_amount='$this->total_amount',discount='$this->discount',tax='$this->tax',service_charges='$this->service_charges',cleaning_charges='$this->cleaning_charges',payment_status_id='$this->payment_status_id',amount_due='$this->amount_due',created_at='$this->created_at',updated_at='$this->updated_at' where id='$this->id'");
 	}
 	public static function delete($id){
 		global $db,$tx;
 		$db->query("delete from {$tx}invoices where id={$id}");
 	}
-	public function jsonSerialize():mixed{
+	public function jsonSerialize(): mixed {
 		return get_object_vars($this);
 	}
 	public static function all(){
 		global $db,$tx;
-		$result=$db->query("select id,customer_id,booking_id,order_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices");
+		$result=$db->query("select id,customer_id,booking_id,order_id,room_amenitie_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices");
 		$data=[];
 		while($invoice=$result->fetch_object()){
 			$data[]=$invoice;
@@ -60,7 +62,7 @@ class Invoice extends Model implements JsonSerializable{
 	public static function pagination($page=1,$perpage=10,$criteria=""){
 		global $db,$tx;
 		$top=($page-1)*$perpage;
-		$result=$db->query("select id,customer_id,booking_id,order_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices $criteria limit $top,$perpage");
+		$result=$db->query("select id,customer_id,booking_id,order_id,room_amenitie_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices $criteria limit $top,$perpage");
 		$data=[];
 		while($invoice=$result->fetch_object()){
 			$data[]=$invoice;
@@ -75,7 +77,7 @@ class Invoice extends Model implements JsonSerializable{
 	}
 	public static function find($id){
 		global $db,$tx;
-		$result =$db->query("select id,customer_id,booking_id,order_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices where id='$id'");
+		$result =$db->query("select id,customer_id,booking_id,order_id,room_amenitie_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices where id='$id'");
 		$invoice=$result->fetch_object();
 			return $invoice;
 	}
@@ -93,6 +95,7 @@ class Invoice extends Model implements JsonSerializable{
 		Customer Id:$this->customer_id<br> 
 		Booking Id:$this->booking_id<br> 
 		Order Id:$this->order_id<br> 
+		Room Amenitie Id:$this->room_amenitie_id<br> 
 		Total Amount:$this->total_amount<br> 
 		Discount:$this->discount<br> 
 		Tax:$this->tax<br> 
@@ -123,13 +126,13 @@ class Invoice extends Model implements JsonSerializable{
 		list($total_rows)=$count_result->fetch_row();
 		$total_pages = ceil($total_rows /$perpage);
 		$top = ($page - 1)*$perpage;
-		$result=$db->query("select id,customer_id,booking_id,order_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices $criteria limit $top,$perpage");
+		$result=$db->query("select id,customer_id,booking_id,order_id,room_amenitie_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices $criteria limit $top,$perpage");
 		$html="<div class='table-responsive'><table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"invoice/create","text"=>"New Invoice"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Order Id</th><th>Total Amount</th><th>Discount</th><th>Tax</th><th>Service Charges</th><th>Cleaning Charges</th><th>Payment Status Id</th><th>Amount Due</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Order Id</th><th>Room Amenitie Id</th><th>Total Amount</th><th>Discount</th><th>Tax</th><th>Service Charges</th><th>Cleaning Charges</th><th>Payment Status Id</th><th>Amount Due</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Order Id</th><th>Total Amount</th><th>Discount</th><th>Tax</th><th>Service Charges</th><th>Cleaning Charges</th><th>Payment Status Id</th><th>Amount Due</th><th>Created At</th><th>Updated At</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Order Id</th><th>Room Amenitie Id</th><th>Total Amount</th><th>Discount</th><th>Tax</th><th>Service Charges</th><th>Cleaning Charges</th><th>Payment Status Id</th><th>Amount Due</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($invoice=$result->fetch_object()){
 			$action_buttons = "";
@@ -142,7 +145,7 @@ class Invoice extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"invoice/confirm/$invoice->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$invoice->id</td><td>$cname</td><td>$invoice->booking_id</td><td>$invoice->order_id</td><td>$invoice->total_amount</td><td>$invoice->discount</td><td>$invoice->tax</td><td>$invoice->service_charges</td><td>$invoice->cleaning_charges</td><td style='color:green; font-weight:bold'>$payment_status</td><td>$invoice->amount_due</td><td>$invoice->created_at</td><td>$invoice->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$invoice->id</td><td>$cname</td><td>$invoice->booking_id</td><td>$invoice->order_id</td><td>$invoice->room_amenitie_id</td><td>$invoice->total_amount</td><td>$invoice->discount</td><td>$invoice->tax</td><td>$invoice->service_charges</td><td>$invoice->cleaning_charges</td><td style='color:green; font-weight:bold'>$payment_status</td><td>$invoice->amount_due</td><td>$invoice->created_at</td><td>$invoice->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table></div>";
 		$html.= pagination($page,$total_pages);
@@ -150,7 +153,7 @@ class Invoice extends Model implements JsonSerializable{
 	}
 	static function html_row_details($id){
 		global $db,$tx,$base_url;
-		$result =$db->query("select id,customer_id,booking_id,order_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices where id={$id}");
+		$result =$db->query("select id,customer_id,booking_id,order_id,room_amenitie_id,total_amount,discount,tax,service_charges,cleaning_charges,payment_status_id,amount_due,created_at,updated_at from {$tx}invoices where id={$id}");
 		$invoice=$result->fetch_object();
 		$html="<table class='table'>";
 		$html.="<tr><th colspan=\"2\">Invoice Show</th></tr>";
@@ -158,6 +161,7 @@ class Invoice extends Model implements JsonSerializable{
 		$html.="<tr><th>Customer Id</th><td>$invoice->customer_id</td></tr>";
 		$html.="<tr><th>Booking Id</th><td>$invoice->booking_id</td></tr>";
 		$html.="<tr><th>Order Id</th><td>$invoice->order_id</td></tr>";
+		$html.="<tr><th>Room Amenitie Id</th><td>$invoice->room_amenitie_id</td></tr>";
 		$html.="<tr><th>Total Amount</th><td>$invoice->total_amount</td></tr>";
 		$html.="<tr><th>Discount</th><td>$invoice->discount</td></tr>";
 		$html.="<tr><th>Tax</th><td>$invoice->tax</td></tr>";

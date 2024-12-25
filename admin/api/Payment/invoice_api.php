@@ -22,6 +22,7 @@ class InvoiceApi{
 		$invoice->customer_id=$data["customer_id"];
 		$invoice->booking_id=$data["booking_id"];
 		$invoice->order_id=$data["order_id"];
+		$invoice->room_amenitie_id=$data["room_amenitie_id"];
 		$invoice->service_charges=$data["service_charges"];
 		$invoice->cleaning_charges=$data["cleaning_charges"];
 		$invoice->payment_status_id=$data["payment_status_id"];
@@ -36,6 +37,7 @@ class InvoiceApi{
 		$invoice->customer_id=$data["customer_id"];
 		$invoice->booking_id=$data["booking_id"];
 		$invoice->order_id=$data["order_id"];
+		$invoice->room_amenitie_id=$data["room_amenitie_id"];
 		$invoice->service_charges=$data["service_charges"];
 		$invoice->cleaning_charges=$data["cleaning_charges"];
 		$invoice->payment_status_id=$data["payment_status_id"];

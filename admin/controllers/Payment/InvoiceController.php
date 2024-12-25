@@ -21,6 +21,9 @@ public function save($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["order_id"])){
 		$errors["order_id"]="Invalid order_id";
 	}
+	if(!preg_match("/^[\s\S]+$/",$data["room_amenitie_id"])){
+		$errors["room_amenitie_id"]="Invalid room_amenitie_id";
+	}
 	if(!preg_match("/^[\s\S]+$/",$data["total_amount"])){
 		$errors["total_amount"]="Invalid total_amount";
 	}
@@ -43,12 +46,13 @@ public function save($data,$file){
 		$errors["amount_due"]="Invalid amount_due";
 	}
 
-*/		global $now;
+*/
 		if(count($errors)==0){
 			$invoice=new Invoice();
 		$invoice->customer_id=$data["customer_id"];
 		$invoice->booking_id=$data["booking_id"];
 		$invoice->order_id=$data["order_id"];
+		$invoice->room_amenitie_id=$data["room_amenitie_id"];
 		$invoice->total_amount=$data["total_amount"];
 		$invoice->discount=$data["discount"];
 		$invoice->tax=$data["tax"];
@@ -82,6 +86,9 @@ public function update($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["order_id"])){
 		$errors["order_id"]="Invalid order_id";
 	}
+	if(!preg_match("/^[\s\S]+$/",$data["room_amenitie_id"])){
+		$errors["room_amenitie_id"]="Invalid room_amenitie_id";
+	}
 	if(!preg_match("/^[\s\S]+$/",$data["total_amount"])){
 		$errors["total_amount"]="Invalid total_amount";
 	}
@@ -104,13 +111,14 @@ public function update($data,$file){
 		$errors["amount_due"]="Invalid amount_due";
 	}
 
-*/		global $now;
+*/
 		if(count($errors)==0){
 			$invoice=new Invoice();
 			$invoice->id=$data["id"];
 		$invoice->customer_id=$data["customer_id"];
 		$invoice->booking_id=$data["booking_id"];
 		$invoice->order_id=$data["order_id"];
+		$invoice->room_amenitie_id=$data["room_amenitie_id"];
 		$invoice->total_amount=$data["total_amount"];
 		$invoice->discount=$data["discount"];
 		$invoice->tax=$data["tax"];

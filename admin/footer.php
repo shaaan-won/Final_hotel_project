@@ -8,7 +8,7 @@
             <div class="col-12 text-center">
                 <script>
                     document.write(new Date().getFullYear())
-                </script> &copy; Rasket. Crafted by <iconify-icon icon="solar:hearts-bold-duotone" class="fs-18 align-middle text-danger"></iconify-icon> <a
+                </script> &copy; Shaan's. Crafted by <iconify-icon icon="solar:hearts-bold-duotone" class="fs-18 align-middle text-danger"></iconify-icon> <a
                     href="https://1.envato.market/techzaa" class="fw-bold footer-text" target="_blank">Shawon Islam</a>
             </div>
         </div>
@@ -43,8 +43,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script> -->
 
 </body>
-
-
-<!-- Mirrored from techzaa.in/rasket/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Nov 2024 03:35:33 GMT -->
-
 </html>
