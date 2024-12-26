@@ -19,6 +19,9 @@
                         <li class="sub-nav-item">
                             <a class="sub-nav-link" href="<?php echo $base_url ?>roomamenity">Room Amenities request</a>
                         </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="<?php echo $base_url ?>roomamenitydetail">Room Amenity Details</a>
+                        </li>
                     </ul>
                 </div>
             </li>

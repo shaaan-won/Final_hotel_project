@@ -344,7 +344,7 @@
 			<tr>
 				<td>Discount== <input type="number" name="discount" id="discount-input" placeholder="Enter Discount" value="10">%</td>
 				<!-- <td id="discount"> -$50.00</td> -->
-				<td id="discount"> </td>
+				<td id="discount">$0.00</td>
 			</tr>
 			<tr>
 				<td>Service Charges</td>
@@ -528,19 +528,14 @@
 		<button
 			id="process-invoice"
 			class="btn btn-primary"
-			style="padding: 10px 20px; font-size: 16px; font-family: Arial, sans-serif; border-radius: 5px; margin-right: 10px; transition: background-color 0.3s ease, transform 0.2s ease;">
-			<a
-				href="<?php echo $base_url; ?>invoice"
-				style="text-decoration: none; color: white;">
-				Process
-			</a>
+			style="color : white; padding: 10px 20px; font-size: 16px; font-family: Arial, sans-serif; border-radius: 5px; margin-right: 10px; transition: background-color 0.3s ease, transform 0.2s ease;">
+			Process Invoice
 		</button>
-
 		<button
 			id="generate-invoice"
 			class="btn btn-success"
 			style="padding: 10px 20px; font-size: 16px; font-family: Arial, sans-serif; border-radius: 5px; transition: background-color 0.3s ease, transform 0.2s ease;">
-			Generate Invoice
+			Generate PDF
 		</button>
 
 	</div>
@@ -928,6 +923,114 @@
 		$('#generate-invoice').on('click', function() {
 			// alert("hello");
 			window.print();
+		})
+		// Process the form submission
+		$('#process-invoice').on('click', function() {
+			// alert("hello");
+			// window.location.href = "<?php echo $base_url; ?>invoice";
+			let customer_id = $('#customer-name').find(':selected').val();
+			// alert(customer_id);
+			let booking_id = $('#booking-id').text();
+			// alert(booking_id);
+			let tax = $('#tax').text().replace('$', '');
+			// alert(tax);
+			let discount = $('#discount').text().replace('$', '');
+			// alert(discount);
+			let service_charges = $('#service-charges-input').val();
+			// alert(service_charges);
+			let cleaning_charges = $('#cleaning-charges-input').val();
+			// alert(cleaning_charges);
+			let sub_total_room = parseFloat($('#total-amount').text().replace('$', '').trim()).toFixed(2);
+			// alert(sub_total_room);
+			let sub_total_amenities = parseFloat($('#amenity-total').text().replace('$', '').trim()).toFixed(2);
+			//alert(sub_total_amenities);
+			let sub_total_items = parseFloat($('#item-total').text().replace('$', '').trim()).toFixed(2);
+			// alert(sub_total_items);
+			let grand_total = parseFloat(sub_total_room) + parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
+			// alert(grand_total);
+			let extra_charges = parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
+			// alert(extra_charges);
+			let amount_paid = $('.amount-paid').map(function() {
+				return parseFloat($(this).text().replace('$', ''));
+			}).get();
+			// alert(amount_paid);
+			let total_amount_paid = parseFloat(amount_paid.reduce((total, amount) => total + amount, 0)).toFixed(2);
+			// alert(total_amount_paid);
+			let amount_due = $('.amount-due').map(function() {
+				return parseFloat($(this).text().replace('$', ''));
+			}).get();
+			// alert(amount_due);
+			let total_amount_due = parseFloat(amount_due.reduce((total, amount) => total + amount, 0)).toFixed(2);
+			// alert(total_amount_due);
+			let ultimate_due = grand_total - parseFloat(total_amount_paid);
+			// alert(ultimate_due);
+			let payment_status = grand_total <= 0 ? 'Paid' : 'Due';
+			// alert(payment_status);
+			let payment_method = $('#payment-method').find(":selected").text();
+			// alert(payment_method);
+			let payment_date = $('#payment-date').val();
+			// alert(payment_date);
+
+			$.ajax({
+				url: "<?php echo $base_url; ?>invoice",
+				type: "POST",
+				data: {
+					customer_id: customer_id,
+					booking_id: booking_id,
+					tax: tax,
+					discount: discount,
+					service_charges: service_charges,
+					cleaning_charges: cleaning_charges,
+					sub_total_room: sub_total_room,
+					sub_total_amenities: sub_total_amenities,
+					sub_total_items: sub_total_items,
+					grand_total: grand_total,
+					extra_charges: extra_charges,
+					total_amount_paid: total_amount_paid,
+					total_amount_due: total_amount_due,
+					ultimate_due: ultimate_due,
+					payment_status: payment_status,
+					payment_method: payment_method,
+					payment_date: payment_date,
+				},
+				success: function(response) {
+					// alert(response);
+					// window.location.href = "<?php echo $base_url; ?>invoice";
+				},error: function(response) {
+					// alert(response);
+					alert("The operation for invoice failed");
+				}
+			})
+			$.ajax({
+				url: "<?php echo $base_url; ?>roomamenity",
+				type: "POST",
+				data: {
+					customer_id: customer_id,
+					booking_id: booking_id,
+				},
+				success: function(response) {
+					// alert(response);
+					// window.location.href = "<?php echo $base_url; ?>invoice";
+				},error: function(response) {
+					// alert(response);
+					alert("The operation for room amenity failed");
+				}
+			})
+			$.ajax({
+				url: "<?php echo $base_url; ?>order",
+				type: "POST",
+				data: {
+					customer_id: customer_id,
+					booking_id: booking_id,
+				},
+				success: function(response) {
+					// alert(response);
+					// window.location.href = "<?php echo $base_url; ?>invoice";
+				},error: function(response) {
+					// alert(response);
+					alert("The operation for order failed");
+				}
+			})	
 		})	
 	});
 </script>

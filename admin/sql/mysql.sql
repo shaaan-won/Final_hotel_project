@@ -279,12 +279,45 @@ CREATE TABLE ht_amenities (
 );
 
 -- 20. RoomAmenities Table
-CREATE TABLE ht_room_amenities (
+drop table if exists ht_room_amenities;
+CREATE TABLE if not exists ht_room_amenities (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    room_id INT,
+    request_date DATETIME,
+    total_amount DECIMAL(10, 2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+--dummy data for RoomAmenities Table
+INSERT INTO ht_room_amenities (customer_id, room_id, request_date, total_amount) VALUES
+(1, 1, '2023-08-01 10:00:00', 100.00),
+(2, 2, '2023-08-01 10:00:00', 200.00),
+(3, 3, '2023-08-01 10:00:00', 300.00),
+(4, 4, '2023-08-01 10:00:00', 400.00),
+(5, 5, '2023-08-01 10:00:00', 500.00);
+
+--20.a RoomAmenitydetails Table
+drop table if exists ht_room_amenity_details;
+CREATE TABLE if not exists ht_room_amenity_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_amenity_id INT,
+    customer_id INT,
     room_id INT,
     amenity_id INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    quantity INT,
+    price DECIMAL(10, 2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+-- dummy data for RoomAmenityDetails Table
+INSERT INTO ht_room_amenity_details (room_amenity_id, customer_id, room_id, amenity_id, quantity, price) VALUES
+(1, 1, 1, 1, 2, 50.00),
+(2, 2, 2, 2, 3, 60.00),
+(3, 3, 3, 3, 4, 70.00),
+(4, 4, 4, 4, 5, 80.00),
+(5, 5, 5, 5, 6, 90.00);
+
 
 -- 21. Invoices Table
 CREATE TABLE ht_invoices (

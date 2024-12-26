@@ -12,20 +12,14 @@ public function save($data,$file){
 	if(isset($data["create"])){
 	$errors=[];
 /*
-	if(!preg_match("/^[\s\S]+$/",$_POST["txtCustomerId"])){
+	if(!preg_match("/^[\s\S]+$/",$data["customer_id"])){
 		$errors["customer_id"]="Invalid customer_id";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["room_id"])){
 		$errors["room_id"]="Invalid room_id";
 	}
-	if(!preg_match("/^[\s\S]+$/",$data["amenity_id"])){
-		$errors["amenity_id"]="Invalid amenity_id";
-	}
-	if(!preg_match("/^[\s\S]+$/",$data["quantity"])){
-		$errors["quantity"]="Invalid quantity";
-	}
-	if(!preg_match("/^[\s\S]+$/",$data["total_price"])){
-		$errors["total_price"]="Invalid total_price";
+	if(!preg_match("/^[\s\S]+$/",$data["total_amount"])){
+		$errors["total_amount"]="Invalid total_amount";
 	}
 
 */		global $now;
@@ -33,10 +27,10 @@ public function save($data,$file){
 			$roomamenity=new RoomAmenity();
 		$roomamenity->customer_id=$data["customer_id"];
 		$roomamenity->room_id=$data["room_id"];
-		$roomamenity->amenity_id=$data["amenity_id"];
-		$roomamenity->quantity=$data["quantity"];
-		$roomamenity->total_price=$data["total_price"];
+		$roomamenity->request_date=date("Y-m-d",strtotime($data["request_date"]));
+		$roomamenity->total_amount=$data["total_amount"];
 		$roomamenity->created_at=$now;
+		$roomamenity->updated_at=$now;
 
 			$roomamenity->save();
 		redirect();
@@ -52,20 +46,14 @@ public function update($data,$file){
 	if(isset($data["update"])){
 	$errors=[];
 /*
-	if(!preg_match("/^[\s\S]+$/",$_POST["txtCustomerId"])){
+	if(!preg_match("/^[\s\S]+$/",$data["customer_id"])){
 		$errors["customer_id"]="Invalid customer_id";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["room_id"])){
 		$errors["room_id"]="Invalid room_id";
 	}
-	if(!preg_match("/^[\s\S]+$/",$data["amenity_id"])){
-		$errors["amenity_id"]="Invalid amenity_id";
-	}
-	if(!preg_match("/^[\s\S]+$/",$data["quantity"])){
-		$errors["quantity"]="Invalid quantity";
-	}
-	if(!preg_match("/^[\s\S]+$/",$data["total_price"])){
-		$errors["total_price"]="Invalid total_price";
+	if(!preg_match("/^[\s\S]+$/",$data["total_amount"])){
+		$errors["total_amount"]="Invalid total_amount";
 	}
 
 */		global $now;
@@ -74,10 +62,10 @@ public function update($data,$file){
 			$roomamenity->id=$data["id"];
 		$roomamenity->customer_id=$data["customer_id"];
 		$roomamenity->room_id=$data["room_id"];
-		$roomamenity->amenity_id=$data["amenity_id"];
-		$roomamenity->quantity=$data["quantity"];
-		$roomamenity->total_price=$data["total_price"];
+		$roomamenity->request_date=date("Y-m-d",strtotime($data["request_date"]));
+		$roomamenity->total_amount=$data["total_amount"];
 		$roomamenity->created_at=$now;
+		$roomamenity->updated_at=$now;
 
 		$roomamenity->update();
 		redirect();

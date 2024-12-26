@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2024 at 12:08 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Dec 26, 2024 at 08:31 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `hotel_db`
 --
-Drop database if exists hotel_db;
+drop database if exists hotel_db;
 CREATE DATABASE IF NOT EXISTS `hotel_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `hotel_db`;
 -- --------------------------------------------------------
@@ -73,7 +73,9 @@ INSERT INTO `ht_bookings` (`id`, `customer_id`, `room_id`, `check_in_date`, `che
 (13, 2, 2, '2024-12-10 00:00:00', '2024-12-15 00:00:00', 5, '2024-12-23 06:25:19', '2024-12-23 06:25:19'),
 (15, 1, 4, '2024-12-24 00:00:00', '2024-12-26 00:00:00', 5, '2024-12-23 06:39:10', '2024-12-23 06:39:10'),
 (16, 3, 3, '2024-12-25 00:00:00', '2024-12-30 00:00:00', 5, '2024-12-23 06:56:08', '2024-12-23 06:56:08'),
-(17, 5, 3, '2024-12-30 00:00:00', '2024-12-31 00:00:00', 5, '2024-12-24 18:31:44', '2024-12-24 18:31:44');
+(17, 5, 3, '2024-12-30 00:00:00', '2024-12-31 00:00:00', 5, '2024-12-24 18:31:44', '2024-12-24 18:31:44'),
+(18, 5, 2, '2024-12-28 00:00:00', '2024-12-30 00:00:00', 5, '2024-12-26 03:24:27', '2024-12-26 03:24:27'),
+(19, 4, 2, '2024-12-30 00:00:00', '2024-12-31 00:00:00', 5, '2024-12-26 03:39:25', '2024-12-26 03:39:25');
 
 -- --------------------------------------------------------
 
@@ -100,7 +102,9 @@ INSERT INTO `ht_checkin_checkouts` (`id`, `room_id`, `check_in_date`, `check_out
 (2, 2, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
 (3, 3, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
 (8, 3, '2024-12-25 12:00:00', '2024-12-30 12:00:00', '', '2024-12-23 06:56:08', '2024-12-23 06:56:08'),
-(9, 3, '2024-12-30 12:00:00', '2024-12-31 12:00:00', '', '2024-12-24 18:31:44', '2024-12-24 18:31:44');
+(9, 3, '2024-12-30 12:00:00', '2024-12-31 12:00:00', '', '2024-12-24 18:31:44', '2024-12-24 18:31:44'),
+(10, 2, '2024-12-28 12:00:00', '2024-12-30 12:00:00', '', '2024-12-26 03:24:27', '2024-12-26 03:24:27'),
+(11, 2, '2024-12-30 12:00:00', '2024-12-31 12:00:00', '', '2024-12-26 03:39:25', '2024-12-26 03:39:25');
 
 -- --------------------------------------------------------
 
@@ -547,24 +551,51 @@ INSERT INTO `ht_rooms` (`id`, `room_number`, `room_type_id`, `price`, `capacity`
 
 CREATE TABLE `ht_room_amenities` (
   `id` int(11) NOT NULL,
-  `customer_id` varchar(255) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
   `room_id` int(11) DEFAULT NULL,
-  `amenity_id` int(11) DEFAULT NULL,
-  `quantity` int(11) NOT NULL,
-  `total_price` decimal(10,2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `request_date` datetime DEFAULT NULL,
+  `total_amount` decimal(10,2) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ht_room_amenities`
 --
 
-INSERT INTO `ht_room_amenities` (`id`, `customer_id`, `room_id`, `amenity_id`, `quantity`, `total_price`, `created_at`) VALUES
-(1, '1', 1, 1, 1, 100.00, '2024-12-19 05:49:33'),
-(2, '2', 2, 2, 2, 50.00, '2024-12-19 05:49:33'),
-(3, '3', 3, 3, 3, 600.00, '2024-12-19 05:49:33'),
-(4, '4', 4, 4, 1, 60.00, '2024-12-19 05:49:33'),
-(5, '1', 1, 1, 2, 200.00, '2024-12-24 21:45:58');
+INSERT INTO `ht_room_amenities` (`id`, `customer_id`, `room_id`, `request_date`, `total_amount`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2023-08-01 10:00:00', 100.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
+(2, 2, 2, '2023-08-01 10:00:00', 200.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
+(3, 3, 3, '2023-08-01 10:00:00', 300.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
+(4, 4, 4, '2023-08-01 10:00:00', 400.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ht_room_amenity_details`
+--
+
+CREATE TABLE `ht_room_amenity_details` (
+  `id` int(11) NOT NULL,
+  `room_amenity_id` int(11) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `room_id` int(11) DEFAULT NULL,
+  `amenity_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ht_room_amenity_details`
+--
+
+INSERT INTO `ht_room_amenity_details` (`id`, `room_amenity_id`, `customer_id`, `room_id`, `amenity_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 2, 50.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
+(2, 2, 2, 2, 2, 3, 60.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
+(3, 3, 3, 3, 3, 4, 70.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
+(4, 4, 4, 4, 4, 5, 80.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51');
 
 -- --------------------------------------------------------
 
@@ -970,6 +1001,12 @@ ALTER TABLE `ht_room_amenities`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ht_room_amenity_details`
+--
+ALTER TABLE `ht_room_amenity_details`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ht_room_maintenance`
 --
 ALTER TABLE `ht_room_maintenance`
@@ -1044,13 +1081,13 @@ ALTER TABLE `ht_amenities`
 -- AUTO_INCREMENT for table `ht_bookings`
 --
 ALTER TABLE `ht_bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `ht_checkin_checkouts`
 --
 ALTER TABLE `ht_checkin_checkouts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `ht_customers`
@@ -1158,6 +1195,12 @@ ALTER TABLE `ht_rooms`
 -- AUTO_INCREMENT for table `ht_room_amenities`
 --
 ALTER TABLE `ht_room_amenities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `ht_room_amenity_details`
+--
+ALTER TABLE `ht_room_amenity_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --

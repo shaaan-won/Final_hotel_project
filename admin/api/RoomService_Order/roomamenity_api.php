@@ -21,19 +21,19 @@ class RoomAmenityApi{
 		$roomamenity=new RoomAmenity();
 		$roomamenity->customer_id=$data["customer_id"];
 		$roomamenity->room_id=$data["room_id"];
-		$roomamenity->amenity_id=$data["amenity_id"];
-		$roomamenity->quantity=$data["quantity"];
+		$roomamenity->request_date=$data["request_date"];
 
 		$roomamenity->save();
 		echo json_encode(["success" => "yes"]);
 	}
 	function update($data,$file=[]){
+		global $now;
 		$roomamenity=new RoomAmenity();
 		$roomamenity->id=$data["id"];
 		$roomamenity->customer_id=$data["customer_id"];
 		$roomamenity->room_id=$data["room_id"];
-		$roomamenity->amenity_id=$data["amenity_id"];
-		$roomamenity->quantity=$data["quantity"];
+		$roomamenity->request_date=$data["request_date"];
+		$roomamenity->updated_at=$now;
 
 		$roomamenity->update();
 		echo json_encode(["success" => "yes"]);
