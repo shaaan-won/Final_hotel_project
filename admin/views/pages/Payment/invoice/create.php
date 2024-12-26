@@ -928,8 +928,7 @@
 		$('#generate-invoice').on('click', function() {
 			// alert("hello");
 			window.print();
-		})
-
+		})	
 	});
 </script>
 <script src=" <?php echo $base_url ?>/js/cart.js"></script>

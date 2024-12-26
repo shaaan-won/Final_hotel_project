@@ -1,7 +1,11 @@
 <?php
 echo Page::title(["title" => "Create Booking"]);
-echo Page::body_open();
-echo Html::link(["class" => "btn btn-success", "route" => "booking", "text" => "Manage Booking"]);
+// echo Page::body_open();
+echo "<div class='content'>
+          <div class='container-fluid'>
+            <div class=	'row'>
+                <div class='col-lg-12' style='margin-top:10px; width:800px; margin-left:200px ; padding-right:10px; '>";
+// echo Html::link(["class" => "btn btn-success", "route" => "booking", "text" => "Manage Booking"]);
 
 echo '<div class="text-center flex">
 			<button type="button" class="btn btn-primary center" id="dashboard">Dashboard</button>
@@ -9,7 +13,8 @@ echo '<div class="text-center flex">
 			<button type="button" class="btn btn-secondary center" id="add-room">Add Room</button>
 			<button type="button" class="btn btn-info center" id="add-amenity">Add Amenity</button>
 			<button type="button" class="btn btn-info center" id="add-order">Add Order</button>
-			<button type="button" class="btn btn-danger center" id="add-payment">Add Payment</button>
+			<button type="button" class="btn btn-danger center" id="add-payment">Payment</button>
+			<button type="button" class="btn btn-warning center" id="return">Details</button>
 		</div>';
 echo Page::context_open();
 echo Form::open(["route" => "booking/save"]);
@@ -19,7 +24,7 @@ echo Form::input(["label" => "Customer", "name" => "customer_id", "table" => "cu
 echo Form::input(["label" => "Room", "name" => "room_id", "table" => "rooms", "display_column" => "room_number"]);
 echo Form::input(["label" => "Status", "name" => "status_id", "table" => "statuss"]);
 
-echo Form::input(["name" => "create", "class" => "btn btn-primary offset-2", "value" => "Save", "type" => "submit"]);
+echo Form::input(["name" => "create", "class" => "btn btn-primary offset-7 mt-3", "value" => "Save", "type" => "submit"]);
 echo Form::close();
 echo Page::context_close();
 echo Page::body_close();
@@ -84,6 +89,11 @@ echo Page::body_close();
 		$("#add-payment").click(function() {
 			// alert("hello");
 			window.location.href = "<?php echo $base_url; ?>payment/create";
+		});
+
+		$("#return").click(function() {
+			// alert("hello");
+			window.location.href = "<?php echo $base_url; ?>booking";
 		});
 	});
 </script>
