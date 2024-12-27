@@ -22,6 +22,7 @@ class RoomAmenityApi{
 		$roomamenity->customer_id=$data["customer_id"];
 		$roomamenity->room_id=$data["room_id"];
 		$roomamenity->request_date=$data["request_date"];
+		$roomamenity->total_amount=$data["total_amount"];
 
 		$roomamenity->save();
 		echo json_encode(["success" => "yes"]);
@@ -33,6 +34,7 @@ class RoomAmenityApi{
 		$roomamenity->customer_id=$data["customer_id"];
 		$roomamenity->room_id=$data["room_id"];
 		$roomamenity->request_date=$data["request_date"];
+		$roomamenity->total_amount=$data["total_amount"];
 		$roomamenity->updated_at=$now;
 
 		$roomamenity->update();

@@ -20,7 +20,7 @@ class InventoryApi{
 	function save($data,$file=[]){
 		$inventory=new Inventory();
 		$inventory->supplier_id=$data["supplier_id"];
-		$inventory->item_name=$data["item_name"];
+		$inventory->item_id=$data["item_id"];
 		$inventory->quantity=$data["quantity"];
 
 		$inventory->save();
@@ -31,7 +31,7 @@ class InventoryApi{
 		$inventory=new Inventory();
 		$inventory->id=$data["id"];
 		$inventory->supplier_id=$data["supplier_id"];
-		$inventory->item_name=$data["item_name"];
+		$inventory->item_id=$data["item_id"];
 		$inventory->quantity=$data["quantity"];
 		$inventory->updated_at=$now;
 

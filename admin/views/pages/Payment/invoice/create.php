@@ -313,6 +313,7 @@
 		</div>
 		<div class="col-md-6">
 			<h5>Billing Information:</h5>
+			<p hidden>Room ID: <span id="room-id"></span></p>
 			<p>Room Number: <span id="room-number"></span></p>
 			<p>Room Type: <span id="room-type"></span></p>
 			<p>Room Price(per night): <span id="room-price-per-night" class="text-red fw-bold fs-20"></span></p>
@@ -672,6 +673,7 @@
 							});
 						}
 					})
+					$('#room-id').text(booking_info.booking.room_id);
 					$('#booking-id').text(booking_info.booking.id);
 					$('#check-in').text(formatDate(check_in_date));
 					$('#check-out').text(formatDate(check_out_date));
@@ -710,15 +712,16 @@
 			})
 		})
 		$('#amenity-add').on('click', function() {
+			let amenity_id = $('#amenity-select').find(":selected").val();
 			let aminity_name = $('#amenity-select').find(":selected").text();
 			let amenity_price = $('#amenity-price').text().replace('$', '');
 			let amenity_quantity = $('#amenity-quantity').val();
 			let amenity_total = parseFloat(amenity_price) * parseFloat(amenity_quantity);
 			// alert(amenity_total);
-			html = `<tr>
-						<td>${aminity_name}</td>
+			html = `<tr class="amenity-row">
+						<td>${aminity_name}<p class="amenity-id" hidden>${amenity_id}</p></td>
 						<td>${amenity_price}</td>
-						<td>${amenity_quantity}</td>
+						<td class="amenity-quantity">${amenity_quantity}</td>
 						<td class="amenity-sub-total">${"$" + amenity_total.toFixed(2)}</td>
 					</tr>`;
 			$('#amenities-charges-row tr:last').before(html);
@@ -772,15 +775,16 @@
 		})
 		$('#item-add').on('click', function() {
 			// alert("hello");
+			let item_id = $('#item-select').find(":selected").val();
 			let item_name = $('#item-select').find(":selected").text();
 			let item_price = $('#item-price').text().replace('$', '');
 			let item_quantity = $('#item-quantity').val();
 			let item_total = parseFloat(item_price) * parseFloat(item_quantity);
 			// alert(item_total);
-			html = `<tr>
-						<td>${item_name}</td>
+			html = `<tr class="item-row">
+						<td>${item_name} <p class="item-id" hidden>${item_id}</p></td>
 						<td>${item_price}</td>
-						<td>${item_quantity}</td>
+						<td class="item-quantity">${item_quantity}</td>
 						<td class="item-sub-total">${"$" + item_total.toFixed(2)}</td>
 					</tr>`;
 			$('#order-items-row tr:last').before(html);
@@ -830,6 +834,7 @@
 		});
 		// Event listener for the "Add Payment" button
 		$('#insert-payment').on('click', function() {
+			let payment_method_id = $('#payment-method').find(":selected").val();
 			// Retrieve input values
 			let payment_method = $('#payment-method').find(":selected").text();
 			// let total_amount = $('#total-amount').text().replace('$', '').trim();
@@ -855,11 +860,11 @@
 
 			// Create the new row dynamically
 			let newRow = `
-       			 <tr>
-            		<td class="amount-due">-$${parseFloat(amount_due_after_payment).toFixed(2)}</td>
-            		<td>${payment_method}</td>
+       			 <tr class="payment-row">
+            		<td class="amount-due">$${parseFloat(amount_due_after_payment).toFixed(2)}</td>
+            		<td>${payment_method}<p class="payment-method-id" hidden>${payment_method_id}</p></td>
             		<td class="amount-paid">$${parseFloat(amount_paid).toFixed(2)}</td>
-           			<td>${payment_date}</td>
+           			<td class="payment-date">${payment_date}</td>
             		<td>
                 		<button style="align-items: center; background-color: #f44336; color: #fff;" class="btn delete-payment">Delete</button>
             		</td>
@@ -927,11 +932,18 @@
 		// Process the form submission
 		$('#process-invoice').on('click', function() {
 			// alert("hello");
+			// console.log("hello");
 			// window.location.href = "<?php echo $base_url; ?>invoice";
+			let date = new Date().toISOString().split('T')[0];
+			// alert(date);
 			let customer_id = $('#customer-name').find(':selected').val();
 			// alert(customer_id);
 			let booking_id = $('#booking-id').text();
 			// alert(booking_id);
+			let room_id = $('#room-id').text();
+			// alert(room_id);
+			let grand_total_room = $('#grand-total').text().replace('$', '');
+			// alert(grand_total_room);
 			let tax = $('#tax').text().replace('$', '');
 			// alert(tax);
 			let discount = $('#discount').text().replace('$', '');
@@ -942,96 +954,267 @@
 			// alert(cleaning_charges);
 			let sub_total_room = parseFloat($('#total-amount').text().replace('$', '').trim()).toFixed(2);
 			// alert(sub_total_room);
-			let sub_total_amenities = parseFloat($('#amenity-total').text().replace('$', '').trim()).toFixed(2);
-			//alert(sub_total_amenities);
-			let sub_total_items = parseFloat($('#item-total').text().replace('$', '').trim()).toFixed(2);
-			// alert(sub_total_items);
-			let grand_total = parseFloat(sub_total_room) + parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
-			// alert(grand_total);
-			let extra_charges = parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
-			// alert(extra_charges);
 			let amount_paid = $('.amount-paid').map(function() {
 				return parseFloat($(this).text().replace('$', ''));
 			}).get();
 			// alert(amount_paid);
 			let total_amount_paid = parseFloat(amount_paid.reduce((total, amount) => total + amount, 0)).toFixed(2);
 			// alert(total_amount_paid);
+
+			// Amenities Details to save in database
+			let room_amenity_id = <?php echo RoomAmenity::get_last_id() + 1; ?>;
+			// alert(room_amenity_id);
+			let sub_total_amenities = parseFloat($('#amenity-total').text().replace('$', '').trim()).toFixed(2);
+			// alert(sub_total_amenities);
+
+			//adding amenities to the databasee by loop one by one using ajax
+			let roomamenitydetail = [];
+			$('.amenity-row').each(function() {
+				roomamenitydetail.push({
+					room_amenity_id: room_amenity_id,
+					customer_id: customer_id,
+					room_id: room_id,
+					amenity_id: $(this).find('.amenity-id').text().trim(),
+					quantity: $(this).find('.amenity-quantity').text().trim(),
+					price: $(this).find('.amenity-sub-total').text().trim().replace('$', '')
+				});
+			});
+			// alert(roomamenitydetail);
+			// alert(JSON.stringify(roomamenitydetail));
+			// let roomamenity_data = JSON.stringify({roomamenitydetail: roomamenitydetail });
+			// alert(roomamenity_data);
+
+			// Item Details to save in database
+			let order_item_id = <?php echo Order::get_last_id() + 1; ?>;
+			// alert(order_item_id);
+			let sub_total_items = parseFloat($('#item-total').text().replace('$', '').trim()).toFixed(2);
+			// alert(sub_total_items);
+			// adding items to the databasee by loop one by one using ajax
+			let orderitemdetail = [];
+			$('.item-row').each(function() {
+				orderitemdetail.push({
+					order_id: order_item_id,
+					customer_id: customer_id,
+					room_id: room_id,
+					item_id: $(this).find('.item-id').text().trim(),
+					quantity: $(this).find('.item-quantity').text().trim(),
+					total: $(this).find('.item-sub-total').text().trim().replace('$', '')
+				});
+			});
+			// alert(orderitemdetail);
+			// alert(JSON.stringify(orderitemdetail));
+			// let orderitem_data = JSON.stringify({orderitemdetail: orderitemdetail });
+			// alert(orderitem_data);
+
+			// Payment section & Grand Total to save in database from the final section
+			let payment_method = $('#payment-method').find(":selected").text();
+			// alert(payment_method);
 			let amount_due = $('.amount-due').map(function() {
 				return parseFloat($(this).text().replace('$', ''));
 			}).get();
 			// alert(amount_due);
 			let total_amount_due = parseFloat(amount_due.reduce((total, amount) => total + amount, 0)).toFixed(2);
 			// alert(total_amount_due);
-			let ultimate_due = grand_total - parseFloat(total_amount_paid);
+			let ultimate_due = grand_total_room - parseFloat(total_amount_paid);
 			// alert(ultimate_due);
-			let payment_status = grand_total <= 0 ? 'Paid' : 'Due';
-			// alert(payment_status);
-			let payment_method = $('#payment-method').find(":selected").text();
-			// alert(payment_method);
 			let payment_date = $('#payment-date').val();
 			// alert(payment_date);
+			// let grand_total = parseFloat(sub_total_room) + parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
+			let extra_charges = parseFloat(sub_total_amenities) + parseFloat(sub_total_items);
+			// alert(extra_charges);
+			let payment_status_id = (grand_total_room === total_amount_paid) ?
+				'1' // Paid
+				:
+				(grand_total_room > total_amount_paid && total_amount_paid > 0) ?
+				'2' // Due
+				:
+				'3'; // Failed
 
-			$.ajax({
-				url: "<?php echo $base_url; ?>invoice",
-				type: "POST",
-				data: {
-					customer_id: customer_id,
-					booking_id: booking_id,
-					tax: tax,
-					discount: discount,
-					service_charges: service_charges,
-					cleaning_charges: cleaning_charges,
-					sub_total_room: sub_total_room,
-					sub_total_amenities: sub_total_amenities,
-					sub_total_items: sub_total_items,
-					grand_total: grand_total,
-					extra_charges: extra_charges,
-					total_amount_paid: total_amount_paid,
-					total_amount_due: total_amount_due,
-					ultimate_due: ultimate_due,
-					payment_status: payment_status,
-					payment_method: payment_method,
-					payment_date: payment_date,
-				},
-				success: function(response) {
-					// alert(response);
-					// window.location.href = "<?php echo $base_url; ?>invoice";
-				},error: function(response) {
-					// alert(response);
-					alert("The operation for invoice failed");
-				}
-			})
-			$.ajax({
-				url: "<?php echo $base_url; ?>roomamenity",
-				type: "POST",
-				data: {
-					customer_id: customer_id,
-					booking_id: booking_id,
-				},
-				success: function(response) {
-					// alert(response);
-					// window.location.href = "<?php echo $base_url; ?>invoice";
-				},error: function(response) {
-					// alert(response);
-					alert("The operation for room amenity failed");
-				}
-			})
-			$.ajax({
-				url: "<?php echo $base_url; ?>order",
-				type: "POST",
-				data: {
-					customer_id: customer_id,
-					booking_id: booking_id,
-				},
-				success: function(response) {
-					// alert(response);
-					// window.location.href = "<?php echo $base_url; ?>invoice";
-				},error: function(response) {
-					// alert(response);
-					alert("The operation for order failed");
-				}
-			})	
-		})	
+			//best case scenario i have learned so far
+			// alert(payment_status_id);
+
+				let paymentdetail = [];
+				$('.payment-row').each(function() {
+					paymentdetail.push({
+						customer_id: customer_id,
+						booking_id: booking_id,
+						payment_method_id: $(this).find('.payment-method-id').text().trim(),
+						amount: $(this).find('.amount-paid').text().trim().replace('$', ''),
+						payment_date: $(this).find('.payment-date').text().trim(),
+						payment_status_id: payment_status_id
+					});
+				})
+				// alert(paymentdetail);
+				// alert(JSON.stringify(paymentdetail));
+				// let payment_data = JSON.stringify({paymentdetail: paymentdetail });
+				// alert(payment_data);
+
+				// Data to save in the Invoice table by ajax by invoice api
+				$.ajax({
+					url: "<?php echo $base_url; ?>api/Invoice/save",
+					type: "POST",
+					data: {
+						customer_id: customer_id,
+						booking_id: booking_id,
+						order_id: order_item_id,
+						room_amenitie_id: room_amenity_id,
+						total_amount: grand_total_room,
+						discount: discount,
+						tax: tax,
+						service_charges: service_charges,
+						cleaning_charges: cleaning_charges,
+						payment_status_id: payment_status_id,
+						amount_due: total_amount_due
+					},
+					success: function(response) {
+						// alert(response);
+						// console.log(response);
+						// window.location.href = "<?php echo $base_url; ?>invoice";
+					},
+					error: function(response) {
+						// alert(response);
+						alert("The operation for invoice failed");
+					}
+				})
+
+				// Data to save in the Room Amenity table by ajax by room amenity api
+				$.ajax({
+					url: "<?php echo $base_url; ?>api/RoomAmenity/save",
+					type: "POST",
+					data: {
+						customer_id: customer_id,
+						room_id: room_id,
+						request_date: date,
+						total_amount: sub_total_amenities
+					},
+					success: function(response) {
+						// alert(response);
+						// console.log(response);
+						// window.location.href = "<?php echo $base_url; ?>invoice";
+					},
+					error: function(response) {
+						// alert(response);
+						alert("The operation for room amenity failed");
+					}
+				})
+
+				// Data to save in the Order table by ajax by order api
+				$.ajax({
+					url: "<?php echo $base_url; ?>api/Order/save",
+					type: "POST",
+					data: {
+						customer_id: customer_id,
+						order_date: date,
+						total_amount: sub_total_items
+					},
+					success: function(response) {
+						alert(response);
+						// window.location.href = "<?php echo $base_url; ?>invoice";
+					},
+					error: function(response) {
+						// alert(response);
+						alert("The operation for order failed");
+					}
+				})
+
+				// Data to save in the Room Amenity Detail table by ajax by room amenity detail api using for loop
+				for (let i = 0; i < roomamenitydetail.length; i++) {
+					let room_amenity_id = roomamenitydetail[i].room_amenity_id;
+					let customer_id = roomamenitydetail[i].customer_id;
+					let room_id = roomamenitydetail[i].room_id;
+					let amenity_id = roomamenitydetail[i].amenity_id;
+					let quantity = roomamenitydetail[i].quantity;
+					let price = roomamenitydetail[i].price;
+					$.ajax({
+						url: "<?php echo $base_url; ?>api/RoomAmenityDetail/save",
+						type: "POST",
+						// contentType: "application/json",
+						data: {
+							room_amenity_id: room_amenity_id,
+							customer_id: customer_id,
+							room_id: room_id,
+							amenity_id: amenity_id,
+							quantity: quantity,
+							price: price
+						},
+						success: function(response) {
+							// alert(response);
+							// console.log(response);
+							// window.location.href = "<?php echo $base_url; ?>invoice";
+						},
+						error: function(response) {
+							// alert(response);
+							alert("The operation for room amenity detail failed");
+						}
+					})
+				};
+
+				// Data to save in the Order Item table by ajax by order item api using for loop
+				for (let i = 0; i < orderitemdetail.length; i++) {
+					let order_id = orderitemdetail[i].order_id;
+					let customer_id = orderitemdetail[i].customer_id;
+					let room_id = orderitemdetail[i].room_id;
+					let item_id = orderitemdetail[i].item_id;
+					let quantity = orderitemdetail[i].quantity;
+					let total = orderitemdetail[i].total;
+					$.ajax({
+						url: "<?php echo $base_url; ?>api/OrderItem/save",
+						type: "POST",
+						// contentType: "application/json",
+						data: {
+							order_id: order_id,
+							customer_id: customer_id,
+							room_id: room_id,
+							item_id: item_id,
+							quantity: quantity,
+							total: total
+						},
+						success: function(response) {
+							// alert(response);
+							// console.log(response);
+							// window.location.href = "<?php echo $base_url; ?>invoice";
+						},
+						error: function(response) {
+							// alert(response);
+							alert("The operation for order item failed");
+						}
+					})
+				};
+
+				// Data to save in the Payment table by ajax by payment api by using for loop
+				for (let i = 0; i < paymentdetail.length; i++) {
+					let customer_id = paymentdetail[i].customer_id;
+					let booking_id = paymentdetail[i].booking_id;
+					let payment_method_id = paymentdetail[i].payment_method_id;
+					let amount = paymentdetail[i].amount;
+					let payment_date = paymentdetail[i].payment_date;
+					let payment_status_id = paymentdetail[i].payment_status_id;
+					$.ajax({
+						url: "<?php echo $base_url; ?>api/Payment/save",
+						type: "POST",
+						// contentType: "application/json",
+						data: {
+							customer_id: customer_id,
+							booking_id: booking_id,
+							amount: amount,
+							payment_method_id: payment_method_id,
+							payment_statuse_id: payment_status_id,
+							payment_date: payment_date
+						},
+						success: function(response) {
+							// alert(response);
+							// console.log(response);
+							// window.location.href = "<?php echo $base_url; ?>invoice";
+						},
+						error: function(response) {
+							// alert(response);
+							alert("The operation for payment failed");
+						}
+					})
+				};
+				window.location.href = "<?php echo $base_url; ?>invoice";
+		});
+
 	});
 </script>
 <script src=" <?php echo $base_url ?>/js/cart.js"></script>

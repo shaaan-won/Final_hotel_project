@@ -109,7 +109,7 @@ class Payment extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"payment/create","text"=>"New Payment"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Customer Name</th><th>Booking Id</th><th>Amount</th><th>Payment Method </th><th>Payment Statuse </th><th>Created At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer Name</th><th>Booking Id</th><th>Amount</th><th>Payment Method </th><th>Payment Statuse </th><th>Payment Date</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Amount</th><th>Payment Method Id</th><th>Payment Statuse Id</th><th>Created At</th></tr>";
 		}

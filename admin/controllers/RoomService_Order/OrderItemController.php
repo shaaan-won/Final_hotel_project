@@ -11,9 +11,15 @@ class OrderItemController extends Controller{
 public function save($data,$file){
 	if(isset($data["create"])){
 	$errors=[];
-/*
+/*	
 	if(!preg_match("/^[\s\S]+$/",$data["order_id"])){
 		$errors["order_id"]="Invalid order_id";
+	}
+	if(!preg_match("/^[\s\S]+$/",$data["customer_id"])){
+		$errors["customer_id"]="Invalid customer_id";
+	}
+	if(!preg_match("/^[\s\S]+$/",$data["room_id"])){
+		$errors["room_id"]="Invalid room_id";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["item_id"])){
 		$errors["item_id"]="Invalid item_id";
@@ -21,17 +27,19 @@ public function save($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["quantity"])){
 		$errors["quantity"]="Invalid quantity";
 	}
-	if(!preg_match("/^[\s\S]+$/",$data["unit_price"])){
-		$errors["unit_price"]="Invalid unit_price";
+	if(!preg_match("/^[\s\S]+$/",$data["total"])){
+		$errors["total"]="Invalid total";
 	}
 
 */		global $now;
 		if(count($errors)==0){
 			$orderitem=new OrderItem();
 		$orderitem->order_id=$data["order_id"];
+		$orderitem->customer_id=$data["customer_id"];
+		$orderitem->room_id=$data["room_id"];
 		$orderitem->item_id=$data["item_id"];
 		$orderitem->quantity=$data["quantity"];
-		$orderitem->unit_price=$data["unit_price"];
+		$orderitem->total=$data["total"];
 		$orderitem->created_at=$now;
 		$orderitem->updated_at=$now;
 
@@ -52,14 +60,20 @@ public function update($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["order_id"])){
 		$errors["order_id"]="Invalid order_id";
 	}
+	if(!preg_match("/^[\s\S]+$/",$data["customer_id"])){
+		$errors["customer_id"]="Invalid customer_id";
+	}
+	if(!preg_match("/^[\s\S]+$/",$data["room_id"])){
+		$errors["room_id"]="Invalid room_id";
+	}
 	if(!preg_match("/^[\s\S]+$/",$data["item_id"])){
 		$errors["item_id"]="Invalid item_id";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["quantity"])){
 		$errors["quantity"]="Invalid quantity";
 	}
-	if(!preg_match("/^[\s\S]+$/",$data["unit_price"])){
-		$errors["unit_price"]="Invalid unit_price";
+	if(!preg_match("/^[\s\S]+$/",$data["total"])){
+		$errors["total"]="Invalid total";
 	}
 
 */		global $now;
@@ -67,9 +81,11 @@ public function update($data,$file){
 			$orderitem=new OrderItem();
 			$orderitem->id=$data["id"];
 		$orderitem->order_id=$data["order_id"];
+		$orderitem->customer_id=$data["customer_id"];
+		$orderitem->room_id=$data["room_id"];
 		$orderitem->item_id=$data["item_id"];
 		$orderitem->quantity=$data["quantity"];
-		$orderitem->unit_price=$data["unit_price"];
+		$orderitem->total=$data["total"];
 		$orderitem->created_at=$now;
 		$orderitem->updated_at=$now;
 

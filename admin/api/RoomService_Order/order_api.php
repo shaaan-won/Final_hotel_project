@@ -21,6 +21,7 @@ class OrderApi{
 		$order=new Order();
 		$order->customer_id=$data["customer_id"];
 		$order->order_date=$data["order_date"];
+		$order->total_amount=$data["total_amount"];
 
 		$order->save();
 		echo json_encode(["success" => "yes"]);

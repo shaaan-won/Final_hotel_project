@@ -5,7 +5,7 @@ echo Html::link(["class"=>"btn btn-success", "route"=>"inventory", "text"=>"Mana
 echo Page::context_open();
 echo Form::open(["route"=>"inventory/save"]);
 	echo Form::input(["label"=>"Supplier","name"=>"supplier_id","table"=>"suppliers"]);
-	echo Form::input(["label"=>"Item Name","type"=>"text","name"=>"item_name"]);
+	echo Form::input(["label"=>"Item","name"=>"item_id","table"=>"items"]);
 	echo Form::input(["label"=>"Quantity","type"=>"text","name"=>"quantity"]);
 	echo Form::input(["label"=>"Unit Price","type"=>"text","name"=>"unit_price"]);
 

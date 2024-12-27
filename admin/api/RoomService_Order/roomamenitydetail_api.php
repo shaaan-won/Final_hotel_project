@@ -18,12 +18,14 @@ class RoomAmenityDetailApi{
 		echo json_encode(["success" => "yes"]);
 	}
 	function save($data,$file=[]){
+		// $data=json_decode(file_get_contents("php://input"),true);
 		$roomamenitydetail=new RoomAmenityDetail();
 		$roomamenitydetail->room_amenity_id=$data["room_amenity_id"];
 		$roomamenitydetail->customer_id=$data["customer_id"];
 		$roomamenitydetail->room_id=$data["room_id"];
 		$roomamenitydetail->amenity_id=$data["amenity_id"];
 		$roomamenitydetail->quantity=$data["quantity"];
+		$roomamenitydetail->price=$data["price"];
 
 		$roomamenitydetail->save();
 		echo json_encode(["success" => "yes"]);

@@ -15,8 +15,8 @@ public function save($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["supplier_id"])){
 		$errors["supplier_id"]="Invalid supplier_id";
 	}
-	if(!preg_match("/^[\s\S]+$/",$_POST["txtItemName"])){
-		$errors["item_name"]="Invalid item_name";
+	if(!preg_match("/^[\s\S]+$/",$data["item_id"])){
+		$errors["item_id"]="Invalid item_id";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["quantity"])){
 		$errors["quantity"]="Invalid quantity";
@@ -29,7 +29,7 @@ public function save($data,$file){
 		if(count($errors)==0){
 			$inventory=new Inventory();
 		$inventory->supplier_id=$data["supplier_id"];
-		$inventory->item_name=$data["item_name"];
+		$inventory->item_id=$data["item_id"];
 		$inventory->quantity=$data["quantity"];
 		$inventory->unit_price=$data["unit_price"];
 		$inventory->created_at=$now;
@@ -52,8 +52,8 @@ public function update($data,$file){
 	if(!preg_match("/^[\s\S]+$/",$data["supplier_id"])){
 		$errors["supplier_id"]="Invalid supplier_id";
 	}
-	if(!preg_match("/^[\s\S]+$/",$_POST["txtItemName"])){
-		$errors["item_name"]="Invalid item_name";
+	if(!preg_match("/^[\s\S]+$/",$data["item_id"])){
+		$errors["item_id"]="Invalid item_id";
 	}
 	if(!preg_match("/^[\s\S]+$/",$data["quantity"])){
 		$errors["quantity"]="Invalid quantity";
@@ -67,7 +67,7 @@ public function update($data,$file){
 			$inventory=new Inventory();
 			$inventory->id=$data["id"];
 		$inventory->supplier_id=$data["supplier_id"];
-		$inventory->item_name=$data["item_name"];
+		$inventory->item_id=$data["item_id"];
 		$inventory->quantity=$data["quantity"];
 		$inventory->unit_price=$data["unit_price"];
 		$inventory->created_at=$now;

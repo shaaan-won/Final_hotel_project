@@ -23,9 +23,13 @@ class InvoiceApi{
 		$invoice->booking_id=$data["booking_id"];
 		$invoice->order_id=$data["order_id"];
 		$invoice->room_amenitie_id=$data["room_amenitie_id"];
+		$invoice->total_amount=$data["total_amount"];
+		$invoice->discount=$data["discount"];
+		$invoice->tax=$data["tax"];
 		$invoice->service_charges=$data["service_charges"];
 		$invoice->cleaning_charges=$data["cleaning_charges"];
 		$invoice->payment_status_id=$data["payment_status_id"];
+		$invoice->amount_due=$data["amount_due"];
 
 		$invoice->save();
 		echo json_encode(["success" => "yes"]);
@@ -37,10 +41,14 @@ class InvoiceApi{
 		$invoice->customer_id=$data["customer_id"];
 		$invoice->booking_id=$data["booking_id"];
 		$invoice->order_id=$data["order_id"];
+		$invoice->total_amount=$data["total_amount"];
+		$invoice->discount=$data["discount"];
+		$invoice->tax=$data["tax"];
 		$invoice->room_amenitie_id=$data["room_amenitie_id"];
 		$invoice->service_charges=$data["service_charges"];
 		$invoice->cleaning_charges=$data["cleaning_charges"];
 		$invoice->payment_status_id=$data["payment_status_id"];
+		$invoice->amount_due=$data["amount_due"];
 		$invoice->updated_at=$now;
 
 		$invoice->update();

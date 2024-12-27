@@ -21,8 +21,10 @@ class PaymentApi{
 		$payment=new Payment();
 		$payment->customer_id=$data["customer_id"];
 		$payment->booking_id=$data["booking_id"];
+		$payment->amount=$data["amount"];
 		$payment->payment_method_id=$data["payment_method_id"];
 		$payment->payment_statuse_id=$data["payment_statuse_id"];
+		$payment->created_at=$data["payment_date"];
 
 		$payment->save();
 		echo json_encode(["success" => "yes"]);

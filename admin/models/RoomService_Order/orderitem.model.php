@@ -2,32 +2,36 @@
 class OrderItem extends Model implements JsonSerializable{
 	public $id;
 	public $order_id;
+	public $customer_id;
+	public $room_id;
 	public $item_id;
 	public $quantity;
-	public $unit_price;
+	public $total;
 	public $created_at;
 	public $updated_at;
 
 	public function __construct(){
 	}
-	public function set($id,$order_id,$item_id,$quantity,$unit_price,$created_at,$updated_at){
+	public function set($id,$order_id,$customer_id,$room_id,$item_id,$quantity,$total,$created_at,$updated_at){
 		$this->id=$id;
 		$this->order_id=$order_id;
+		$this->customer_id=$customer_id;
+		$this->room_id=$room_id;
 		$this->item_id=$item_id;
 		$this->quantity=$quantity;
-		$this->unit_price=$unit_price;
+		$this->total=$total;
 		$this->created_at=$created_at;
 		$this->updated_at=$updated_at;
 
 	}
 	public function save(){
 		global $db,$tx;
-		$db->query("insert into {$tx}order_items(order_id,item_id,quantity,unit_price,created_at,updated_at)values('$this->order_id','$this->item_id','$this->quantity','$this->unit_price','$this->created_at','$this->updated_at')");
+		$db->query("insert into {$tx}order_items(order_id,customer_id,room_id,item_id,quantity,total,created_at,updated_at)values('$this->order_id','$this->customer_id','$this->room_id','$this->item_id','$this->quantity','$this->total','$this->created_at','$this->updated_at')");
 		return $db->insert_id;
 	}
 	public function update(){
 		global $db,$tx;
-		$db->query("update {$tx}order_items set order_id='$this->order_id',item_id='$this->item_id',quantity='$this->quantity',unit_price='$this->unit_price',created_at='$this->created_at',updated_at='$this->updated_at' where id='$this->id'");
+		$db->query("update {$tx}order_items set order_id='$this->order_id',customer_id='$this->customer_id',room_id='$this->room_id',item_id='$this->item_id',quantity='$this->quantity',total='$this->total',created_at='$this->created_at',updated_at='$this->updated_at' where id='$this->id'");
 	}
 	public static function delete($id){
 		global $db,$tx;
@@ -38,7 +42,7 @@ class OrderItem extends Model implements JsonSerializable{
 	}
 	public static function all(){
 		global $db,$tx;
-		$result=$db->query("select id,order_id,item_id,quantity,unit_price,created_at,updated_at from {$tx}order_items");
+		$result=$db->query("select id,order_id,customer_id,room_id,item_id,quantity,total,created_at,updated_at from {$tx}order_items");
 		$data=[];
 		while($orderitem=$result->fetch_object()){
 			$data[]=$orderitem;
@@ -48,7 +52,7 @@ class OrderItem extends Model implements JsonSerializable{
 	public static function pagination($page=1,$perpage=10,$criteria=""){
 		global $db,$tx;
 		$top=($page-1)*$perpage;
-		$result=$db->query("select id,order_id,item_id,quantity,unit_price,created_at,updated_at from {$tx}order_items $criteria limit $top,$perpage");
+		$result=$db->query("select id,order_id,customer_id,room_id,item_id,quantity,total,created_at,updated_at from {$tx}order_items $criteria limit $top,$perpage");
 		$data=[];
 		while($orderitem=$result->fetch_object()){
 			$data[]=$orderitem;
@@ -63,7 +67,7 @@ class OrderItem extends Model implements JsonSerializable{
 	}
 	public static function find($id){
 		global $db,$tx;
-		$result =$db->query("select id,order_id,item_id,quantity,unit_price,created_at,updated_at from {$tx}order_items where id='$id'");
+		$result =$db->query("select id,order_id,customer_id,room_id,item_id,quantity,total,created_at,updated_at from {$tx}order_items where id='$id'");
 		$orderitem=$result->fetch_object();
 			return $orderitem;
 	}
@@ -79,9 +83,11 @@ class OrderItem extends Model implements JsonSerializable{
 	public function __toString(){
 		return "		Id:$this->id<br> 
 		Order Id:$this->order_id<br> 
+		Customer Id:$this->customer_id<br> 
+		Room Id:$this->room_id<br> 
 		Item Id:$this->item_id<br> 
 		Quantity:$this->quantity<br> 
-		Unit Price:$this->unit_price<br> 
+		Total:$this->total<br> 
 		Created At:$this->created_at<br> 
 		Updated At:$this->updated_at<br> 
 ";
@@ -105,17 +111,19 @@ class OrderItem extends Model implements JsonSerializable{
 		list($total_rows)=$count_result->fetch_row();
 		$total_pages = ceil($total_rows /$perpage);
 		$top = ($page - 1)*$perpage;
-		$result=$db->query("select id,order_id,item_id,quantity,unit_price,created_at,updated_at from {$tx}order_items $criteria limit $top,$perpage");
+		$result=$db->query("select id,order_id,customer_id,room_id,item_id,quantity,total,created_at,updated_at from {$tx}order_items $criteria limit $top,$perpage");
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"orderitem/create","text"=>"New OrderItem"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Order Id</th><th>Item </th><th>Quantity</th><th>Unit Price</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Order Id</th><th>Customer Name</th><th>Room Number</th><th>Items</th><th>Quantity</th><th>Total</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
-			$html.="<tr><th>Id</th><th>Order Id</th><th>Item Id</th><th>Quantity</th><th>Unit Price</th><th>Created At</th><th>Updated At</th></tr>";
+			$html.="<tr><th>Id</th><th>Order Id</th><th>Customer Id</th><th>Room Id</th><th>Item Id</th><th>Quantity</th><th>Total</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($orderitem=$result->fetch_object()){
 			$action_buttons = "";
-			$item = Item::find($orderitem->item_id);
+			$cname = Customer::find($orderitem->customer_id)->name;
+			$rname = Room::find($orderitem->room_id)->room_number;
+			$item_name = Item::find($orderitem->item_id)->name;
 			if($action){
 				$action_buttons = "<td><div class='btn-group' style='display:flex;'>";
 				$action_buttons.= Event::button(["name"=>"show", "value"=>"Show", "class"=>"btn btn-info", "route"=>"orderitem/show/$orderitem->id"]);
@@ -123,7 +131,7 @@ class OrderItem extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"orderitem/confirm/$orderitem->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$orderitem->id</td><td>$orderitem->order_id</td><td>$item->name</td><td>$orderitem->quantity</td><td>$orderitem->unit_price</td><td>$orderitem->created_at</td><td>$orderitem->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$orderitem->id</td><td>$orderitem->order_id</td><td>$cname</td><td>$rname</td><td>$item_name</td><td>$orderitem->quantity</td><td>$orderitem->total</td><td>$orderitem->created_at</td><td>$orderitem->updated_at</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);
@@ -131,15 +139,17 @@ class OrderItem extends Model implements JsonSerializable{
 	}
 	static function html_row_details($id){
 		global $db,$tx,$base_url;
-		$result =$db->query("select id,order_id,item_id,quantity,unit_price,created_at,updated_at from {$tx}order_items where id={$id}");
+		$result =$db->query("select id,order_id,customer_id,room_id,item_id,quantity,total,created_at,updated_at from {$tx}order_items where id={$id}");
 		$orderitem=$result->fetch_object();
 		$html="<table class='table'>";
 		$html.="<tr><th colspan=\"2\">OrderItem Show</th></tr>";
 		$html.="<tr><th>Id</th><td>$orderitem->id</td></tr>";
 		$html.="<tr><th>Order Id</th><td>$orderitem->order_id</td></tr>";
+		$html.="<tr><th>Customer Id</th><td>$orderitem->customer_id</td></tr>";
+		$html.="<tr><th>Room Id</th><td>$orderitem->room_id</td></tr>";
 		$html.="<tr><th>Item Id</th><td>$orderitem->item_id</td></tr>";
 		$html.="<tr><th>Quantity</th><td>$orderitem->quantity</td></tr>";
-		$html.="<tr><th>Unit Price</th><td>$orderitem->unit_price</td></tr>";
+		$html.="<tr><th>Total</th><td>$orderitem->total</td></tr>";
 		$html.="<tr><th>Created At</th><td>$orderitem->created_at</td></tr>";
 		$html.="<tr><th>Updated At</th><td>$orderitem->updated_at</td></tr>";
 

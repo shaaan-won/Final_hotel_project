@@ -20,8 +20,11 @@ class OrderItemApi{
 	function save($data,$file=[]){
 		$orderitem=new OrderItem();
 		$orderitem->order_id=$data["order_id"];
+		$orderitem->customer_id=$data["customer_id"];
+		$orderitem->room_id=$data["room_id"];
 		$orderitem->item_id=$data["item_id"];
 		$orderitem->quantity=$data["quantity"];
+		$orderitem->total=$data["total"];
 
 		$orderitem->save();
 		echo json_encode(["success" => "yes"]);
@@ -31,6 +34,8 @@ class OrderItemApi{
 		$orderitem=new OrderItem();
 		$orderitem->id=$data["id"];
 		$orderitem->order_id=$data["order_id"];
+		$orderitem->customer_id=$data["customer_id"];
+		$orderitem->room_id=$data["room_id"];
 		$orderitem->item_id=$data["item_id"];
 		$orderitem->quantity=$data["quantity"];
 		$orderitem->updated_at=$now;

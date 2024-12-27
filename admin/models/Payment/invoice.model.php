@@ -130,7 +130,7 @@ class Invoice extends Model implements JsonSerializable{
 		$html="<div class='table-responsive'><table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"invoice/create","text"=>"New Invoice"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Order Id</th><th>Room Amenitie Id</th><th>Total Amount</th><th>Discount</th><th>Tax</th><th>Service Charges</th><th>Cleaning Charges</th><th>Payment Status Id</th><th>Amount Due</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Order Id</th><th>Amenitie Id</th><th>Total Amount</th><th>Discount</th><th>Tax</th><th>Service Charges</th><th>Cleaning Charges</th><th>Payment Status</th><th>Amount Due</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
 			$html.="<tr><th>Id</th><th>Customer Id</th><th>Booking Id</th><th>Order Id</th><th>Room Amenitie Id</th><th>Total Amount</th><th>Discount</th><th>Tax</th><th>Service Charges</th><th>Cleaning Charges</th><th>Payment Status Id</th><th>Amount Due</th><th>Created At</th><th>Updated At</th></tr>";
 		}
