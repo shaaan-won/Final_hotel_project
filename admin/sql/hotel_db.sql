@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2024 at 08:53 PM
+-- Generation Time: Dec 28, 2024 at 12:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `hotel_db`
 --
-Drop database if exists hotel_db;
+drop database if exists hotel_db;
 CREATE DATABASE IF NOT EXISTS `hotel_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `hotel_db`;
 -- --------------------------------------------------------
@@ -64,20 +64,6 @@ CREATE TABLE `ht_bookings` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `ht_bookings`
---
-
-INSERT INTO `ht_bookings` (`id`, `customer_id`, `room_id`, `check_in_date`, `check_out_date`, `status_id`, `created_at`, `updated_at`) VALUES
-(12, 1, 1, '2024-12-05 00:00:00', '2024-12-10 00:00:00', 5, '2024-12-23 06:13:29', '2024-12-23 06:13:29'),
-(13, 2, 2, '2024-12-10 00:00:00', '2024-12-15 00:00:00', 5, '2024-12-23 06:25:19', '2024-12-23 06:25:19'),
-(15, 1, 4, '2024-12-24 00:00:00', '2024-12-26 00:00:00', 5, '2024-12-23 06:39:10', '2024-12-23 06:39:10'),
-(16, 3, 3, '2024-12-25 00:00:00', '2024-12-30 00:00:00', 5, '2024-12-23 06:56:08', '2024-12-23 06:56:08'),
-(17, 5, 3, '2024-12-30 00:00:00', '2024-12-31 00:00:00', 5, '2024-12-24 18:31:44', '2024-12-24 18:31:44'),
-(18, 5, 2, '2024-12-28 00:00:00', '2024-12-30 00:00:00', 5, '2024-12-26 03:24:27', '2024-12-26 03:24:27'),
-(19, 4, 2, '2024-12-30 00:00:00', '2024-12-31 00:00:00', 5, '2024-12-26 03:39:25', '2024-12-26 03:39:25'),
-(20, 5, 2, '2024-12-27 00:00:00', '2024-12-28 00:00:00', 5, '2024-12-26 15:10:51', '2024-12-26 15:10:51');
-
 -- --------------------------------------------------------
 
 --
@@ -93,20 +79,6 @@ CREATE TABLE `ht_checkin_checkouts` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ht_checkin_checkouts`
---
-
-INSERT INTO `ht_checkin_checkouts` (`id`, `room_id`, `check_in_date`, `check_out_date`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 1, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
-(2, 2, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
-(3, 3, '2024-03-07 12:25:53', '2024-03-07 06:25:53', 'Check-in notes', '2024-03-07 06:25:53', '2024-03-07 00:25:53'),
-(8, 3, '2024-12-25 12:00:00', '2024-12-30 12:00:00', '', '2024-12-23 06:56:08', '2024-12-23 06:56:08'),
-(9, 3, '2024-12-30 12:00:00', '2024-12-31 12:00:00', '', '2024-12-24 18:31:44', '2024-12-24 18:31:44'),
-(10, 2, '2024-12-28 12:00:00', '2024-12-30 12:00:00', '', '2024-12-26 03:24:27', '2024-12-26 03:24:27'),
-(11, 2, '2024-12-30 12:00:00', '2024-12-31 12:00:00', '', '2024-12-26 03:39:25', '2024-12-26 03:39:25'),
-(12, 2, '2024-12-27 12:00:00', '2024-12-28 12:00:00', '', '2024-12-26 15:10:51', '2024-12-26 15:10:51');
 
 -- --------------------------------------------------------
 
@@ -163,6 +135,46 @@ INSERT INTO `ht_customer_feedbacks` (`id`, `user_id`, `customer_id`, `comments`,
 (2, 127, 2, 'Room was clean and comfortable', 4, '2024-12-21 21:10:22'),
 (3, 127, 3, 'Food was delicious', 5, '2024-12-21 21:10:25'),
 (4, 127, 4, 'Would stay here again', 4, '2024-12-21 21:10:29');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `ht_hotel_dashboards`
+-- (See below for the actual view)
+--
+CREATE TABLE `ht_hotel_dashboards` (
+`total_customers` bigint(21)
+,`total_check_ins` bigint(21)
+,`total_check_outs` bigint(21)
+,`total_revenue` decimal(32,2)
+,`today_revenue` decimal(32,2)
+,`this_month_revenue` decimal(32,2)
+,`this_year_revenue` decimal(32,2)
+,`standard_rooms_total` bigint(21)
+,`deluxe_rooms_total` bigint(21)
+,`suite_rooms_total` bigint(21)
+,`penthouse_rooms_total` bigint(21)
+,`available_rooms` bigint(21)
+,`booked_rooms` bigint(21)
+,`maintenance_rooms` bigint(21)
+,`standard_rooms` bigint(21)
+,`deluxe_rooms` bigint(21)
+,`suite_rooms` bigint(21)
+,`penthouse_rooms` bigint(21)
+,`today_check_ins` bigint(21)
+,`today_check_outs` bigint(21)
+,`current_check_ins` bigint(21)
+,`future_check_ins` bigint(21)
+,`average_customer_rating` decimal(12,1)
+,`total_feedbacks` bigint(21)
+,`paid_payments` bigint(21)
+,`pending_payments` bigint(21)
+,`failed_payments` bigint(21)
+,`total_bookings` bigint(21)
+,`total_rooms` bigint(21)
+,`total_room_types` bigint(21)
+,`total_payments` bigint(21)
+);
 
 -- --------------------------------------------------------
 
@@ -236,9 +248,9 @@ CREATE TABLE `ht_inventorys` (
 
 INSERT INTO `ht_inventorys` (`id`, `supplier_id`, `item_id`, `quantity`, `unit_price`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 200, 3.50, '2024-12-27 19:48:54', '2024-12-27 19:48:54'),
-(2, 2, 3, 150, 4.00, '2024-12-27 19:38:14', '2024-12-27 19:38:14'),
-(3, 3, 2, 200, 1.25, '2024-12-27 19:38:21', '2024-12-27 19:38:21'),
-(4, 4, 4, 250, 2.75, '2024-12-27 19:38:26', '2024-12-27 19:38:26');
+(2, 2, 3, 146, 4.00, '2024-12-27 19:38:14', '2024-12-28 07:23:56'),
+(3, 3, 2, 197, 1.25, '2024-12-27 19:38:21', '2024-12-28 07:23:56'),
+(4, 4, 4, 247, 2.75, '2024-12-27 19:38:26', '2024-12-28 07:23:56');
 
 -- --------------------------------------------------------
 
@@ -262,19 +274,6 @@ CREATE TABLE `ht_invoices` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ht_invoices`
---
-
-INSERT INTO `ht_invoices` (`id`, `customer_id`, `booking_id`, `order_id`, `room_amenitie_id`, `total_amount`, `discount`, `tax`, `service_charges`, `cleaning_charges`, `payment_status_id`, `amount_due`, `created_at`, `updated_at`) VALUES
-(1, 1, 12, 1, 1, 500.00, 300.00, 20.00, 30, 60, 1, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 2, 12, 2, 2, 750.00, 40.00, 60.00, 90, 30, 1, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 3, 12, 3, 3, 1000.00, 300.00, 60.00, 30, 20, 2, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 4, 12, 4, 4, 1250.00, 60.00, 60.00, 20, 20, 1, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 2, 13, 6, 10, 1113.93, 82.50, 112.50, 20, 30, 3, 913.93, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, 3, 16, 7, 11, 1523.94, 110.00, 150.00, 20, 30, 3, 1023.94, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, 2, 13, 8, 12, 1134.44, 75.00, 112.50, 20, 30, 3, 934.44, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -341,20 +340,6 @@ CREATE TABLE `ht_orders` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `ht_orders`
---
-
-INSERT INTO `ht_orders` (`id`, `customer_id`, `order_date`, `total_amount`, `created_at`, `updated_at`) VALUES
-(1, 1, '2023-07-01 00:00:00', 150.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
-(2, 2, '2023-08-10 00:00:00', 200.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
-(3, 3, '2023-09-15 00:00:00', 250.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
-(4, 4, '2023-10-20 00:00:00', 300.00, '2024-12-19 05:52:36', '2024-12-19 05:52:36'),
-(5, 3, '2024-12-27 00:00:00', 9.98, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 2, '2024-12-27 00:00:00', 33.93, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, 3, '2024-12-27 00:00:00', 23.94, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, 2, '2024-12-27 00:00:00', 26.94, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -372,26 +357,6 @@ CREATE TABLE `ht_order_items` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ht_order_items`
---
-
-INSERT INTO `ht_order_items` (`id`, `order_id`, `customer_id`, `room_id`, `item_id`, `quantity`, `total`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 1, 2, 0.00, '2024-12-27 18:02:33', '2024-12-27 18:02:33'),
-(2, 2, 2, 1, 3, 6, 0.00, '2024-12-27 18:02:51', '2024-12-27 18:02:51'),
-(3, 3, 4, 3, 3, 5, 0.00, '2024-12-27 18:03:03', '2024-12-27 18:03:03'),
-(4, 4, 3, 4, 4, 3, 0.00, '2024-12-27 18:03:16', '2024-12-27 18:03:16'),
-(10, 6, 2, 2, 1, 3, 17.97, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(11, 6, 2, 2, 2, 1, 6.99, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(12, 6, 2, 2, 3, 3, 8.97, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(13, 7, 3, 3, 2, 1, 6.99, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(14, 7, 3, 3, 4, 2, 7.98, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(15, 7, 3, 3, 3, 3, 8.97, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(16, 8, 2, 2, 4, 1, 3.99, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(17, 8, 2, 2, 2, 2, 13.98, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(18, 8, 2, 2, 3, 3, 8.97, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(19, 7, 5, 3, 1, 100, 50.00, '2024-12-27 19:48:04', '2024-12-27 19:48:04');
 
 --
 -- Triggers `ht_order_items`
@@ -427,18 +392,6 @@ CREATE TABLE `ht_payments` (
   `payment_statuse_id` int(11) DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ht_payments`
---
-
-INSERT INTO `ht_payments` (`id`, `customer_id`, `booking_id`, `amount`, `payment_method_id`, `payment_statuse_id`, `created_at`) VALUES
-(1, 1, 1, 200.00, 1, 1, '2024-12-19 05:49:33'),
-(2, 2, 2, 300.00, 2, 1, '2024-12-19 05:49:33'),
-(3, 3, 3, 400.00, 1, 2, '2024-12-19 05:49:33'),
-(4, 4, 4, 500.00, 2, 1, '2024-12-19 05:49:33'),
-(8, 2, 13, 200.00, 2, 3, '2024-12-27 18:00:00'),
-(9, 2, 13, 200.00, 2, 3, '2024-12-27 18:00:00');
 
 -- --------------------------------------------------------
 
@@ -581,10 +534,10 @@ CREATE TABLE `ht_rooms` (
 --
 
 INSERT INTO `ht_rooms` (`id`, `room_number`, `room_type_id`, `price`, `capacity`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, '101', 1, 100.00, 2, 5, '2024-12-23 06:11:57', '2024-12-23 06:11:57'),
-(2, '102', 2, 150.00, 3, 5, '2024-12-23 06:23:45', '2024-12-23 06:25:19'),
-(3, '103', 3, 200.00, 4, 5, '2024-12-23 06:23:49', '2024-12-23 06:56:09'),
-(4, '104', 4, 250.00, 2, 5, '2024-12-23 06:23:53', '2024-12-23 06:37:53');
+(1, '101', 1, 100.00, 2, 6, '2024-12-28 11:05:45', '2024-12-28 11:05:45'),
+(2, '102', 2, 150.00, 3, 6, '2024-12-28 11:05:49', '2024-12-28 11:05:49'),
+(3, '103', 3, 200.00, 4, 6, '2024-12-28 11:05:55', '2024-12-28 11:05:55'),
+(4, '104', 4, 250.00, 2, 6, '2024-12-28 11:05:58', '2024-12-28 11:05:58');
 
 -- --------------------------------------------------------
 
@@ -601,20 +554,6 @@ CREATE TABLE `ht_room_amenities` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ht_room_amenities`
---
-
-INSERT INTO `ht_room_amenities` (`id`, `customer_id`, `room_id`, `request_date`, `total_amount`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2023-08-01 10:00:00', 100.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
-(2, 2, 2, '2023-08-01 10:00:00', 200.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
-(3, 3, 3, '2023-08-01 10:00:00', 300.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
-(4, 4, 4, '2023-08-01 10:00:00', 400.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
-(9, 2, 2, '2024-12-27 00:00:00', 100.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(10, 2, 2, '2024-12-27 00:00:00', 250.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(11, 3, 3, '2024-12-27 00:00:00', 410.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(12, 2, 2, '2024-12-27 00:00:00', 270.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -633,25 +572,6 @@ CREATE TABLE `ht_room_amenity_details` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ht_room_amenity_details`
---
-
-INSERT INTO `ht_room_amenity_details` (`id`, `room_amenity_id`, `customer_id`, `room_id`, `amenity_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 1, 2, 50.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
-(2, 2, 2, 2, 2, 3, 60.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
-(3, 3, 3, 3, 3, 4, 70.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
-(4, 4, 4, 4, 4, 5, 80.00, '2024-12-26 06:46:51', '2024-12-26 06:46:51'),
-(16, 10, 2, 2, 1, 1, 20.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(17, 10, 2, 2, 3, 1, 30.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(18, 10, 2, 2, 4, 2, 200.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(19, 11, 3, 3, 2, 1, 50.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(20, 11, 3, 3, 3, 2, 60.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(21, 11, 3, 3, 4, 3, 300.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(22, 12, 2, 2, 4, 2, 200.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(23, 12, 2, 2, 2, 1, 50.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(24, 12, 2, 2, 1, 1, 20.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -924,6 +844,15 @@ INSERT INTO `ht_work_schedules` (`id`, `staff_id`, `start_time`, `end_time`, `cr
 (3, 3, '2023-06-30 09:00:00', '2023-06-30 17:00:00', '2024-12-19 05:49:33'),
 (4, 4, '2023-06-30 09:00:00', '2023-06-30 17:00:00', '2024-12-19 05:49:33');
 
+-- --------------------------------------------------------
+
+--
+-- Structure for view `ht_hotel_dashboards`
+--
+DROP TABLE IF EXISTS `ht_hotel_dashboards`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ht_hotel_dashboards`  AS SELECT (select count(0) from `ht_customers`) AS `total_customers`, (select count(0) from `ht_bookings` where `ht_bookings`.`check_in_date` <= current_timestamp() and `ht_bookings`.`check_out_date` >= current_timestamp()) AS `total_check_ins`, (select count(0) from `ht_bookings` where `ht_bookings`.`check_out_date` < current_timestamp()) AS `total_check_outs`, (select sum(`ht_invoices`.`total_amount`) from `ht_invoices` where `ht_invoices`.`payment_status_id` = (select `ht_payment_statuses`.`id` from `ht_payment_statuses` where `ht_payment_statuses`.`name` = 'Paid')) AS `total_revenue`, (select sum(`ht_invoices`.`total_amount`) from `ht_invoices` where cast(`ht_invoices`.`created_at` as date) = curdate()) AS `today_revenue`, (select sum(`ht_invoices`.`total_amount`) from `ht_invoices` where month(`ht_invoices`.`created_at`) = month(curdate())) AS `this_month_revenue`, (select sum(`ht_invoices`.`total_amount`) from `ht_invoices` where year(`ht_invoices`.`created_at`) = year(curdate())) AS `this_year_revenue`, (select count(0) from `ht_rooms` where `ht_rooms`.`room_type_id` = (select `ht_room_types`.`id` from `ht_room_types` where `ht_room_types`.`name` = 'Standard')) AS `standard_rooms_total`, (select count(0) from `ht_rooms` where `ht_rooms`.`room_type_id` = (select `ht_room_types`.`id` from `ht_room_types` where `ht_room_types`.`name` = 'Deluxe')) AS `deluxe_rooms_total`, (select count(0) from `ht_rooms` where `ht_rooms`.`room_type_id` = (select `ht_room_types`.`id` from `ht_room_types` where `ht_room_types`.`name` = 'Suite')) AS `suite_rooms_total`, (select count(0) from `ht_rooms` where `ht_rooms`.`room_type_id` = (select `ht_room_types`.`id` from `ht_room_types` where `ht_room_types`.`name` = 'Penthouse')) AS `penthouse_rooms_total`, (select count(0) from `ht_rooms` where `ht_rooms`.`status_id` = (select `ht_statuss`.`id` from `ht_statuss` where `ht_statuss`.`name` = 'Available')) AS `available_rooms`, (select count(0) from `ht_rooms` where `ht_rooms`.`status_id` = (select `ht_statuss`.`id` from `ht_statuss` where `ht_statuss`.`name` = 'Booked')) AS `booked_rooms`, (select count(0) from `ht_rooms` where `ht_rooms`.`status_id` = (select `ht_statuss`.`id` from `ht_statuss` where `ht_statuss`.`name` = 'Maintenance')) AS `maintenance_rooms`, (select count(0) from `ht_rooms` where `ht_rooms`.`status_id` = (select `ht_statuss`.`id` from `ht_statuss` where `ht_statuss`.`name` = 'Available') and `ht_rooms`.`room_type_id` = (select `ht_room_types`.`id` from `ht_room_types` where `ht_room_types`.`name` = 'Standard')) AS `standard_rooms`, (select count(0) from `ht_rooms` where `ht_rooms`.`status_id` = (select `ht_statuss`.`id` from `ht_statuss` where `ht_statuss`.`name` = 'Available') and `ht_rooms`.`room_type_id` = (select `ht_room_types`.`id` from `ht_room_types` where `ht_room_types`.`name` = 'Deluxe')) AS `deluxe_rooms`, (select count(0) from `ht_rooms` where `ht_rooms`.`status_id` = (select `ht_statuss`.`id` from `ht_statuss` where `ht_statuss`.`name` = 'Available') and `ht_rooms`.`room_type_id` = (select `ht_room_types`.`id` from `ht_room_types` where `ht_room_types`.`name` = 'Suite')) AS `suite_rooms`, (select count(0) from `ht_rooms` where `ht_rooms`.`status_id` = (select `ht_statuss`.`id` from `ht_statuss` where `ht_statuss`.`name` = 'Available') and `ht_rooms`.`room_type_id` = (select `ht_room_types`.`id` from `ht_room_types` where `ht_room_types`.`name` = 'Penthouse')) AS `penthouse_rooms`, (select count(0) from `ht_bookings` where cast(`ht_bookings`.`check_in_date` as date) = curdate()) AS `today_check_ins`, (select count(0) from `ht_bookings` where cast(`ht_bookings`.`check_out_date` as date) = curdate()) AS `today_check_outs`, (select count(0) from `ht_bookings` where `ht_bookings`.`check_in_date` <= current_timestamp() and `ht_bookings`.`check_out_date` >= current_timestamp()) AS `current_check_ins`, (select count(0) from `ht_bookings` where `ht_bookings`.`check_out_date` > current_timestamp()) AS `future_check_ins`, (select round(avg(`ht_customer_feedbacks`.`rating`),1) from `ht_customer_feedbacks`) AS `average_customer_rating`, (select count(0) from `ht_customer_feedbacks`) AS `total_feedbacks`, (select count(0) from `ht_payments` where `ht_payments`.`payment_statuse_id` = (select `ht_payment_statuses`.`id` from `ht_payment_statuses` where `ht_payment_statuses`.`name` = 'Paid')) AS `paid_payments`, (select count(0) from `ht_payments` where `ht_payments`.`payment_statuse_id` = (select `ht_payment_statuses`.`id` from `ht_payment_statuses` where `ht_payment_statuses`.`name` = 'Pending')) AS `pending_payments`, (select count(0) from `ht_payments` where `ht_payments`.`payment_statuse_id` = (select `ht_payment_statuses`.`id` from `ht_payment_statuses` where `ht_payment_statuses`.`name` = 'Failed')) AS `failed_payments`, (select count(0) from `ht_bookings`) AS `total_bookings`, (select count(0) from `ht_rooms`) AS `total_rooms`, (select count(0) from `ht_room_types`) AS `total_room_types`, (select count(0) from `ht_payments`) AS `total_payments` ;
+
 --
 -- Indexes for dumped tables
 --
@@ -1137,13 +1066,13 @@ ALTER TABLE `ht_amenities`
 -- AUTO_INCREMENT for table `ht_bookings`
 --
 ALTER TABLE `ht_bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ht_checkin_checkouts`
 --
 ALTER TABLE `ht_checkin_checkouts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ht_customers`
@@ -1179,7 +1108,7 @@ ALTER TABLE `ht_inventorys`
 -- AUTO_INCREMENT for table `ht_invoices`
 --
 ALTER TABLE `ht_invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ht_items`
@@ -1197,19 +1126,19 @@ ALTER TABLE `ht_loyalty_programs`
 -- AUTO_INCREMENT for table `ht_orders`
 --
 ALTER TABLE `ht_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ht_order_items`
 --
 ALTER TABLE `ht_order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ht_payments`
 --
 ALTER TABLE `ht_payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ht_payment_methods`
@@ -1251,13 +1180,13 @@ ALTER TABLE `ht_rooms`
 -- AUTO_INCREMENT for table `ht_room_amenities`
 --
 ALTER TABLE `ht_room_amenities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ht_room_amenity_details`
 --
 ALTER TABLE `ht_room_amenity_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ht_room_maintenance`

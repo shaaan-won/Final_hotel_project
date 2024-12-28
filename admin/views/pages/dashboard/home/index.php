@@ -225,8 +225,8 @@
 </div> <!-- end row -->
 
 <div class="row">
-	<div class="col-lg-6">
-		<div class="card">
+	<div class="col-lg-4">
+		<div class="card card-height-100">
 			<div class="d-flex card-header justify-content-between align-items-center border-bottom border-dashed">
 				<h4 class="card-title">Sessions by Country</h4>
 				<div class="dropdown">
@@ -255,7 +255,7 @@
 							<!-- Country Data -->
 							<div class="d-flex justify-content-between align-items-center">
 								<p class="mb-1">
-									<iconify-icon icon="circle-flags:us" class="fs-16 align-middle me-1"></iconify-icon> <span class="align-middle">United States</span>
+									<iconify-icon icon="circle-flags:ru" class="fs-16 align-middle me-1"></iconify-icon> <span class="align-middle">Russia</span>
 								</p>
 							</div>
 							<div class="row align-items-center mb-3">
@@ -272,7 +272,7 @@
 							<!-- Country Data -->
 							<div class="d-flex justify-content-between align-items-center">
 								<p class="mb-1">
-									<iconify-icon icon="circle-flags:ru" class="fs-16 align-middle me-1"></iconify-icon> <span class="align-middle">Russia</span>
+									<iconify-icon icon="circle-flags:bd" class="fs-16 align-middle me-1"></iconify-icon> <span class="align-middle">Bangladesh</span>
 								</p>
 							</div>
 							<div class="row align-items-center mb-3">
@@ -289,7 +289,7 @@
 							<!-- Country Data -->
 							<div class="d-flex justify-content-between align-items-center">
 								<p class="mb-1">
-									<iconify-icon icon="circle-flags:cn" class="fs-16 align-middle me-1"></iconify-icon> <span class="align-middle">China</span>
+									<iconify-icon icon="circle-flags:bd" class="fs-16 align-middle me-1"></iconify-icon> <span class="align-middle">Bangladesh</span>
 								</p>
 							</div>
 							<div class="row align-items-center mb-3">
@@ -304,7 +304,7 @@
 							</div>
 
 							<!-- Country Data -->
-							<div class="d-flex justify-content-between align-items-center">
+							<!-- <div class="d-flex justify-content-between align-items-center">
 								<p class="mb-1">
 									<iconify-icon icon="circle-flags:ca" class="fs-16 align-middle me-1"></iconify-icon> <span class="align-middle">Canada</span>
 								</p>
@@ -318,7 +318,7 @@
 								<div class="col-auto">
 									<p class="mb-0 fs-13 fw-semibold">204k</p>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -326,199 +326,104 @@
 		</div> <!-- end card-->
 	</div> <!-- end col-->
 
-	<div class="col-lg-6">
+	<div class="col-lg-8">
 		<div class="card card-height-100">
 			<div class="card-header d-flex align-items-center justify-content-between gap-2">
-				<h4 class="card-title flex-grow-1">Check In/Out Statistics</h4>
+				<h4 class="card-title flex-grow-1">Check In/Out Sessions</h4>
 				<div>
-					<a href="#" class="btn btn-sm btn-soft-primary">View All</a>
+					<a href="<?php echo $base_url; ?>checkincheckout" class="btn btn-sm btn-soft-primary">View All</a>
 				</div>
 			</div>
 			<div class="table-responsive">
 				<table class="table table-hover table-nowrap table-centered m-0">
 					<thead class="bg-light bg-opacity-50">
 						<tr>
-							<th class="text-muted py-1">Rooms</th>
+							<th class="text-muted py-1">Rooms Type</th>
+							<th class="text-muted py-1">Room Number</th>
 							<th class="text-muted py-1">Check In</th>
 							<th class="text-muted py-1">Check Out</th>
 							<th class="text-muted py-1">Customer Name</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-hotel-line"></i>
-											</span>
+						<?php
+						$checkincheckout = HotelDashboard::checkin_checkout_statistics();
+						if ($checkincheckout && count($checkincheckout) > 0) {
+							foreach ($checkincheckout as $checkincheckouts) {
+						?>
+							<tr>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="flex-shrink-0">
+											<div class="avatar-sm">
+												<span class="avatar-title bg-primary-subtle text-primary rounded-3">
+													<i class="ri-hotel-line"></i>
+												</span>
+											</div>
+										</div>
+										<div class="flex-grow-1 ms-2">
+											<h6 class="fs-13 mb-0"> <?php echo $checkincheckouts->room_type; ?></h6>
 										</div>
 									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">Deluxe Room</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-time-line"></i>
-											</span>
+								</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="flex-shrink-0">
+											<div class="avatar-sm">
+												<span class="avatar-title bg-primary-subtle text-primary rounded-3">
+													<i class="ri-hotel-line"></i>
+												</span>
+											</div>
+										</div>
+										<div class="flex-grow-1 ms-2">
+											<h6 class="fs-13 mb-0"><?php echo $checkincheckouts->room_number; ?></h6>
 										</div>
 									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">10:00 AM</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-time-line"></i>
-											</span>
+								</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="flex-shrink-0">
+											<div class="avatar-sm">
+												<span class="avatar-title bg-primary-subtle text-primary rounded-3">
+													<i class="ri-time-line"></i>
+												</span>
+											</div>
+										</div>
+										<div class="flex-grow-1 ms-2">
+											<h6 class="fs-13 mb-0"><?php echo date('d-m-Y', strtotime($checkincheckouts->check_in_time)); ?></h6>
 										</div>
 									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">12:00 PM</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-user-3-line"></i>
-											</span>
+								</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="flex-shrink-0">
+											<div class="avatar-sm">
+												<span class="avatar-title bg-primary-subtle text-primary rounded-3">
+													<i class="ri-time-line"></i>
+												</span>
+											</div>
+										</div>
+										<div class="flex-grow-1 ms-2">
+											<h6 class="fs-13 mb-0"><?php echo date('d-m-Y', strtotime($checkincheckouts->check_out_time)); ?></h6>
 										</div>
 									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">John Doe</h6>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-hotel-line"></i>
-											</span>
+								</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="flex-shrink-0">
+											<div class="avatar-sm">
+												<span class="avatar-title bg-primary-subtle text-primary rounded-3">
+													<i class="ri-user-3-line"></i>
+												</span>
+											</div>
+										</div>
+										<div class="flex-grow-1 ms-2">
+											<h6 class="fs-13 mb-0"><?php echo $checkincheckouts->customer_name; ?></h6>
 										</div>
 									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">Deluxe Room</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-time-line"></i>
-											</span>
-										</div>
-									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">10:00 AM</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-time-line"></i>
-											</span>
-										</div>
-									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">12:00 PM</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-user-3-line"></i>
-											</span>
-										</div>
-									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">John Doe</h6>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-hotel-line"></i>
-											</span>
-										</div>
-									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">Deluxe Room</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-time-line"></i>
-											</span>
-										</div>
-									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">10:00 AM</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-time-line"></i>
-											</span>
-										</div>
-									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">12:00 PM</h6>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<div class="avatar-sm">
-											<span class="avatar-title bg-primary-subtle text-primary rounded-3">
-												<i class="ri-user-3-line"></i>
-											</span>
-										</div>
-									</div>
-									<div class="flex-grow-1 ms-2">
-										<h6 class="fs-13 mb-0">John Doe</h6>
-									</div>
-								</div>
-							</td>
-						</tr>
+								</td>
+							</tr>
+						<?php }} ?>
 					</tbody>
 				</table>
 			</div>

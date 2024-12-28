@@ -4,7 +4,7 @@ echo Page::title(["title" => "Create Booking"]);
 echo "<div class='content'>
           <div class='container-fluid'>
             <div class=	'row'>
-                <div class='col-lg-12' style='margin-top:10px; width:800px; margin-left:200px ; padding-right:10px; '>";
+                <div class='col-lg-12 col-md-12 col-sm-12 ' style='margin-top:10px; width:800px; margin-left:200px ; padding-right:40px; '>";
 // echo Html::link(["class" => "btn btn-success", "route" => "booking", "text" => "Manage Booking"]);
 
 echo '<div class="text-center flex">
@@ -14,6 +14,7 @@ echo '<div class="text-center flex">
 			<button type="button" class="btn btn-info center" id="add-amenity">Add Amenity</button>
 			<button type="button" class="btn btn-info center" id="add-order">Add Order</button>
 			<button type="button" class="btn btn-danger center" id="add-payment">Payment</button>
+			<button type="button" class="btn btn-danger center" id="invoice">Hotel Invoice</button>
 			<button type="button" class="btn btn-warning center" id="return">Details</button>
 		</div>';
 echo Page::context_open();
@@ -94,6 +95,11 @@ echo Page::body_close();
 		$("#return").click(function() {
 			// alert("hello");
 			window.location.href = "<?php echo $base_url; ?>booking";
+		});
+
+		$("#invoice").click(function() {
+			// alert("hello");
+			window.location.href = "<?php echo $base_url; ?>invoice/create";
 		});
 	});
 </script>

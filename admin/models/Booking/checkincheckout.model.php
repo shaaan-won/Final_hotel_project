@@ -128,7 +128,7 @@ class CheckinCheckout extends Model implements JsonSerializable
 		$html = "<table class='table'>";
 		$html .= "<tr><th colspan='3'>" . Html::link(["class" => "btn btn-success", "route" => "checkincheckout/create", "text" => "New CheckinCheckout"]) . "</th></tr>";
 		if ($action) {
-			$html .= "<tr><th>Id</th><th>Room Number</th><th>Check In Date</th><th>Check Out Date</th><th>Notes</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html .= "<tr><th>Id</th><th>Room Number</th><th>Check In Date</th><th>Check Out Date</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		} else {
 			$html .= "<tr><th>Id</th><th>Room Id</th><th>Check In Date</th><th>Check Out Date</th><th>Notes</th><th>Created At</th><th>Updated At</th></tr>";
 		}
@@ -142,7 +142,7 @@ class CheckinCheckout extends Model implements JsonSerializable
 				$action_buttons .= Event::button(["name" => "delete", "value" => "Delete", "class" => "btn btn-danger", "route" => "checkincheckout/confirm/$checkincheckout->id"]);
 				$action_buttons .= "</div></td>";
 			}
-			$html .= "<tr><td>$checkincheckout->id</td><td>$room_number</td><td>$checkincheckout->check_in_date</td><td>$checkincheckout->check_out_date</td><td>$checkincheckout->notes</td><td>$checkincheckout->created_at</td><td>$checkincheckout->updated_at</td> $action_buttons</tr>";
+			$html .= "<tr><td>$checkincheckout->id</td><td>$room_number</td><td>$checkincheckout->check_in_date</td><td>$checkincheckout->check_out_date</td><td>$checkincheckout->created_at</td><td>$checkincheckout->updated_at</td> $action_buttons</tr>";
 		}
 		$html .= "</table>";
 		$html .= pagination($page, $total_pages);

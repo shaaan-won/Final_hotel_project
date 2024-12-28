@@ -115,8 +115,7 @@ class HotelDashboard extends Model implements JsonSerializable
 							WHERE 
 								b.status_id = (SELECT id FROM ht_statuss WHERE name = 'Booked')
 							ORDER BY 
-								b.check_in_date ASC;
-									");
+								b.check_out_date ASC LIMIT 4;");
 		$data = [];
 		while ($hoteldashboard = $result->fetch_object()) {
 			$data[] = $hoteldashboard;
