@@ -1108,7 +1108,7 @@
 						total_amount: sub_total_items
 					},
 					success: function(response) {
-						alert(response);
+						// alert(response);
 						// window.location.href = "<?php echo $base_url; ?>invoice";
 					},
 					error: function(response) {

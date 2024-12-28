@@ -588,3 +588,121 @@ INSERT INTO ht_order_items (order_id, item_id, quantity, unit_price) VALUES
 (2, 2, 1, 100.00),
 (3, 3, 5, 30.00),
 (4, 4, 3, 75.00);
+
+
+--create dashboard view for the database
+-- CREATE VIEW ht_dashboard_view AS
+-- SELECT
+--   (SELECT COUNT(*) FROM ht_customers) AS total_customers,
+--   (SELECT COUNT(*) FROM ht_rooms) AS total_rooms,
+--   (SELECT COUNT(*) FROM ht_bookings) AS total_bookings,
+--   (SELECT COUNT(*) FROM ht_invoices) AS total_invoices,
+--   (SELECT COUNT(*) FROM ht_payments) AS total_payments
+-- FROM dual;
+
+-- create dashboard view for the database
+CREATE OR REPLACE VIEW hotel_dashboard AS
+SELECT
+    -- General Statistics
+    (SELECT COUNT(*) FROM ht_customers) AS total_customers,
+    (SELECT COUNT(*) FROM ht_bookings WHERE check_in_date <= NOW() AND check_out_date >= NOW()) AS total_check_ins,
+    (SELECT COUNT(*) FROM ht_bookings WHERE check_out_date < NOW()) AS total_check_outs,
+    (SELECT SUM(total_amount) FROM ht_invoices WHERE payment_status_id = (SELECT id FROM ht_payment_statuses WHERE name = 'Paid')) AS total_revenue,
+
+    -- revenue from invoice table by day & month
+    (SELECT SUM(total_amount) FROM ht_invoices WHERE DATE(created_at) = CURDATE()) AS today_revenue,
+    (SELECT SUM(total_amount) FROM ht_invoices WHERE MONTH(created_at) = MONTH(CURDATE())) AS this_month_revenue,
+    (SELECT SUM(total_amount) FROM ht_invoices WHERE YEAR(created_at) = YEAR(CURDATE())) AS this_year_revenue,
+
+    -- Room Type Statistics
+    (SELECT COUNT(*) FROM ht_rooms WHERE room_type_id = (SELECT id FROM ht_room_types WHERE name = 'Standard')) AS standard_rooms_total,
+    (SELECT COUNT(*) FROM ht_rooms WHERE room_type_id = (SELECT id FROM ht_room_types WHERE name = 'Deluxe')) AS deluxe_rooms_total,
+    (SELECT COUNT(*) FROM ht_rooms WHERE room_type_id = (SELECT id FROM ht_room_types WHERE name = 'Suite')) AS suite_rooms_total,
+    (SELECT COUNT(*) FROM ht_rooms WHERE room_type_id = (SELECT id FROM ht_room_types WHERE name = 'Penthouse')) AS penthouse_rooms_total,
+    
+    -- Room Statistics
+    (SELECT COUNT(*) FROM ht_rooms WHERE status_id = (SELECT id FROM ht_statuss WHERE name = 'Available')) AS available_rooms,
+    (SELECT COUNT(*) FROM ht_rooms WHERE status_id = (SELECT id FROM ht_statuss WHERE name = 'Booked')) AS booked_rooms,
+    (SELECT COUNT(*) FROM ht_rooms WHERE status_id = (SELECT id FROM ht_statuss WHERE name = 'Maintenance')) AS maintenance_rooms,
+
+    -- room occupied statistics by customer need to khnow the room types
+    (SELECT COUNT(*) FROM ht_rooms WHERE status_id = (SELECT id FROM ht_statuss WHERE name = 'Available') AND room_type_id = (SELECT id FROM ht_room_types WHERE name = 'Standard')) AS standard_rooms,
+    (SELECT COUNT(*) FROM ht_rooms WHERE status_id = (SELECT id FROM ht_statuss WHERE name = 'Available') AND room_type_id = (SELECT id FROM ht_room_types WHERE name = 'Deluxe')) AS deluxe_rooms,
+    (SELECT COUNT(*) FROM ht_rooms WHERE status_id = (SELECT id FROM ht_statuss WHERE name = 'Available') AND room_type_id = (SELECT id FROM ht_room_types WHERE name = 'Suite')) AS suite_rooms,
+    (SELECT COUNT(*) FROM ht_rooms WHERE status_id = (SELECT id FROM ht_statuss WHERE name = 'Available') AND room_type_id = (SELECT id FROM ht_room_types WHERE name = 'Penthouse')) AS penthouse_rooms,
+
+    -- Recent Activity: Check-in/Check-out Counts
+    (SELECT COUNT(*) FROM ht_bookings WHERE DATE(check_in_date) = CURDATE()) AS today_check_ins,
+    (SELECT COUNT(*) FROM ht_bookings WHERE DATE(check_out_date) = CURDATE()) AS today_check_outs,
+    
+    -- Booking Statistics
+    (SELECT COUNT(*) FROM ht_bookings WHERE check_in_date <= NOW() AND check_out_date >= NOW()) AS current_check_ins,
+    -- (SELECT COUNT(*) FROM ht_bookings WHERE check_out_date < NOW()) AS current_check_outs,
+    (SELECT COUNT(*) FROM ht_bookings WHERE check_out_date > NOW()) AS future_check_ins,
+
+    -- Customer Feedback Statistics
+    (SELECT ROUND(AVG(rating), 1) FROM ht_customer_feedbacks) AS average_customer_rating,
+    (SELECT COUNT(*) FROM ht_customer_feedbacks) AS total_feedbacks,
+    
+    -- Payment Statistics
+    (SELECT COUNT(*) FROM ht_payments WHERE payment_statuse_id = (SELECT id FROM ht_payment_statuses WHERE name = 'Paid')) AS paid_payments,
+    (SELECT COUNT(*) FROM ht_payments WHERE payment_statuse_id = (SELECT id FROM ht_payment_statuses WHERE name = 'Pending')) AS pending_payments,
+    (SELECT COUNT(*) FROM ht_payments WHERE payment_statuse_id = (SELECT id FROM ht_payment_statuses WHERE name = 'Failed')) AS failed_payments,
+    
+    -- Detailed Data Aggregation
+    (SELECT COUNT(*) FROM ht_bookings) AS total_bookings,
+    (SELECT COUNT(*) FROM ht_rooms) AS total_rooms,
+    (SELECT COUNT(*) FROM ht_room_types) AS total_room_types,
+    (SELECT COUNT(*) FROM ht_payments) AS total_payments,
+    -- Add more columns as needed
+--     c.name AS customer_name,
+--     c.first_name AS customer_first_name,
+--     c.last_name AS customer_last_name,
+--     c.email AS customer_email,
+--     c.phone AS customer_phone,
+--     c.address AS customer_address
+-- FROM
+--     ht_customers c
+--     LEFT JOIN ht_bookings b ON c.id = b.customer_id
+--     -- LEFT JOIN ht_invoices i ON b.id = i.booking_id
+--     LEFT JOIN ht_rooms r ON b.room_id = r.id
+--     LEFT JOIN ht_room_types rt ON r.room_type_id = rt.id
+--     LEFT JOIN ht_payments p ON b.id = p.booking_id
+--     LEFT JOIN ht_payment_statuses ps ON p.payment_statuse_id = ps.id
+--     LEFT JOIN ht_statuss s ON r.status_id = s.id
+--     -- LEFT JOIN ht_room_amenities ra ON r.id = ra.room_id
+--     LEFT JOIN ht_customer_feedbacks cf ON c.id = cf.customer_id;
+
+
+
+-- dahboard query to customer details
+SELECT 
+    c.name AS customer_name,
+    c.phone AS customer_phone,
+    r.room_number AS booked_room_number
+FROM 
+    ht_customers c
+JOIN 
+    ht_bookings b ON c.id = b.customer_id
+JOIN 
+    ht_rooms r ON b.room_id = r.id
+
+    --- checkin checkout statistics
+    SELECT 
+    rt.name AS room_type,
+    r.room_number AS room_number,
+    c.name AS customer_name,
+    b.check_in_date AS check_in_time,
+    b.check_out_date AS check_out_time
+FROM 
+    ht_bookings b
+INNER JOIN 
+    ht_customers c ON b.customer_id = c.id
+INNER JOIN 
+    ht_rooms r ON b.room_id = r.id
+INNER JOIN 
+    ht_room_types rt ON r.room_type_id = rt.id
+WHERE 
+    b.status_id = (SELECT id FROM ht_statuss WHERE name = 'Booked')
+ORDER BY 
+    b.check_in_date ASC;
