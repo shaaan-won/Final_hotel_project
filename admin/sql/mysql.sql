@@ -653,7 +653,7 @@ SELECT
     (SELECT COUNT(*) FROM ht_bookings) AS total_bookings,
     (SELECT COUNT(*) FROM ht_rooms) AS total_rooms,
     (SELECT COUNT(*) FROM ht_room_types) AS total_room_types,
-    (SELECT COUNT(*) FROM ht_payments) AS total_payments,
+    (SELECT COUNT(*) FROM ht_payments) AS total_payments
     -- Add more columns as needed
 --     c.name AS customer_name,
 --     c.first_name AS customer_first_name,
