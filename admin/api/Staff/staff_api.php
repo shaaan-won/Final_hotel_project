@@ -24,7 +24,9 @@ class StaffApi{
 		$staff->email=$data["email"];
 		$staff->phone=$data["phone"];
 		$staff->address=$data["address"];
+		$staff->work_schedule_id=$data["work_schedule_id"];
 		$staff->hired_date=$data["hired_date"];
+		$staff->performance_score=$data["performance_score"];
 
 		$staff->save();
 		echo json_encode(["success" => "yes"]);
@@ -38,7 +40,9 @@ class StaffApi{
 		$staff->email=$data["email"];
 		$staff->phone=$data["phone"];
 		$staff->address=$data["address"];
+		$staff->work_schedule_id=$data["work_schedule_id"];
 		$staff->hired_date=$data["hired_date"];
+		$staff->performance_score=$data["performance_score"];
 		$staff->updated_at=$now;
 
 		$staff->update();
