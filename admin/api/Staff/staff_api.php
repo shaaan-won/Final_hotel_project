@@ -27,6 +27,7 @@ class StaffApi{
 		$staff->work_schedule_id=$data["work_schedule_id"];
 		$staff->hired_date=$data["hired_date"];
 		$staff->performance_score=$data["performance_score"];
+		upload($file["image"],"../img/staff",$data["name"]);
 
 		$staff->save();
 		echo json_encode(["success" => "yes"]);
