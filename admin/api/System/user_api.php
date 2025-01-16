@@ -10,6 +10,11 @@ class UserApi extends Api{
 		  	    die("401 Unauthorized");
 			}
 			
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {			  
+				http_response_code(401);//Not Authorized
+		  	    die("401 Unauthorized");
+			}
+			
          }		
 	}
 	function index(){

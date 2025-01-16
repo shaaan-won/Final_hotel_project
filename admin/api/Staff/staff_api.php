@@ -1,6 +1,19 @@
 <?php
-class StaffApi{
+class StaffApi extends Api{
 	public function __construct(){
+		if(!$this->authorized()){   
+		    
+			if ($_SERVER['REQUEST_METHOD'] == 'GET') {			  
+				http_response_code(401);//Not Authorized
+		  	    die("401 Unauthorized");
+			}
+			
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {			  
+				http_response_code(401);//Not Authorized
+		  	    die("401 Unauthorized");
+			}
+			
+         }
 	}
 	function index(){
 		echo json_encode(["staffs"=>Staff::all()]);
@@ -27,7 +40,7 @@ class StaffApi{
 		$staff->work_schedule_id=$data["work_schedule_id"];
 		$staff->hired_date=$data["hired_date"];
 		$staff->performance_score=$data["performance_score"];
-		upload($file["image"],"../img/staff",$data["name"]);
+		upload($file["image"],"../img/staff",$data["name"]); //upload image by handed for react form data
 
 		$staff->save();
 		echo json_encode(["success" => "yes"]);

@@ -3,8 +3,13 @@ require_once("../configs/db_config.php");
 require_once("../configs/app_config.php");
 
 header("Access-Control-Allow-Origin:*");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH ,OPTIONS');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 require_once("../models/model.php");
 
@@ -617,7 +622,7 @@ class Api{
     function __construct(){
         
         header("Access-Control-Allow-Origin:*");
-        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH ,OPTIONS'); 
         header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
     }
