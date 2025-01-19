@@ -27,8 +27,8 @@ class CustomerApi{
 		$customer->id_card_type_id=$data["id_card_type_id"];
 		$customer->id_card_number=$data["id_card_number"];
 		$customer->address=$data["address"];
-		$customer->created_at=$data["created_at"];
-		$customer->updated_at=$data["updated_at"];
+		$customer->created_at=date("Y-m-d H:i:s");
+		$customer->updated_at=date("Y-m-d H:i:s");
 
 		$customer->save();
 		echo json_encode(["success" => "yes"]);
